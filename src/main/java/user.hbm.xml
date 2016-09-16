@@ -7,7 +7,7 @@
 	<class name="com.grandcircus.planit.User" table="users">
 	<id name="ID" column="ID" type="int">  
 		 	<generator class="increment"></generator>  
-		 </id>  
+		 </id>
 		<property name="username" column="username" type="string"></property>
 		<property name="password" column="password" type="string"></property>
 		<property name="email" column="email" type="string"></property>

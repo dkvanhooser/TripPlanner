@@ -19,4 +19,3 @@ public class UserSearch {
 	
 	
 }
-//DigestUtils.md5Hex(
