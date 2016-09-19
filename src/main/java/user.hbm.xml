@@ -12,7 +12,7 @@
 		<property name="password" column="password" type="string"></property>
 		<property name="email" column="email" type="string"></property>
 		<property name="fullname" column="fullname" type="string"></property>
-		<property name="permission" column="permission" type="int"></property>
+
 		
 	</class>
 </hibernate-mapping> 

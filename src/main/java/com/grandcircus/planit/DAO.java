@@ -8,6 +8,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import com.grandcircus.planit.User;
+
 
 public class DAO {
 	private static SessionFactory factory;
@@ -37,5 +39,24 @@ public class DAO {
 		hibernateSession.getTransaction().commit();
 		hibernateSession.close();
 		return UserSearch.checkUserAndPass((ArrayList<User>)users, user.getUsername(), user.getPassword());
+	}
+	public static boolean isUsernameTaken(User user){
+		if (factory == null)
+			setupFactory();
+		Session hibernateSession = factory.openSession();
+		hibernateSession.getTransaction().begin();
+		List<User> users = hibernateSession.createQuery("SELECT username FROM User WHERE username="+ user.getUsername() + "").list();
+		return true;
+	}
+	public static String addUser(User u) {
+		if (factory == null)
+			setupFactory();
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+hibernateSession.save(u);  
+		 hibernateSession.getTransaction().commit();
+		 hibernateSession.close();  
+				    
+		 return null;  
 	}
 }

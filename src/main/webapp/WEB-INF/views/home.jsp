@@ -15,7 +15,7 @@
 	Welcome to PlanIT! 
 </h1></td>
 <td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
-<a href="<c:url value="login" />" align ="right" >Register</a></td>
+<a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
 </tr>
 </table>
 <table>
@@ -23,7 +23,7 @@
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
 <form:form action="login" commandName="searchForm">
-<td><form:input type="text" path="search" size="30"/></td>
+<td><form:input path="search" type="text" size="30"/></td>
 <td><form:input path="date" type="date" size="30"/></td>
 <td><form:input path="date" type="date" size="30"/></td>
 <td><input type="submit" value="search"/></td>
