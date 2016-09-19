@@ -11,7 +11,6 @@ public class User {
 	@Email
 	@NotEmpty
 	private String email;
-	private String fullname;
 	private int ID;
 	
 	public int getID() {
@@ -38,12 +37,6 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getFullname() {
-		return fullname;
-	}
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
 	}
 
 
