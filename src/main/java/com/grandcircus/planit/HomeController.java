@@ -29,5 +29,12 @@ public class HomeController {
 		model.put("searchForm", search);
 		return "home";
 	}
-	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String log() {
+		return "login";
+	}
+	@RequestMapping(value = "/checklogin", method = RequestMethod.GET)
+	public String checklog() {
+		return "checkloginlogin";
+	}
 }

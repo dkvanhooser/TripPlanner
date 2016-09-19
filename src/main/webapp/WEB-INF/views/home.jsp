@@ -14,8 +14,8 @@
 <td><h1 align = "center">
 	Welcome to PlanIT! 
 </h1></td>
-<td><a href="<c:url value="/login" />" align ="right" >Login</a><br/>
-<a href="<c:url value="/login" />" align ="right" >Register</a></td>
+<td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
+<a href="<c:url value="login" />" align ="right" >Register</a></td>
 </tr>
 </table>
 <table>
