@@ -62,4 +62,9 @@ public class HomeController {
 		model.put("searchForm", search);
 		return "home";
 	}
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String search()
+	{
+		return "Search";
+	}
 }
