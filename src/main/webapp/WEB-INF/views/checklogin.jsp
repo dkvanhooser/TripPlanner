@@ -12,20 +12,21 @@
 <title>Checking User Info...</title>
 </head>
 <body>
-	<li><p><b>Username :</b>
-   <%= request.getParameter("username")%>
-   <br>
-</p></li>
+   <%= request.getParameter("username")%> <%out.print(" has successfully logged in!");%>
+<form action="home" method="get">
+    <input type="submit" value="Return home!" 
+         name="Submit"/>
+</form>
 
-<jsp:useBean id="obj" class="com.grandcircus.planit.User">  
-</jsp:useBean>  
-<jsp:setProperty property="*" name="obj"/>
+<jsp:useBean id="user" class="com.grandcircus.planit.User">  
+</jsp:useBean>
+<jsp:setProperty property="*" name="user"/>
 <%  
-boolean i=DAO.userAndPassValidator(obj); 
-if (i)  
-	out.print("Product successfully added");  
-else
-	out.println("Error; product not added");
+//DAO.userAndPassValidator(user);
+//if (i)  
+//	out.print("Product successfully added");  
+//else
+//	out.println("Error; product not added");
 %>
 </body>
 </html>

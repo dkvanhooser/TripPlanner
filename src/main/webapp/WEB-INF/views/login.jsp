@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page session="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,11 +10,10 @@
 <title>Login Page</title>
 </head>
 <body>
-	<form action="checklogin" method="POST">
-Username :  <input type="text" name="username" />
-<br>
-Password :  <input type="password" name="password" />
-<input type="submit" name="submit" value="Submit" />
-</form>
+<form:form commandName="loginForm" method="post">
+<td>Username:<form:input type="text" path="username" size="30"/></td>
+<td>Password:<form:input path="password" type="password" size="30"/></td>
+<td><input type="submit" value="Login!"/></td>
+</form:form>
 </body>
 </html>

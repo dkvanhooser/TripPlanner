@@ -4,15 +4,12 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="com.grandcircus.planit.User" table="users">
+	<class name="com.grandcircus.planit.User" table="Users">
 	<id name="ID" column="ID" type="int">  
 		 	<generator class="increment"></generator>  
 		 </id>
 		<property name="username" column="username" type="string"></property>
 		<property name="password" column="password" type="string"></property>
 		<property name="email" column="email" type="string"></property>
-		<property name="fullname" column="fullname" type="string"></property>
-		<property name="permission" column="permission" type="int"></property>
-		
 	</class>
 </hibernate-mapping> 

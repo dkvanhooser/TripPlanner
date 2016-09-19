@@ -11,9 +11,7 @@ public class User {
 	@Email
 	@NotEmpty
 	private String email;
-	private String fullname;
 	private int ID;
-	private int permission;
 	
 	public int getID() {
 		return ID;
@@ -39,18 +37,6 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getFullname() {
-		return fullname;
-	}
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
-	public int getPermission() {
-		return permission;
-	}
-	public void setPermission(int permission) {
-		this.permission = permission;
 	}
 
 }
