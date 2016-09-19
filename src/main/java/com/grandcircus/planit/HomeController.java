@@ -37,4 +37,9 @@ public class HomeController {
 	public String checklog() {
 		return "checkloginlogin";
 	}
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String search()
+	{
+		return "Search";
+	}
 }
