@@ -30,6 +30,12 @@ public class HomeController {
 		model.put("searchForm", search);
 		return "home";
 	}
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String welcomeagain(Map<String, Object> model) {
+		Search search = new Search();
+		model.put("searchForm", search);
+		return "home";
+	}
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loggingin(Map<String, Object> model) {
 		User user = new User();
@@ -55,12 +61,6 @@ public class HomeController {
 	public String failedlogin() {
 		
 		return "loginfailed";
-	}
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String welcomeagain(Map<String, Object> model) {
-		Search search = new Search();
-		model.put("searchForm", search);
-		return "home";
 	}
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search()

@@ -18,9 +18,5 @@
     <input type="submit" value="Return to home page!" 
          name="Submit"/>         
 </form>
-<a href="home">Flee now or die in vane.</a>
-
-
-
 </body>
 </html>
