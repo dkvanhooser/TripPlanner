@@ -33,14 +33,10 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welcome(Map<String, Object> model) {
-		Search search = new Search();
-		model.put("searchForm", search);
 		return "home";
 	}
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String welcomeagain(Map<String, Object> model) {
-		Search search = new Search();
-		model.put("searchForm", search);
 		return "home";
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
