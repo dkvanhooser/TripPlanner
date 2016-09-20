@@ -8,10 +8,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create a new account</title>
 </head>
+
 <body>
-<form:form action="adduser" commandName="createAccount" method="POST">
+<%-- <c:if test ="${usernameTaken.validation=='true'}"> --%>
+<!-- 	<script type="text/javascript">alert("That username already exists");</script> -->
+<%-- <c:otherwise> --%>
+
+<%-- </c:otherwise> --%>
+<%-- </c:if> --%>
+<form:form action="adduser" commandName="addUser" method="POST">
 <label class="fieldLabel">Username:
+	
     <form:input type="text" path="username" name="username" size="40" maxlength="32" placeholder="username" />      
+<!-- error form -->
+	<form:errors path="username" cssClass="error"/>
+
   </label>
   <br>
   <label class="fieldLabel">Password:
@@ -28,4 +39,5 @@
   </div>
   </form:form>
 </body>
+
 </html>

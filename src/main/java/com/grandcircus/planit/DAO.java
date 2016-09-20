@@ -2,6 +2,11 @@ package com.grandcircus.planit;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.NoResultException;
+import javax.validation.ConstraintViolationException;
+
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -45,18 +50,29 @@ public class DAO {
 			setupFactory();
 		Session hibernateSession = factory.openSession();
 		hibernateSession.getTransaction().begin();
-		List<User> users = hibernateSession.createQuery("SELECT username FROM User WHERE username="+ user.getUsername() + "").list();
+		try{
+			String query = "FROM User WHERE username='"+ user.getUsername()+"'";
+			System.out.println(query);
+			User singleUser = (User) hibernateSession.createQuery(query).getSingleResult();
+			System.out.println("Found: " + singleUser.getUsername());
+		}catch(Exception e){
+			System.out.println("Exception: " + e);
+			return false;
+		}
+		
+		//no exception = there was a single result
 		return true;
 	}
+	
 	public static String addUser(User u) {
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-hibernateSession.save(u);  
+		 hibernateSession.save(u);  
 		 hibernateSession.getTransaction().commit();
 		 hibernateSession.close();  
 				    
 		 return null;  
 	}
-}
+} 

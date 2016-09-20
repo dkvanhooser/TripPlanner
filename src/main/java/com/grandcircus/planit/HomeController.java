@@ -48,12 +48,12 @@ public class HomeController {
 		return "login";
 	}
 		
-		@RequestMapping(value = "/login", method = RequestMethod.POST)
-		public String userlogincheck(Map<String, Object> model, @ModelAttribute("loginForm") User user) {
-			if(DAO.userAndPassValidator(user)){
-				return "checklogin";
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String userlogincheck(Map<String, Object> model, @ModelAttribute("loginForm") User user) {
+		if(DAO.userAndPassValidator(user)){
+		return "checklogin";
 			}else{
-			return "loginfailed";
+				return "loginfailed";
 			}
 	}
 	@RequestMapping(value = "/checklogin", method = RequestMethod.POST)
@@ -74,52 +74,14 @@ public class HomeController {
 	@RequestMapping(value = "/createaccount", method = RequestMethod.GET)
 	public String createAccount(Map<String, Object> model) {
 		User user = new User();
-		model.put("createAccount", user);
+		model.put("addUser", user);
 		DAO.isUsernameTaken(user);
 		return "createaccount";
 
 	}
-	//is the username a valid username (validation)
-	//does the username exist in the database call the DAO
-	//create new username in database
-	
- //   @RequestMapping(value = "/adduser", method=RequestMethod.POST)
-    //public ModelAndView checkPersonInfo(@Valid @ModelAttribute("addUser") User addUser, BindingResult bindingResult) {
-	
-//    if (bindingResult.hasErrors()) {
-//    		logger.info("Erroneous form submitted");
-//    		logger.info(bindingResult.toString());
-//    		ModelAndView result = new ModelAndView("createaccount");
-//    		result.addObject("addUser", addUser);
-//    		FieldError usernameError = bindingResult.getFieldError("username"); 
-//    		String usernameErrString = "";
-//    		if (usernameError != null) {
-//    			usernameErrString = usernameError.getDefaultMessage();
-//    		}
-//    			
-//    		String passwordErrString = "";
-//    		FieldError passwordError = bindingResult.getFieldError("password");
-//    		if (passwordError != null) {
-//    			passwordErrString = passwordError.getDefaultMessage();
-//    		}
-//    		String emailErrString = "";
-//    		FieldError emailError = bindingResult.getFieldError("email");
-//    		if (emailError != null) {
-//    			emailErrString = emailError.getDefaultMessage();
-//    		}
-//        result.addObject("usernameError", usernameErrString);
-//        result.addObject("passwordError", passwordErrString);
-//        result.addObject("emailError", emailErrString);
-//            
-//    		return result;
-//    }
-//
-//    logger.info("correct form submitted");
-//    return new ModelAndView ("result");
-//}
 
-	   @RequestMapping(value = "/adduser", method=RequestMethod.POST)    
-    public ModelAndView checkPersonInfo(@ModelAttribute("addUser") User addUser) {
+	@RequestMapping(value = "/adduser", method=RequestMethod.POST)    
+    public ModelAndView checkPersonInfo(Map<String, Object> model, @ModelAttribute("addUser") User addUser) {
     		
     //validate user info?
 
@@ -128,11 +90,13 @@ public class HomeController {
         logger.info("Email: " + addUser.getEmail());
         logger.info("Password: " + addUser.getPassword());
         
-        //check if the username alreadys exist (DAO)
-        DAO.isUsernameTaken(addUser);
-        //now call the DAO to store this user (addUser)
-        DAO.addUser(addUser);
-       
+        if(!DAO.isUsernameTaken(addUser)){
+        	DAO.addUser(addUser);
+        }else{//please try again re-route to create account
+        
+        	return new ModelAndView ("loginfailed");
+        }
+
         //return a success page
         return new ModelAndView ("userProfile");
     }
@@ -146,3 +110,41 @@ public class HomeController {
 			return "savedtrips";
 		}
 }
+//is the username a valid username (validation)
+//does the username exist in the database call the DAO
+//create new username in database
+
+//   @RequestMapping(value = "/adduser", method=RequestMethod.POST)
+//public ModelAndView checkPersonInfo(@Valid @ModelAttribute("addUser") User addUser, BindingResult bindingResult) {
+
+//if (bindingResult.hasErrors()) {
+//		logger.info("Erroneous form submitted");
+//		logger.info(bindingResult.toString());
+//		ModelAndView result = new ModelAndView("createaccount");
+//		result.addObject("addUser", addUser);
+//		FieldError usernameError = bindingResult.getFieldError("username"); 
+//		String usernameErrString = "";
+//		if (usernameError != null) {
+//			usernameErrString = usernameError.getDefaultMessage();
+//		}
+//			
+//		String passwordErrString = "";
+//		FieldError passwordError = bindingResult.getFieldError("password");
+//		if (passwordError != null) {
+//			passwordErrString = passwordError.getDefaultMessage();
+//		}
+//		String emailErrString = "";
+//		FieldError emailError = bindingResult.getFieldError("email");
+//		if (emailError != null) {
+//			emailErrString = emailError.getDefaultMessage();
+//		}
+//    result.addObject("usernameError", usernameErrString);
+//    result.addObject("passwordError", passwordErrString);
+//    result.addObject("emailError", emailErrString);
+//        
+//		return result;
+//}
+//
+//logger.info("correct form submitted");
+//return new ModelAndView ("result");
+//}
