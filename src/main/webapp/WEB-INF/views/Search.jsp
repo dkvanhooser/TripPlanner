@@ -8,23 +8,6 @@
 <title>Search</title>
 </head>
 <body>
-<script>
-$.ajax({
-	  type:"GET",
-	  url:"https://app.ticketmaster.com/discovery/v2/events.json",
-	  async:true,
-	  dataType: "json",
-	 // data: {"radius":"1", "startDateTime":"2016-09-23T00%3A00%3A00Z", "endDateTime":"2016-09-26T00%3A00%3A00Z","city":"Detroit", "apikey":"9GWQl0TyQA2GKd6qcHEAMxL3VkwldGx3"},
-	 data:{"size":"10","apikey":"9GWQl0TyQA2GKd6qcHEAMxL3VkwldGx3","dmaId":"266"},
-	  success: function(json) {
-	              console.log(json);
-	              // Parse the response.
-	              // Do other things.
-	           },
-	  error: function(xhr, status, err) {
-		  		   console.log(err);
-	              // This time, we do not end up here!
-	           }
-	});</script>
+
 </body>
 </html>

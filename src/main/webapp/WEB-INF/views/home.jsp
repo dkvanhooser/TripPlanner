@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="com.grandcircus.planit.FetchURLData"%>
 <%@ page session="false" %>
 
 <html>
@@ -14,6 +15,7 @@
 <td><h1 align = "center">
 	Welcome to PlanIT! 
 </h1></td>
+<% FetchURLData.FetchURL(); %>
 <td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
 <a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
 </tr>
@@ -22,7 +24,7 @@
 <tr><td></td><td align = "right">Trip</td><td>date</td></tr>
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
-<form:form action="login" commandName="searchForm">
+<form:form action="search" commandName="searchForm">
 <td><form:input path="search" type="text" size="30"/></td>
 <td><form:input path="date" type="date" size="30"/></td>
 <td><form:input path="date" type="date" size="30"/></td>
