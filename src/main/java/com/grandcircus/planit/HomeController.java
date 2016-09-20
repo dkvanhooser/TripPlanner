@@ -134,11 +134,15 @@ public class HomeController {
         DAO.addUser(addUser);
        
         //return a success page
-        return new ModelAndView ("result");
+        return new ModelAndView ("userProfile");
     }
 //    @RequestMapping(method=RequestMethod.GET)
 //    public String add(@Valid @ModelAttribute("adduser") User addUser, BindingResult bindingResult) {
 //    return "Account Created";
 //    }
-    
+	   @RequestMapping(value = "/savedtrips", method = RequestMethod.GET)
+		public String savedtrips()
+		{
+			return "savedtrips";
+		}
 }
