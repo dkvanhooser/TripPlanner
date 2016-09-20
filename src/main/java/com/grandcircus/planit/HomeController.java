@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import com.grandcircus.planit.resources.TicketmasterKey;
 
 /**
  * Handles requests for the application home page.
@@ -66,10 +68,24 @@ public class HomeController {
 		
 		return "loginfailed";
 	}
+	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search()
-	{
-		return "Search";
+	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+		TicketmasterKey.setCity(search);
+		TicketmasterKey.setDateFrom(dateFrom);
+		TicketmasterKey.setDateTo(dateTo);
+		model.put("eventList", FetchURLData.fetchEvents());
+		
+		return new ModelAndView("Search","events",model);
+	}
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public ModelAndView filterSearch(Map<String, Object> model,@RequestParam("search") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+		TicketmasterKey.setCity(search);
+		TicketmasterKey.setDateFrom(dateFrom);
+		TicketmasterKey.setDateTo(dateTo);
+		model.put("eventList", FetchURLData.fetchEvents());
+		
+		return new ModelAndView("Search","events",model);
 	}
 	@RequestMapping(value = "/createaccount", method = RequestMethod.GET)
 	public String createAccount(Map<String, Object> model) {
