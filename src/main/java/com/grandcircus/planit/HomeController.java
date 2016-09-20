@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -15,7 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import com.grandcircus.planit.resources.TicketmasterKey;
 
 /**
  * Handles requests for the application home page.
@@ -49,13 +52,17 @@ public class HomeController {
 	}
 		
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String userlogincheck(Map<String, Object> model, @ModelAttribute("loginForm") User user) {
+
+	public String userlogincheck(HttpSession session, @ModelAttribute("loginForm") User user) {
 		if(DAO.userAndPassValidator(user)){
-		return "checklogin";
-			}else{
-				return "loginfailed";
-			}
-	}
+			//set the model's session
+			session.setAttribute("loggedin", "true");
+			return "checklogin";
+		}else{
+			return "loginfailed";
+		}
+}
+
 	@RequestMapping(value = "/checklogin", method = RequestMethod.POST)
 	public String checklog() {
 		
@@ -66,10 +73,24 @@ public class HomeController {
 		
 		return "loginfailed";
 	}
+	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search()
-	{
-		return "Search";
+	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+		TicketmasterKey.setCity(search);
+		TicketmasterKey.setDateFrom(dateFrom);
+		TicketmasterKey.setDateTo(dateTo);
+		model.put("eventList", FetchURLData.fetchEvents());
+		
+		return new ModelAndView("Search","events",model);
+	}
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public ModelAndView filterSearch(Map<String, Object> model,@RequestParam("search") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+		TicketmasterKey.setCity(search);
+		TicketmasterKey.setDateFrom(dateFrom);
+		TicketmasterKey.setDateTo(dateTo);
+		model.put("eventList", FetchURLData.fetchEvents());
+		
+		return new ModelAndView("Search","events",model);
 	}
 	@RequestMapping(value = "/createaccount", method = RequestMethod.GET)
 	public String createAccount(Map<String, Object> model) {

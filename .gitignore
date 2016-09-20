@@ -14,6 +14,8 @@
 # Hibernate DB Settings
 hibernate.cfg.xml
 
+#Ticketmaster
+TicketmasterKey.java
 # Maven
 log/
 target/

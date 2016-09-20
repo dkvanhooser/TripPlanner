@@ -4,29 +4,21 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import org.json.JSONException;
-
+import com.grandcircus.planit.resources.TicketmasterKey;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-/**
- * @author Crunchify.com
- */
 
 public class FetchURLData {
 
-	public static void FetchURL() {
-		JSONParser jsonParser = new JSONParser();
-		ArrayList<SearchEvent> searchArray = new ArrayList<SearchEvent>();
+	public static ArrayList<SearchEvent> fetchEvents() {
+		ArrayList<SearchEvent> searchedEvents = new ArrayList<SearchEvent>();
 		try {
-			URL url = new URL(
-					"https://app.ticketmaster.com//discovery/v2/events.json?apikey=9GWQl0TyQA2GKd6qcHEAMxL3VkwldGx3&radius=1&startDateTime=2016-09-20T00%3A00%3A00Z&endDateTime=2016-09-26T00%3A00%3A00Z&city=Detroit HTTP/1.1");
-			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+			URL url = new URL(TicketmasterKey.getAPI());
+					BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			String strTemp = "";
 			while (null != (strTemp = br.readLine())) {
-				ArrayList<SearchEvent> searchedEvents = new ArrayList<SearchEvent>();
+				
 				JSONObject tempJsonObject = new JSONObject(strTemp); 
 				JSONObject embedded = tempJsonObject.getJSONObject ("_embedded");
 				
@@ -47,7 +39,6 @@ public class FetchURLData {
 				        }catch(JSONException e){
 				        
 				        }
-				        System.out.println(se.toString());
 				        searchedEvents.add(se);
 				}
 				
@@ -55,5 +46,6 @@ public class FetchURLData {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		return searchedEvents;
 	}
 }

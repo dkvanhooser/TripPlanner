@@ -15,7 +15,6 @@
 <td><h1 align = "center">
 	Welcome to PlanIT! 
 </h1></td>
-<% FetchURLData.FetchURL(); %>
 <td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
 <a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
 </tr>
@@ -24,12 +23,14 @@
 <tr><td></td><td align = "right">Trip</td><td>date</td></tr>
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
-<form:form action="search" commandName="searchForm">
-<td><form:input path="search" type="text" size="30"/></td>
-<td><form:input path="date" type="date" size="30"/></td>
-<td><form:input path="date" type="date" size="30"/></td>
-<td><input type="submit" value="search"/></td>
-</form:form>
+<form action = "<c:url value="search" />">
+<td><input type="text" path="search" name = "search" size="30"/></td>
+<td><input path="dateFrom" type="date" name = "dateFrom" size="30"/></td>
+<td><input path="dateTo" type="date" name ="dateTo" size="30"/></td>
+<td><input type = "submit" value = "Search"></td>
+</form>
+</tr>
 </table>
+
 </body>
 </html>
