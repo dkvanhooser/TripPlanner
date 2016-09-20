@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -50,14 +51,16 @@ public class HomeController {
 		return "login";
 	}
 		
-		@RequestMapping(value = "/login", method = RequestMethod.POST)
-		public String userlogincheck(Map<String, Object> model, @ModelAttribute("loginForm") User user) {
-			if(DAO.userAndPassValidator(user)){
-				return "checklogin";
-			}else{
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String userlogincheck(HttpSession session, @ModelAttribute("loginForm") User user) {
+		if(DAO.userAndPassValidator(user)){
+			//set the model's session
+			session.setAttribute("loggedin", "true");
+			return "checklogin";
+		}else{
 			return "loginfailed";
-			}
-	}
+		}
+}
 	@RequestMapping(value = "/checklogin", method = RequestMethod.POST)
 	public String checklog() {
 		
