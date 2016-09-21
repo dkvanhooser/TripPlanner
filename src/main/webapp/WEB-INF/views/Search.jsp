@@ -32,12 +32,22 @@
 </table>
 <table>
 		<c:forEach var="event" items="${events.eventList}">
+		<form action = "<c:url value="addEvent" />">
 		<tr>
 			<td><c:out value ="${event.name}" /></td>
 			<td><c:out value ="${event.url}" />	</td>
 			<td><c:out value ="${event.dateTime}" />	</td>
 			<td><c:out value ="${event.info}" /></td>
+			<td><select name="trip">
+			<c:forEach var="trip" items="${trip.tripList}">
+			<option value="${trip.id}">${trip.name}</option>
+			</c:forEach>
+			</select>
+			<input type ="hidden" name ="eventId" value = "${event.id}">
+			</td>
+			<td><button type="submit">Add to Trip</button></td>
 		</tr>
+		</form>
 		</c:forEach>
 
 </table>
