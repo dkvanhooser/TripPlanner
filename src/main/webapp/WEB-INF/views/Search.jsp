@@ -34,7 +34,7 @@
 		<c:forEach var="event" items="${events.eventList}">
 		<tr>
 			<td><c:out value ="${event.name}" /></td>
-			<td><c:out value ="${event.id}" />	</td>
+			<td><c:out value ="${event.url}" />	</td>
 			<td><c:out value ="${event.dateTime}" />	</td>
 			<td><c:out value ="${event.info}" /></td>
 		</tr>

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+//import com.grandcircus.planit.TicketmasterKey;
+
 import com.grandcircus.planit.resources.TicketmasterKey;
 
 /**
@@ -32,60 +36,65 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String welcome(Map<String, Object> model) {
+	public String welcome() {
 		return "home";
+		
 	}
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String welcomeagain(Map<String, Object> model) {
+
+	public String welcomeagain() {
 		return "home";
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loggingin(Map<String, Object> model) {
+	public String loggingin(Model model) {
 		User user = new User();
-		model.put("loginForm", user);
+		model.addAttribute("loginForm", user);
 		
 		return "login";
 	}
 		
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 
-	public String userlogincheck(HttpSession session, @ModelAttribute("loginForm") User user) {
+	public String userlogincheck(HttpSession session, 
+			Model model,
+			@ModelAttribute("loginForm") User user, 
+			HttpServletResponse response) {
 		if(DAO.userAndPassValidator(user)){
 			//set the model's session
-			session.setAttribute("loggedin", "true");
+			//session.setAttribute("loggedin", "true");
+			Cookie username = new Cookie ("username", user.getUsername());
+			response.addCookie(username);
+			model.addAttribute("username", user.getUsername());
 			return "checklogin";
 		}else{
 			return "loginfailed";
 		}
 }
 
-	@RequestMapping(value = "/checklogin", method = RequestMethod.POST)
-	public String checklog() {
-		
-		return "checklogin";
-	}
-	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
-	public String failedlogin() {
-		
-		return "loginfailed";
-	}
+//	@RequestMapping(value = "/checklogin", method = RequestMethod.POST)
+//	public String checklog() {
+//		
+//		return "checklogin";
+//	}
+//	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
+//	public String failedlogin() {
+//		
+//		return "loginfailed";
+//	}
 	
+
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
-		TicketmasterKey.setCity(search);
-		TicketmasterKey.setDateFrom(dateFrom);
-		TicketmasterKey.setDateTo(dateTo);
-		model.put("eventList", FetchURLData.fetchEvents());
+	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
+		model.put("eventList", FetchURLData.fetchAllEvents(key));
 		
 		return new ModelAndView("Search","events",model);
 	}
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ModelAndView filterSearch(Map<String, Object> model,@RequestParam("search") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
-		TicketmasterKey.setCity(search);
-		TicketmasterKey.setDateFrom(dateFrom);
-		TicketmasterKey.setDateTo(dateTo);
-		model.put("eventList", FetchURLData.fetchEvents());
-		
+	public ModelAndView filterSearch(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
+		model.put("eventList", FetchURLData.fetchAllEvents(key));
+
 		return new ModelAndView("Search","events",model);
 	}
 	@RequestMapping(value = "/createaccount", method = RequestMethod.GET)

@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ page import="com.grandcircus.planit.FetchURLData"%>
+<%--@ page import="com.grandcircus.planit.FetchURLData"--%>
 <%@ page session="false" %>
+<%@ page import="java.io.*,java.util.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="com.grandcircus.planit.DAO"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
 <html>
 <head>
@@ -13,10 +18,34 @@
 <table border="0" width="100%">
 <tr>
 <td><h1 align = "center">
-	Welcome to PlanIT! 
+	Welcome to PlanIt! 
 </h1></td>
+<%--
+<%
+	String username = null;
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie c: cookies) {
+			if (c.getName().equals("username")) {
+				username = c.getValue();
+			}
+		}
+	}
+		
+%>
+   <%= "You are logged in as " + username %>
+ --%>
+<!--  From Expressions: ${cookie.username.value} -->
+
+<c:if test="${cookie.username.value != null}">
+	<td><a href="<c:url value="userprofile" />" align ="right" >Profile</a></td>
+</c:if>
+
+<c:if test="${cookie.username.value == null}">
 <td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
 <a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
+</c:if>
+
 </tr>
 </table>
 <table>
