@@ -89,4 +89,16 @@ public class DAO {
 				    
 		 return null;  
 	}
+	public static String addUserTrips(Trips t) {
+		if (factory == null)
+			setupFactory();
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 String query = "INSEERT INTO userTrips VALUES (, tname);";
+		 hibernateSession.save(tname, );  
+		 hibernateSession.getTransaction().commit();
+		 hibernateSession.close();  
+				    
+		 return null;  
+	}
 } 

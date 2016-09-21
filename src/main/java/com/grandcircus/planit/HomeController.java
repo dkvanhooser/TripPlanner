@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 //import com.grandcircus.planit.TicketmasterKey;
 
-import com.grandcircus.planit.resources.TicketmasterKey;
+import com.grandcircus.planit.TicketmasterKey;
 
 /**
  * Handles requests for the application home page.
@@ -63,7 +63,9 @@ public class HomeController {
 			//set the model's session
 			//session.setAttribute("loggedin", "true");
 			Cookie username = new Cookie ("username", user.getUsername());
+			Cookie userID = new Cookie("userid", "" + user.getID());
 			response.addCookie(username);
+			response.addCookie(userID);
 			model.addAttribute("username", user.getUsername());
 			return "checklogin";
 		}else{
@@ -137,13 +139,13 @@ public class HomeController {
 	   {
 		   return "Trips";
 	   }
-		@RequestMapping(value = "/search", method = RequestMethod.POST)
-		public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("searchTrips") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+	//	@RequestMapping(value = "/search", method = RequestMethod.POST)
+		//public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("searchTrips") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
 			
-			model.put("tripID", FetchURLData.fetchEvents());
+			//model.put("tripID", FetchURLData.fetchEvents());
 			
-			return new ModelAndView("Search","tripID",model);
-		}
+			//return new ModelAndView("Search","tripID",model);
+		//}
 }
 //is the username a valid username (validation)
 //does the username exist in the database call the DAO
