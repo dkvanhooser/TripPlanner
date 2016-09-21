@@ -139,13 +139,14 @@ public class HomeController {
 	   {
 		   return "Trips";
 	   }
-	//	@RequestMapping(value = "/search", method = RequestMethod.POST)
-		//public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("searchTrips") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+
+		/*@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
+		public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("trip") String tripId,@RequestParam("eventId") String eventId){
+			DAO.addEvent(tripId, eventId);
 			
-			//model.put("tripID", FetchURLData.fetchEvents());
-			
-			//return new ModelAndView("Search","tripID",model);
-		//}
+			return new ModelAndView("Search");
+		} */
+
 }
 //is the username a valid username (validation)
 //does the username exist in the database call the DAO

@@ -3,10 +3,12 @@ package com.grandcircus.planit;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.NonUniqueResultException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -75,7 +77,22 @@ public class DAO {
 				    
 		 return null;  
 	}
-
+	public static boolean addEvent(String tripId, String eventId){
+		if (factory == null)
+			setupFactory();
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 String sqlquer = "INSERT INTO tripDetails(tripID) VALUES("+tripId + " , "+ eventId +")";
+		 Query query = hibernateSession.createQuery(sqlquer);
+		 query.executeUpdate();
+		 hibernateSession.getTransaction().commit();
+		 hibernateSession.close();  
+		
+		return false;
+	}
+	
+	
+	
 	public static <Trips> String findUserTrips(Trips t) {
 		if (factory == null)
 			setupFactory();
@@ -89,13 +106,13 @@ public class DAO {
 				    
 		 return null;  
 	}
-	public static String addUserTrips(Trips t) {
+	public static String addUserTrips(String t) {
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String query = "INSEERT INTO userTrips VALUES (, tname);";
-		 hibernateSession.save(tname, );  
+		 String query = "INSERT INTO userTrips VALUES (, tname)";
+		 hibernateSession.save(t);  
 		 hibernateSession.getTransaction().commit();
 		 hibernateSession.close();  
 				    
