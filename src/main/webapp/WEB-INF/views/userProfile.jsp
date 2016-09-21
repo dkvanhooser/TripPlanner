@@ -9,17 +9,19 @@
 <title>User Profile</title>
 </head>
 <body>
-<h1>Welcome ${userForm.username}!!</h1>
+<h1>Welcome!</h1>
 <h2>You have successfully logged in!</h2>
 <h3>Let's plan a trip!</h3>
 <form:form action="home" commandName="newtrip" method="GET">
 <div class="buttons">
   <td><input type="submit" name="NewTrip" value="Create a New Trip" /></td>
   </div>
+  <br>
+  detroit rodeo    modify this trip
  </form:form>
  <form:form action="savedtrips" commandName="savedtrips" method="GET">
  <div class="buttons">
-  <td><input type="submit" name="SavedTrips" value="My Saved Trips"/></td>
+  <td><input type="submit" name="SavedTrips" value="Modify This Trip"/></td>
   </div>
   </form:form>
 </body>

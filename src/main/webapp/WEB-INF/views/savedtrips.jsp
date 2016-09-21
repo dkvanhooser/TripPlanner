@@ -7,10 +7,11 @@
 <title>Saved trips</title>
 </head>
 <body>
+$"{tripname}"
 saved trips page
 <form action="">
-<input type="checkbox" name="delete" value="delete">delete<br>
-<input type="checkbox" name="delete" value="delete">delete<br>
+<input type="checkbox" name="delete" value="delete">Delete this event<br>
+<input type="checkbox" name="delete" value="delete">Delete the entire trip<br>
 </form>
 </body>
 </html>

@@ -75,4 +75,18 @@ public class DAO {
 				    
 		 return null;  
 	}
+
+	public static <Trips> String findUserTrips(Trips t) {
+		if (factory == null)
+			setupFactory();
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 String query = "SELECT * FROM userTrips WHERE userID = {userid}";
+		 String query2 = "SELECT * FROM userTrips WHERE tripID = {tripid}";
+		 hibernateSession.save(t);  
+		 hibernateSession.getTransaction().commit();
+		 hibernateSession.close();  
+				    
+		 return null;  
+	}
 } 
