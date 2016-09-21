@@ -94,7 +94,6 @@ public class HomeController {
 		model.put("addUser", user);
 		DAO.isUsernameTaken(user);
 		return "createaccount";
-
 	}
 
 	@RequestMapping(value = "/adduser", method=RequestMethod.POST)    
@@ -113,18 +112,28 @@ public class HomeController {
         
         	return new ModelAndView ("loginfailed");
         }
-
+        
         //return a success page
         return new ModelAndView ("userProfile");
     }
-//    @RequestMapping(method=RequestMethod.GET)
-//    public String add(@Valid @ModelAttribute("adduser") User addUser, BindingResult bindingResult) {
-//    return "Account Created";
-//    }
+
 	   @RequestMapping(value = "/savedtrips", method = RequestMethod.GET)
 		public String savedtrips()
-		{
+		{ 
 			return "savedtrips";
+		}
+	   
+	   @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
+	   public String Trips()
+	   {
+		   return "Trips";
+	   }
+		@RequestMapping(value = "/search", method = RequestMethod.POST)
+		public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("searchTrips") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+			
+			model.put("tripID", FetchURLData.fetchEvents());
+			
+			return new ModelAndView("Search","tripID",model);
 		}
 }
 //is the username a valid username (validation)
