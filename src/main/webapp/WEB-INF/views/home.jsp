@@ -43,7 +43,10 @@
 
 <c:if test="${cookie.username.value == null}">
 <td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
-<a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
+<a href="<c:url value="createaccount" />" align ="right" >Register</a><br/>
+<a href="<c:url value="logout" />" align ="right" >Logout</a></td>
+
+</form>
 </c:if>
 
 </tr>
