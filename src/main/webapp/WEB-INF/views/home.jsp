@@ -13,7 +13,7 @@
 <table border="0" width="100%">
 <tr>
 <td><h1 align = "center">
-	Welcome to PlanIT! 
+	Welcome to PlanIt! 
 </h1></td>
 <td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
 <a href="<c:url value="createaccount" />" align ="right" >Register</a></td>

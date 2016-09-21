@@ -34,9 +34,11 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welcome(Map<String, Object> model) {
 		return "home";
+		
 	}
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String welcomeagain(Map<String, Object> model) {
+		
 		return "home";
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -71,20 +73,16 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
-		TicketmasterKey.setCity(search);
-		TicketmasterKey.setDateFrom(dateFrom);
-		TicketmasterKey.setDateTo(dateTo);
-		model.put("eventList", FetchURLData.fetchEvents());
+	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
+		model.put("eventList", FetchURLData.fetchAllEvents(key));
 		
 		return new ModelAndView("Search","events",model);
 	}
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ModelAndView filterSearch(Map<String, Object> model,@RequestParam("search") String search,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
-		TicketmasterKey.setCity(search);
-		TicketmasterKey.setDateFrom(dateFrom);
-		TicketmasterKey.setDateTo(dateTo);
-		model.put("eventList", FetchURLData.fetchEvents());
+	public ModelAndView filterSearch(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
+		model.put("eventList", FetchURLData.fetchAllEvents(key));
 		
 		return new ModelAndView("Search","events",model);
 	}
