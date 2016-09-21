@@ -12,11 +12,18 @@
 <title>Checking User Info...</title>
 </head>
 <body>
-   <%= request.getParameter("username")%> <%out.print(" has successfully logged in!");%>
-<form action="home" method="get">
-    <input type="submit" value="Return home!" 
-         name="Submit"/>
-</form>
+Welcome back ${username }
+<c:if test="${username != null }">
+	<a href="home">Go home!</a>
+</c:if>
+<%--
+	String loginStatus = (String)session.getAttribute("loggedin");
+	//if (loginStatus == null)
+	if (loginStatus.equals("true"))
+		out.println("You are logged in");
+	else
+		out.println("You are not really logged in.");
+--%>
 
 <jsp:useBean id="user" class="com.grandcircus.planit.User">  
 </jsp:useBean>
