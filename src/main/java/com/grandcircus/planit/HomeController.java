@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -139,16 +140,20 @@ public class HomeController {
 		}
 	   
 	   @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-	   public String Trips()
-	   {
-		   return "Trips";
+	   public ModelAndView Trips(Map<String, Object> model,@RequestParam("userID") String userID,@RequestParam("tripId") String tripID){
+	 //need userID from session
+		   model.put("saved trips",DAO.findUserTrips(userID));
+		   
+		   return new ModelAndView("userProfile","Profile",model);  
 	   }
+	   
 		@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 		public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("trip") String tripId,@RequestParam("eventId") String eventId){
 			DAO.addEvent(tripId, eventId);
 			
 			return new ModelAndView("Search");
 		}
+		
 		@RequestMapping(value = "/logout", method = RequestMethod.GET)
 		public String loggingout(Model model) {
 			User user = new User();

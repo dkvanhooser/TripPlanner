@@ -11,18 +11,30 @@
 <body>
 <h1>Welcome!</h1>
 <h2>You have successfully logged in!</h2>
-<h3>Let's plan a trip!</h3>
+<h3>Here are your current trips!</h3>
 <form:form action="home" commandName="newtrip" method="GET">
 <div class="buttons">
   <td><input type="submit" name="NewTrip" value="Create a New Trip" /></td>
   </div>
-  <br>
-  detroit rodeo    modify this trip
+  <br> 
  </form:form>
  <form:form action="savedtrips" commandName="savedtrips" method="GET">
- <div class="buttons">
-  <td><input type="submit" name="SavedTrips" value="Modify This Trip"/></td>
+ <td><button type="submit">View/Modify Trip</button></td>
   </div>
   </form:form>
+  <table>
+		<c:forEach var="trip" items="${trip.tripList}">
+		<form action = "<c:url value="addEvent" />">
+		<tr>
+			<td><c:out value ="${trip.tripID}" /></td>
+			<td><c:out value ="${trip.dateTime}" />	</td>
+			<td><c:out value ="${trip.info}" /></td>
+			<td><input type ="hidden" name ="tripID" value = "${trip.tripID}"></td>
+			<td><button type="submit">Modify this Trip</button></td>
+		</tr>
+		</form>
+		</c:forEach>
+
+</table>
 </body>
 </html>

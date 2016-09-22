@@ -16,6 +16,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import com.grandcircus.planit.User;
+import com.grandcircus.planit.UserTrip;
 
 
 public class DAO {
@@ -90,21 +91,31 @@ public class DAO {
 		
 		return false;
 	}
-	
-	
-	
-	public static <Trips> String findUserTrips(Trips t) {
+
+	public static List<UserTrip> findUserTrips(String userId){
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String query = "SELECT * FROM userTrips WHERE userID = {userid}";
-		 String query2 = "SELECT * FROM userTrips WHERE tripID = {tripid}";
-		 hibernateSession.save(t);  
-		 hibernateSession.getTransaction().commit();
-		 hibernateSession.close();  
-				    
-		 return null;  
+		 String sqlquer = "SELECT * FROM userTrips WHERE userID =%s";
+		 sqlquer = String.format(sqlquer,userId);
+		 List<UserTrip> userTrips= hibernateSession.createQuery(sqlquer).getResultList();
+			hibernateSession.getTransaction().commit();
+			hibernateSession.close();  
+		
+		return userTrips;
 	}
-	
+	public static List<tripDetails> getUserTrips(String tripID){
+		if (factory == null)
+			setupFactory();
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 String sqlquer = "FROM tripDetails WHERE tripID =%s";
+		 sqlquer = String.format(sqlquer,tripID);
+		 List<tripDetails> details= hibernateSession.createQuery(sqlquer, tripDetails.class).getResultList();
+			hibernateSession.getTransaction().commit();
+			hibernateSession.close();  
+		
+		return details;
+	}
 } 
