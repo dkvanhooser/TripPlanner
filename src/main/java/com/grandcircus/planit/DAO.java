@@ -37,7 +37,7 @@ public class DAO {
 		factory = configuration.buildSessionFactory(serviceRegistry);
 	}
 	
-	public static boolean userAndPassValidator(User user){
+	public static User userAndPassValidator(User user){
 		if (factory == null)
 			setupFactory();
 		Session hibernateSession = factory.openSession();
