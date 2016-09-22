@@ -153,14 +153,12 @@ public class HomeController {
 			DAO.addEvent(tripId, eventId);
 			
 			return new ModelAndView("Search");
-<<<<<<< HEAD
 		} */
 
 		
 	 //here's a handler for the logout request
 		@RequestMapping("/logout")
 		public ModelAndView accessLogout(@CookieValue("username") Cookie username,@CookieValue("userid") Cookie userid, HttpServletResponse response){
-			
 			if(!(username.getValue().equals("null"))){
 				username.setMaxAge(0);
 				//loggedIn.setValue("false");
@@ -173,7 +171,6 @@ public class HomeController {
 		}
 			return new ModelAndView("logout");
 		}
-
 }
 //is the username a valid username (validation)
 //does the username exist in the database call the DAO
