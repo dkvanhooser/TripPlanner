@@ -1,12 +1,13 @@
 package com.grandcircus.planit;
 
 public class UserTrip {
-	private String tripID;
+	private int userID;
+	private int tripID;
 	private String tripName;
-	public String getTripID() {
+	public int getTripID() {
 		return tripID;
 	}
-	public void setTripID(String tripID) {
+	public void setTripID(int tripID) {
 		this.tripID = tripID;
 	}
 	public String getTripName() {
@@ -14,6 +15,12 @@ public class UserTrip {
 	}
 	public void setTripName(String tripName) {
 		this.tripName = tripName;
+	}
+	public int getUserID() {
+		return userID;
+	}
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	
 	

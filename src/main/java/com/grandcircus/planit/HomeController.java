@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -65,7 +66,7 @@ public class HomeController {
 			//set the model's session
 			//session.setAttribute("loggedin", "true");
 			Cookie username = new Cookie ("username", checkedUser.getUsername());
-			Cookie userID = new Cookie("userid", "" + checkedUser.getID());
+			Cookie userID = new Cookie("userid", ("" + checkedUser.getID()));
 			response.addCookie(username);
 			response.addCookie(userID);
 			model.addAttribute("userid", checkedUser.getID());
@@ -143,10 +144,18 @@ public class HomeController {
 		}
 	   
 	   @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-	   public String Trips()
-	   {
-		   return "Trips";
+
+	   public ModelAndView Trips(Map<String, Object> model,
+			   @CookieValue("username") Cookie username,
+			   @CookieValue("userid") Cookie userid){
+	 //need userID from session
+		   model.put("saved trips",DAO.findUserTrips(userid.getValue()));
+		   
+		   return new ModelAndView("userProfile","Profile",model);  
+
 	   }
+
+
 
 		/*@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 		public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("trip") String tripId,@RequestParam("eventId") String eventId){
@@ -164,6 +173,7 @@ public class HomeController {
 				//loggedIn.setValue("false");
 				response.addCookie(username);
 		}
+
 			if(!(userid.getValue().equals("null"))){
 				userid.setMaxAge(0);
 				//loggedIn.setValue("false");
@@ -171,6 +181,26 @@ public class HomeController {
 		}
 			return new ModelAndView("logout");
 		}
+		
+		@RequestMapping(value = "/createTrip", method = RequestMethod.POST)
+		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName, @CookieValue("userid") Cookie userid){
+			UserTrip ut = new UserTrip();
+			ut.setTripName(tripName);
+			ut.setUserID(Integer.parseInt(userid.getValue()));
+			
+			DAO.addUserTrips(ut);
+			return new ModelAndView("home");
+		}
+		@RequestMapping(value = "/createTrip", method = RequestMethod.GET)
+		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrip trip){
+			DAO.addUserTrips(trip);
+			return new ModelAndView("home");
+		}
+		
+		
+		
+		
+		
 }
 //is the username a valid username (validation)
 //does the username exist in the database call the DAO

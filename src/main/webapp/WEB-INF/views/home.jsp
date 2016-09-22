@@ -35,7 +35,7 @@
 %>
    <%= "You are logged in as " + username %>
  --%>
-
+ 
 <c:if test="${cookie.username.value != null}">
 	<td>logged in as: ${cookie.username.value} </br>
 	<a href="<c:url value="userprofile" />" align ="right" >Profile</a></br>

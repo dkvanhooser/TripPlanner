@@ -8,5 +8,6 @@
 </head>
 <body>
 Logout Successful 
+<a href="home">Go home!</a>
 </body>
 </html>

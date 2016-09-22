@@ -12,7 +12,7 @@
 <title>Checking User Info...</title>
 </head>
 <body>
-Welcome back ${username }
+Welcome back ${username } ID: ${userid }
 <c:if test="${username != null }">
 	<a href="home">Go home!</a>
 </c:if>
