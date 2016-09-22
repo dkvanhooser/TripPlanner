@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -143,13 +144,18 @@ public class HomeController {
 		}
 	   
 	   @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-	   public ModelAndView Trips(Map<String, Object> model)
-	   {
-		   UserTrips trip = new UserTrips();
-		   model.put("UserTrip", trip);
+
+	   public ModelAndView Trips(Map<String, Object> model,
+			   @CookieValue("username") Cookie username,
+			   @CookieValue("userid") Cookie userid){
+	 //need userID from session
+		   model.put("saved trips",DAO.findUserTrips(userid.getValue()));
 		   
-		   return new ModelAndView("userProfile","trips", model);
+		   return new ModelAndView("userProfile","Profile",model);  
+
 	   }
+
+
 
 		/*@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 		public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("trip") String tripId,@RequestParam("eventId") String eventId){
@@ -167,6 +173,7 @@ public class HomeController {
 				//loggedIn.setValue("false");
 				response.addCookie(username);
 		}
+
 			if(!(userid.getValue().equals("null"))){
 				userid.setMaxAge(0);
 				//loggedIn.setValue("false");
@@ -176,14 +183,14 @@ public class HomeController {
 		}
 		
 		@RequestMapping(value = "/createTrip", method = RequestMethod.POST)
-		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName,@ModelAttribute("UserTrip") UserTrips trip){
+		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName,@ModelAttribute("UserTrip") UserTrip trip){
 			DAO.addUserTrips(trip);
 			model.put("tripsaved", "true");
 			System.out.println(trip.getUserID() + "      "+ trip.getTripName());
 			return new ModelAndView("home");
 		}
 		@RequestMapping(value = "/createTrip", method = RequestMethod.GET)
-		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrips trip){
+		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrip trip){
 			DAO.addUserTrips(trip);
 			model.put("tripsaved", "true");
 			System.out.println(trip.getUserID() + "      "+ trip.getTripName());

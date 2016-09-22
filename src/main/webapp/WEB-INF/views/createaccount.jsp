@@ -26,7 +26,7 @@
   </label>
   <br>
   <label class="fieldLabel">Password:
-    <form:input type="text" path="password" name="password" size="40" maxlength="12"/>      
+    <form:input type="password" path="password" name="password" size="40" maxlength="12"/>      
   </label>
   <br>
    <label class="fieldLabel"> Email:

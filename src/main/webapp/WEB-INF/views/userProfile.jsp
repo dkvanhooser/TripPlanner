@@ -18,12 +18,27 @@
   <td><button type="submit">Click here to create trip!</button></td>
   </form:form>
   <br/>
-modify this trip
  </form>
+
+<h3>Here are your current trips!</h3>
+
  <form:form action="savedtrips" commandName="savedtrips" method="GET">
- <div class="buttons">
-  <td><input type="submit" name="SavedTrips" value="Modify This Trip"/></td>
+ <td><button type="submit">View/Modify Trip</button></td>
   </div>
   </form:form>
+  <table>
+		<c:forEach var="trip" items="${trip.tripList}">
+		<form action = "<c:url value="addEvent" />">
+		<tr>
+			<td><c:out value ="${trip.tripID}" /></td>
+			<td><c:out value ="${trip.dateTime}" />	</td>
+			<td><c:out value ="${trip.info}" /></td>
+			<td><input type ="hidden" name ="tripID" value = "${trip.tripID}"></td>
+			<td><button type="submit">Modify this Trip</button></td>
+		</tr>
+		</form>
+		</c:forEach>
+
+</table>
 </body>
 </html>

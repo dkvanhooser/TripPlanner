@@ -1,6 +1,6 @@
 package com.grandcircus.planit;
 
-public class UserTrips {
+public class UserTrip {
 	private int userID;
 	private int tripID;
 	private String tripName;
