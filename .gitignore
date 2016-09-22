@@ -17,6 +17,9 @@ hibernate.cfg.xml
 #Ticketmaster
 TicketmasterKey.java
 
+#Google
+GoogleKey.java
+
 # Maven
 log/
 target/
