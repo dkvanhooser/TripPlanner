@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 //import com.grandcircus.planit.TicketmasterKey;
 
-import com.grandcircus.planit.TicketmasterKey;
+import com.grandcircus.planit.resources.GoogleKey;
+import com.grandcircus.planit.resources.TicketmasterKey;
 
 /**
  * Handles requests for the application home page.
@@ -88,6 +89,9 @@ public class HomeController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
 		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
+		GoogleKey gkey = new GoogleKey();	
+		model.put("gKey", gkey.getApi());
+		model.put("latAndLng",FetchURLData.fetchLngAndLat(gkey, city));
 		model.put("eventList", FetchURLData.fetchAllEvents(key));
 		
 		return new ModelAndView("Search","events",model);
@@ -95,6 +99,8 @@ public class HomeController {
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public ModelAndView filterSearch(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
 		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
+		GoogleKey gkey = new GoogleKey();		
+		model.put("latAndLng",FetchURLData.fetchLngAndLat(gkey, city));
 		model.put("eventList", FetchURLData.fetchAllEvents(key));
 
 		return new ModelAndView("Search","events",model);
@@ -145,7 +151,17 @@ public class HomeController {
 			DAO.addEvent(tripId, eventId);
 			
 			return new ModelAndView("Search");
+<<<<<<< HEAD
 		} */
+
+		
+		@RequestMapping(value = "/logout", method = RequestMethod.GET)
+		public String loggingout(Model model) {
+			User user = new User();
+			model.addAttribute("logout", user);
+			
+			return "logout";
+		}
 
 }
 //is the username a valid username (validation)
