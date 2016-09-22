@@ -66,7 +66,7 @@ public class HomeController {
 			//set the model's session
 			//session.setAttribute("loggedin", "true");
 			Cookie username = new Cookie ("username", checkedUser.getUsername());
-			Cookie userID = new Cookie("userid", "" + checkedUser.getID());
+			Cookie userID = new Cookie("userid", ("" + checkedUser.getID()));
 			response.addCookie(username);
 			response.addCookie(userID);
 			model.addAttribute("userid", checkedUser.getID());

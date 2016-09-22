@@ -32,9 +32,9 @@ public class DAO {
 		Configuration configuration = new Configuration();
 		// modify these to match your XML files
 		configuration.configure("hibernate.cfg.xml");
-		configuration.addResource("user.hbm.xml");
-		configuration.addResource("usertrips.hbm.xml");
+		configuration.addResource("usertrip.hbm.xml");
 		configuration.addResource("tripdetails.hbm.xml");
+		configuration.addResource("user.hbm.xml");
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties()).build();
 		factory = configuration.buildSessionFactory(serviceRegistry);
