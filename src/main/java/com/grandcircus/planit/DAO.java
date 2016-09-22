@@ -16,7 +16,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import com.grandcircus.planit.User;
-import com.grandcircus.planit.UserTrip;
+import com.grandcircus.planit.UserTrips;
 
 
 public class DAO {
@@ -94,34 +94,36 @@ public class DAO {
 		return false;
 	}
 
-	public static List<UserTrip> findUserTrips(String userId){
+	public static List<UserTrips> findUserTrips(int userId){
 		if (factory == null)
 			setupFactory();
+		
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String sqlquer = "SELECT * FROM userTrips WHERE userID =%s";
+		 String sqlquer = "FROM "+UserTrips.class.getName() +" WHERE userID=%s";
+		 System.out.println(UserTrips.class.getName());
 		 sqlquer = String.format(sqlquer,userId);
-		 List<UserTrip> userTrips= hibernateSession.createQuery(sqlquer).getResultList();
+		 List<UserTrips> userTrips= (List<UserTrips>)hibernateSession.createQuery(sqlquer, UserTrips.class).getResultList();
 			hibernateSession.getTransaction().commit();
 			hibernateSession.close();  
 		
 		return userTrips;
 	}
-	public static List<tripDetails> getUserTrips(String tripID){
+	public static List<tripDetails> getTripEvents(String tripID){
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String sqlquer = "FROM tripDetails WHERE tripID =%s";
+		 String sqlquer = "FROM tripDetails WHERE tripID='%s";
 		 sqlquer = String.format(sqlquer,tripID);
-		 List<tripDetails> details= hibernateSession.createQuery(sqlquer, tripDetails.class).getResultList();
+		 List<tripDetails> details= (List<tripDetails>)hibernateSession.createQuery(sqlquer, tripDetails.class).getResultList();
 			hibernateSession.getTransaction().commit();
 			hibernateSession.close();  
 		
 		return details;
 	}
 
-	public static String addUserTrips(UserTrip t) {
+	public static String addUserTrips(UserTrips t) {
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();

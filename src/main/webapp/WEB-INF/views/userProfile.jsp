@@ -27,13 +27,12 @@
   </div>
   </form:form>
   <table>
-		<c:forEach var="trip" items="${trip.tripList}">
+		<c:forEach var="trip" items="${Profile.savedtrips}">
 		<form action = "<c:url value="addEvent" />">
 		<tr>
-			<td><c:out value ="${trip.tripID}" /></td>
-			<td><c:out value ="${trip.dateTime}" />	</td>
-			<td><c:out value ="${trip.info}" /></td>
-			<td><input type ="hidden" name ="tripID" value = "${trip.tripID}"></td>
+			<td><c:out value ="${savedtrips.tripName}" />	</td>
+			<td><c:out value ="${savedtrips.tripID}" /></td>
+			<td><input type ="hidden" name ="tripID" value = "${savedtrips.tripID}"></td>
 			<td><button type="submit">Modify this Trip</button></td>
 		</tr>
 		</form>

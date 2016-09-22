@@ -38,7 +38,7 @@
 
 <c:if test="${cookie.username.value != null}">
 	<td>logged in as: ${cookie.username.value} </br>
-	<a href="<c:url value="userprofile" />" align ="right" >Profile</a></br>
+	<a href="<c:url value="userProfile" />" align ="right" >Profile</a></br>
 	<a href="<c:url value="logout" />" align ="right" >Logout</a></td>
 </c:if>
 <c:if test="${cookie.username.value == null}">
