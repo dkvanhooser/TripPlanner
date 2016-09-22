@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,14 +60,16 @@ public class HomeController {
 			Model model,
 			@ModelAttribute("loginForm") User user, 
 			HttpServletResponse response) {
-		if(DAO.userAndPassValidator(user)){
+		User checkedUser = DAO.userAndPassValidator(user);
+		if(checkedUser != null){
 			//set the model's session
 			//session.setAttribute("loggedin", "true");
-			Cookie username = new Cookie ("username", user.getUsername());
-			Cookie userID = new Cookie("userid", "" + user.getID());
+			Cookie username = new Cookie ("username", checkedUser.getUsername());
+			Cookie userID = new Cookie("userid", "" + checkedUser.getID());
 			response.addCookie(username);
 			response.addCookie(userID);
-			model.addAttribute("username", user.getUsername());
+			model.addAttribute("userid", checkedUser.getID());
+			model.addAttribute("username", checkedUser.getUsername());
 			return "checklogin";
 		}else{
 			return "loginfailed";
@@ -155,12 +157,21 @@ public class HomeController {
 		} */
 
 		
-		@RequestMapping(value = "/logout", method = RequestMethod.GET)
-		public String loggingout(Model model) {
-			User user = new User();
-			model.addAttribute("logout", user);
+	 //here's a handler for the logout request
+		@RequestMapping("/logout")
+		public ModelAndView accessLogout(@CookieValue("username") Cookie username,@CookieValue("userid") Cookie userid, HttpServletResponse response){
 			
-			return "logout";
+			if(!(username.getValue().equals("null"))){
+				username.setMaxAge(0);
+				//loggedIn.setValue("false");
+				response.addCookie(username);
+		}
+			if(!(userid.getValue().equals("null"))){
+				userid.setMaxAge(0);
+				//loggedIn.setValue("false");
+				response.addCookie(userid);
+		}
+			return new ModelAndView("logout");
 		}
 
 }
