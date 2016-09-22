@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,12 +61,16 @@ public class HomeController {
 			Model model,
 			@ModelAttribute("loginForm") User user, 
 			HttpServletResponse response) {
-		if(DAO.userAndPassValidator(user)){
+		User checkedUser = DAO.userAndPassValidator(user);
+		if(checkedUser != null){
 			//set the model's session
 			//session.setAttribute("loggedin", "true");
-			Cookie username = new Cookie ("username", user.getUsername());
+			Cookie username = new Cookie ("username", checkedUser.getUsername());
+			Cookie userID = new Cookie("userid", "" + checkedUser.getID());
 			response.addCookie(username);
-			model.addAttribute("username", user.getUsername());
+			response.addCookie(userID);
+			model.addAttribute("userid", checkedUser.getID());
+			model.addAttribute("username", checkedUser.getUsername());
 			return "checklogin";
 		}else{
 			return "loginfailed";
@@ -140,26 +144,40 @@ public class HomeController {
 		}
 	   
 	   @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-	   public ModelAndView Trips(Map<String, Object> model,@RequestParam("userID") String userID,@RequestParam("tripId") String tripID){
+	   public ModelAndView Trips(Map<String, Object> model,
+			   @CookieValue("username") Cookie username,
+			   @CookieValue("userid") Cookie userid){
 	 //need userID from session
-		   model.put("saved trips",DAO.findUserTrips(userID));
+		   model.put("saved trips",DAO.findUserTrips(userid.getValue()));
 		   
 		   return new ModelAndView("userProfile","Profile",model);  
 	   }
-	   
-		@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
+
+
+
+		/*@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 		public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("trip") String tripId,@RequestParam("eventId") String eventId){
 			DAO.addEvent(tripId, eventId);
 			
 			return new ModelAndView("Search");
-		}
+		} */
+
 		
-		@RequestMapping(value = "/logout", method = RequestMethod.GET)
-		public String loggingout(Model model) {
-			User user = new User();
-			model.addAttribute("logout", user);
-			
-			return "logout";
+	 //here's a handler for the logout request
+		@RequestMapping("/logout")
+		public ModelAndView accessLogout(@CookieValue("username") Cookie username,@CookieValue("userid") Cookie userid, HttpServletResponse response){
+			if(!(username.getValue().equals("null"))){
+				username.setMaxAge(0);
+				//loggedIn.setValue("false");
+				response.addCookie(username);
+		}
+
+			if(!(userid.getValue().equals("null"))){
+				userid.setMaxAge(0);
+				//loggedIn.setValue("false");
+				response.addCookie(userid);
+		}
+			return new ModelAndView("logout");
 		}
 }
 //is the username a valid username (validation)

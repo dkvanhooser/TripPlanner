@@ -38,7 +38,7 @@ public class DAO {
 		factory = configuration.buildSessionFactory(serviceRegistry);
 	}
 	
-	public static boolean userAndPassValidator(User user){
+	public static User userAndPassValidator(User user){
 		if (factory == null)
 			setupFactory();
 		Session hibernateSession = factory.openSession();
@@ -117,5 +117,18 @@ public class DAO {
 			hibernateSession.close();  
 		
 		return details;
+	}
+
+	public static String addUserTrips(String t) {
+		if (factory == null)
+			setupFactory();
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 String query = "INSERT INTO userTrips VALUES (, tname)";
+		 hibernateSession.save(t);  
+		 hibernateSession.getTransaction().commit();
+		 hibernateSession.close();  
+				    
+		 return null;  
 	}
 } 
