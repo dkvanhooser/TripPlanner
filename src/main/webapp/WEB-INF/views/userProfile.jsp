@@ -12,11 +12,11 @@
 <h1>Welcome!</h1>
 <h2>You have successfully logged in!</h2>
 <h3>Let's plan a trip!</h3>
-<form:form action="createTrip" commandName="UserTrip" method="get">
-	<form:input type = "hidden" value = "${cookie.userID.value}" path="userID"/>
-  	<form:input type="text" name ="tripName" size="30" path="tripName"/>
+<form action="createTrip" method="get">
+	<input type = "hidden" name= "userID" value = "${cookie.userID.value}"/>
+  	<input type="text" name ="tripName" size="30" name="tripName"/>
   <td><button type="submit">Click here to create trip!</button></td>
-  </form:form>
+  </form>
   <br/>
  </form>
 

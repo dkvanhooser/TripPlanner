@@ -183,17 +183,16 @@ public class HomeController {
 		}
 		
 		@RequestMapping(value = "/createTrip", method = RequestMethod.POST)
-		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName,@ModelAttribute("UserTrip") UserTrip trip){
-			DAO.addUserTrips(trip);
-			model.put("tripsaved", "true");
-			System.out.println(trip.getUserID() + "      "+ trip.getTripName());
+		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName, @RequestParam("userID") String userID){
+			UserTrip ut = new UserTrip();
+			ut.setTripName(tripName);
+			ut.setUserID(userID);
+			DAO.addUserTrips(ut);
 			return new ModelAndView("home");
 		}
 		@RequestMapping(value = "/createTrip", method = RequestMethod.GET)
 		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrip trip){
 			DAO.addUserTrips(trip);
-			model.put("tripsaved", "true");
-			System.out.println(trip.getUserID() + "      "+ trip.getTripName());
 			return new ModelAndView("home");
 		}
 		
