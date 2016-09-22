@@ -149,6 +149,13 @@ public class HomeController {
 			
 			return new ModelAndView("Search");
 		}
+		@RequestMapping(value = "/logout", method = RequestMethod.GET)
+		public String loggingout(Model model) {
+			User user = new User();
+			model.addAttribute("logout", user);
+			
+			return "logout";
+		}
 }
 //is the username a valid username (validation)
 //does the username exist in the database call the DAO
