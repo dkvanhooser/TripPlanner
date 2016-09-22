@@ -35,16 +35,15 @@
 %>
    <%= "You are logged in as " + username %>
  --%>
-<!--  From Expressions: ${cookie.username.value} -->
 
 <c:if test="${cookie.username.value != null}">
-	<td><a href="<c:url value="userprofile" />" align ="right" >Profile</a></td>
+	<td>logged in as: ${cookie.username.value} </br>
+	<a href="<c:url value="userprofile" />" align ="right" >Profile</a></br>
+	<a href="<c:url value="logout" />" align ="right" >Logout</a></td>
 </c:if>
-
 <c:if test="${cookie.username.value == null}">
 <td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
-<a href="<c:url value="createaccount" />" align ="right" >Register</a><br/>
-<a href="<c:url value="logout" />" align ="right" >Logout</a></td>
+<a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
 
 </form>
 </c:if>
