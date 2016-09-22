@@ -12,13 +12,14 @@
 <h1>Welcome!</h1>
 <h2>You have successfully logged in!</h2>
 <h3>Let's plan a trip!</h3>
-<form:form action="home" commandName="newtrip" method="GET">
-<div class="buttons">
-  <td><input type="submit" name="NewTrip" value="Create a New Trip" /></td>
-  </div>
-  <br>
-  detroit rodeo    modify this trip
- </form:form>
+<form:form action="createTrip" commandName="UserTrip" method="get">
+	<form:input type = "hidden" value = "${cookie.userID.value}" path="userID"/>
+  	<form:input type="text" name ="tripName" size="30" path="tripName"/>
+  <td><button type="submit">Click here to create trip!</button></td>
+  </form:form>
+  <br/>
+modify this trip
+ </form>
  <form:form action="savedtrips" commandName="savedtrips" method="GET">
  <div class="buttons">
   <td><input type="submit" name="SavedTrips" value="Modify This Trip"/></td>

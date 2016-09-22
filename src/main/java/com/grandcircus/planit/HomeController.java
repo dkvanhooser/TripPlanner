@@ -143,9 +143,12 @@ public class HomeController {
 		}
 	   
 	   @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-	   public String Trips()
+	   public ModelAndView Trips(Map<String, Object> model)
 	   {
-		   return "Trips";
+		   UserTrips trip = new UserTrips();
+		   model.put("UserTrip", trip);
+		   
+		   return new ModelAndView("userProfile","trips", model);
 	   }
 
 		/*@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
@@ -171,6 +174,26 @@ public class HomeController {
 		}
 			return new ModelAndView("logout");
 		}
+		
+		@RequestMapping(value = "/createTrip", method = RequestMethod.POST)
+		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName,@ModelAttribute("UserTrip") UserTrips trip){
+			DAO.addUserTrips(trip);
+			model.put("tripsaved", "true");
+			System.out.println(trip.getUserID() + "      "+ trip.getTripName());
+			return new ModelAndView("home");
+		}
+		@RequestMapping(value = "/createTrip", method = RequestMethod.GET)
+		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrips trip){
+			DAO.addUserTrips(trip);
+			model.put("tripsaved", "true");
+			System.out.println(trip.getUserID() + "      "+ trip.getTripName());
+			return new ModelAndView("home");
+		}
+		
+		
+		
+		
+		
 }
 //is the username a valid username (validation)
 //does the username exist in the database call the DAO

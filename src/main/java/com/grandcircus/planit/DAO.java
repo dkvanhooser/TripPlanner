@@ -32,6 +32,8 @@ public class DAO {
 		// modify these to match your XML files
 		configuration.configure("hibernate.cfg.xml");
 		configuration.addResource("user.hbm.xml");
+		configuration.addResource("usertrips.hbm.xml");
+		configuration.addResource("tripdetails.hbm.xml");
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties()).build();
 		factory = configuration.buildSessionFactory(serviceRegistry);
@@ -106,12 +108,11 @@ public class DAO {
 				    
 		 return null;  
 	}
-	public static String addUserTrips(String t) {
+	public static String addUserTrips(UserTrips t) {
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String query = "INSERT INTO userTrips VALUES (, tname)";
 		 hibernateSession.save(t);  
 		 hibernateSession.getTransaction().commit();
 		 hibernateSession.close();  
