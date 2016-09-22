@@ -1,9 +1,10 @@
 package com.grandcircus.planit;
 
-public class UserTrip {
+public class UserTrips {
 	private int userID;
 	private int tripID;
 	private String tripName;
+	
 	public int getTripID() {
 		return tripID;
 	}
@@ -19,8 +20,9 @@ public class UserTrip {
 	public int getUserID() {
 		return userID;
 	}
-	public void setUserID(int userID) {
-		this.userID = userID;
+
+	public void setUserID(String userID) {
+		this.userID = Integer.parseInt(userID);
 	}
 	
 	

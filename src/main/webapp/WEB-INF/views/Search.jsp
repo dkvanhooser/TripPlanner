@@ -94,7 +94,7 @@
 			<td><c:out value ="${event.dateTime}" />	</td>
 			<td><c:out value ="${event.info}" /></td>
 			<td><select name="trip">
-			<c:forEach var="trip" items="${trip.tripList}">
+			<c:forEach var="trip" items="${events.trips}">
 			<option value="${trip.id}">${trip.name}</option>
 			</c:forEach>
 			</select>

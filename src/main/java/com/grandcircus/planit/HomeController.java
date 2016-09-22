@@ -90,12 +90,13 @@ public class HomeController {
 	
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
+	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo,@CookieValue("userid") Cookie userid){
 		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
 		GoogleKey gkey = new GoogleKey();	
 		model.put("gKey", gkey.getApi());
 		model.put("latAndLng",FetchURLData.fetchLngAndLat(gkey, city));
 		model.put("eventList", FetchURLData.fetchAllEvents(key));
+		model.put("trips", DAO.findUserTrips(Integer.parseInt(userid.getValue())));
 		
 		return new ModelAndView("Search","events",model);
 	}
@@ -149,7 +150,7 @@ public class HomeController {
 			   @CookieValue("username") Cookie username,
 			   @CookieValue("userid") Cookie userid){
 	 //need userID from session
-		   model.put("saved trips",DAO.findUserTrips(userid.getValue()));
+		   model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
 		   
 		   return new ModelAndView("userProfile","Profile",model);  
 
@@ -184,15 +185,17 @@ public class HomeController {
 		
 		@RequestMapping(value = "/createTrip", method = RequestMethod.POST)
 		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName, @CookieValue("userid") Cookie userid){
-			UserTrip ut = new UserTrip();
+
+			UserTrips ut = new UserTrips();
 			ut.setTripName(tripName);
-			ut.setUserID(Integer.parseInt(userid.getValue()));
+			ut.setUserID(userid.getValue());
+
 			
 			DAO.addUserTrips(ut);
 			return new ModelAndView("home");
 		}
 		@RequestMapping(value = "/createTrip", method = RequestMethod.GET)
-		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrip trip){
+		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrips trip){
 			DAO.addUserTrips(trip);
 			return new ModelAndView("home");
 		}

@@ -19,11 +19,6 @@ saved trips page
 			<td><c:out value ="${trip.tripID}" /></td>
 			<td><c:out value ="${trip.tripName}" />	</td>
 			<td><c:out value ="${trip.info}" /></td>
-			<td><select name="trip">
-			<c:forEach var="trip" items="${trip.tripList}">
-			<option value="${trip.id}">${trip.name}</option>
-			</c:forEach>
-			</select>
 			<input type ="hidden" name ="eventId" value = "${trip.id}">
 			</td>
 			<td><button type="submit">Save this Trip</button></td>

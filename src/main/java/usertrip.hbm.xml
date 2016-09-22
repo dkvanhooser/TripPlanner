@@ -4,7 +4,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="com.grandcircus.planit.UserTrip" table="userTrips">
+	<class name="com.grandcircus.planit.UserTrips" table="userTrips">
 	<id name="tripID" column="tripID" type="int">  
 		 	<generator class="increment"></generator>  
 		 </id>
