@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -149,13 +149,24 @@ public class HomeController {
 			
 			return new ModelAndView("Search");
 		}
-		@RequestMapping(value = "/logout", method = RequestMethod.GET)
-		public String loggingout(Model model) {
-			User user = new User();
-			model.addAttribute("logout", user);
-			
-			return "logout";
+		//here's a handler for the logout request
+
+		@RequestMapping("/logout")
+		public ModelAndView accessLogout(@CookieValue("username") Cookie username, @CookieValue("userid") Cookie userid, HttpServletResponse response){
+
+			if(!(username.getValue().equals("null"))){
+				username.setMaxAge(0);
+				//loggedIn.setValue("false");
+				response.addCookie(username);
 		}
+			if(!(userid.getValue().equals("null"))){
+				userid.setMaxAge(0);
+				//loggedIn.setValue("false");
+				response.addCookie(userid);
+		}
+			return new ModelAndView("logout");
+		}
+		
 }
 //is the username a valid username (validation)
 //does the username exist in the database call the DAO
