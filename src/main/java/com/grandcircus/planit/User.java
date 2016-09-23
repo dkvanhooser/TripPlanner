@@ -2,7 +2,8 @@ package com.grandcircus.planit;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-
+import org.jasypt.util.password.BasicPasswordEncryptor;
+import org.jasypt.util.password.PasswordEncryptor;
 public class User {
 	@NotEmpty
 	private String username;
@@ -12,6 +13,7 @@ public class User {
 	@NotEmpty
 	private String email;
 	private int ID;
+	
 	
 	public int getID() {
 		return ID;
@@ -29,6 +31,7 @@ public class User {
 		return password;
 	}
 	public void setPassword(String password) {
+
 		this.password = password;
 	}
 	
