@@ -54,13 +54,12 @@ public class FetchURLData {
 		return searchedEvents;
 	}
 
-	public static List<SearchEvent> fetchSavedEvents(TicketmasterKey key, List<tripDetails> event) {
+	public static ArrayList<SearchEvent> fetchSavedEvents(TicketmasterKey key, ArrayList<String> event) {
 		ArrayList<SearchEvent> searchedEvents = new ArrayList<SearchEvent>();
 
-		for (tripDetails s : event) {
+		for (String s : event) {
 			try {
-				System.out.println(s.getEventID());
-				URL url = new URL("https://app.ticketmaster.com/discovery/v2/events/" + s.getEventID() + ".json?" + key.getAPI());
+				URL url = new URL("https://app.ticketmaster.com/discovery/v2/events/" + s + ".json?" + key.getAPI());
 				BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 				String strTemp = "";
 				while (null != (strTemp = br.readLine())) {
@@ -85,6 +84,7 @@ public class FetchURLData {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
+			
 		}
 
 		return searchedEvents;

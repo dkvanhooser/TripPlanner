@@ -11,10 +11,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Checking User Info...</title>
 </head>
-<body>
+<body  background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 Welcome back ${username }
 <c:if test="${username != null }">
-	<a href="home">Go home!</a>
+	<a href="home">Click here to go home!</a>
 </c:if>
 <%--
 	String loginStatus = (String)session.getAttribute("loggedin");

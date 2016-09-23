@@ -122,16 +122,16 @@ public class DAO {
 			hibernateSession.close();  
 		return userTrips;
 	}
-	public static List<tripDetails> getTripEvents(int tripID){
+	public static ArrayList<String> getTripEvents(int tripID){
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String sqlquer = "FROM tripDetails WHERE tripID=%s";
+		 String sqlquer = "Select eventID FROM tripDetails WHERE tripID=%s";
 		 sqlquer = String.format(sqlquer,tripID);
-		 List<tripDetails> details= hibernateSession.createQuery(sqlquer, tripDetails.class).getResultList();
+		 ArrayList<String> details = (ArrayList<String>)hibernateSession.createQuery(sqlquer, String.class).getResultList();
 			hibernateSession.getTransaction().commit();
-			hibernateSession.close();  
+			hibernateSession.close();
 		
 		return details;
 	}

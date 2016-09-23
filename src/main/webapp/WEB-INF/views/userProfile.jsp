@@ -8,18 +8,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User Profile</title>
 </head>
-<body>
+<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 <h1>Welcome!</h1>
-<h2>You have successfully logged in!</h2>
+<table><tr><td>
 <h3>Let's plan a trip!</h3>
 <form action="createTrip" method="get">
 	<input type = "hidden" name= "userID" value = "${cookie.userID.value}"/>
   	<input type="text" name ="tripName" size="30" name="tripName"/>
-  <td><button type="submit">Click here to create trip!</button></td>
+  <button type="submit">Click here to create trip!</button>
   </form>
   <br/>
  </form>
+</td><td>
 
+<c:if test="${cookie.username.value != null}">
+	logged in as: ${cookie.username.value} </br>
+	<a href="<c:url value="userProfile" />" align ="right" >Profile</a></br>
+	<a href="<c:url value="logout" />" align ="right" >Logout</a>
+</c:if>
+<c:if test="${cookie.username.value == null}">
+<a href="<c:url value="login" />" align ="right" >Login</a><br/>
+<a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
+</td></tr>
+</form>
+</c:if>		
+
+</table>
 <h3>Here are your current trips!</h3>
 
  <form:form action="savedtrips" commandName="savedtrips" method="GET">

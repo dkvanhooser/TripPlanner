@@ -1,6 +1,7 @@
 package com.grandcircus.planit;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -119,7 +120,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/adduser", method=RequestMethod.POST)    
-    public ModelAndView checkPersonInfo(Map<String, Object> model, @ModelAttribute("addUser") User addUser) {
+    public ModelAndView checkPersonInfo(HttpSession session, Model model, @ModelAttribute("addUser") User addUser,HttpServletResponse response) {
     		
     //validate user info?
 
@@ -135,6 +136,12 @@ public class HomeController {
         	return new ModelAndView ("loginfailed");
         }
         
+        Cookie username = new Cookie ("username", addUser.getUsername());
+		Cookie userID = new Cookie("userid", ("" + addUser.getID()));
+		response.addCookie(username);
+		response.addCookie(userID);
+		model.addAttribute("userid", addUser.getID());
+		model.addAttribute("username", addUser.getUsername());
         //return a success page
         return new ModelAndView ("userProfile");
     }
@@ -204,17 +211,23 @@ public class HomeController {
 		
 		@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 		public ModelAndView addEenrrtwgnfjsig(Map<String, Object> model,@ModelAttribute("addedEvent") tripDetails addedEvent){
-			DAO.addEvent(addedEvent);
-			return new ModelAndView("Search");
+
+			return new ModelAndView("home");
 		}
 		@RequestMapping(value = "/addEvent", method = RequestMethod.GET)
-		public ModelAndView addEenrrtwfdsfdsfgnfjsig(Map<String, Object> model){
-			return new ModelAndView("Search");
+		public ModelAndView addEenrrtwfdsfdsfgnfjsig(Map<String, Object> model,@RequestParam("eventID") String event,@RequestParam("trip") int tripID){
+			tripDetails addedEvent = new tripDetails();
+			addedEvent.setTripID(tripID);
+			addedEvent.setEventID(event);
+			DAO.addEvent(addedEvent);
+			return new ModelAndView("home");
 		}
 		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
 		public ModelAndView viewAndModifyTrip(Map<String, Object> model,@RequestParam("tripID") int tripToViewID){
 			TicketmasterKey key = new TicketmasterKey();
+
 			model.put("events",FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(tripToViewID)));
+
 			return new ModelAndView("savedtrips","listevents",model);
 		}
 		

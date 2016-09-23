@@ -69,8 +69,17 @@
 <td><h1 align = "center">
 	Search
 </h1></td>
+<c:if test="${cookie.username.value != null}">
+	<td>logged in as: ${cookie.username.value} </br>
+	<a href="<c:url value="userProfile" />" align ="right" >Profile</a></br>
+	<a href="<c:url value="logout" />" align ="right" >Logout</a></td>
+</c:if>
+<c:if test="${cookie.username.value == null}">
 <td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
 <a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
+
+</form>
+</c:if>
 </tr>
 </table>
 <table>
@@ -87,10 +96,10 @@
 </table>
 <table>
 		<c:forEach var="event" items="${events.eventList}">
-		<form action = "<c:url value="addEvent" />">
+		<form action = "<c:url value="addEvent" />" method = "get">
 		<tr>
 			<td><c:out value ="${event.name}" /></td>
-			<td><c:out value ="${event.url}" />	</td>
+			<td><a href="<c:out value ="${event.url}" />">Click Here to View it on Ticketmaster!</a></td>
 			<td><c:out value ="${event.dateTime}" />	</td>
 			<td><c:out value ="${event.info}" /></td>
 			<td><select name="trip">
@@ -98,7 +107,7 @@
 			<option value="${trip.tripID}">${trip.tripName}</option>
 			</c:forEach>
 			</select>
-			<input type ="hidden" name ="eventId" value = "${event.id}">
+			<input type ="hidden" name ="eventID" value = "${event.id}">
 			</td>
 			<td><button type="submit">Add to Trip</button></td>
 		</tr>
