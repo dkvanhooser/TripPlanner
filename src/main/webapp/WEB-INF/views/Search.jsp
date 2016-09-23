@@ -95,7 +95,7 @@
 			<td><c:out value ="${event.info}" /></td>
 			<td><select name="trip">
 			<c:forEach var="trip" items="${events.trips}">
-			<option value="${trip.id}">${trip.name}</option>
+			<option value="${trip.tripID}">${trip.tripName}</option>
 			</c:forEach>
 			</select>
 			<input type ="hidden" name ="eventId" value = "${event.id}">
