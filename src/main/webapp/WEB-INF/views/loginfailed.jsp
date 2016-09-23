@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Failed</title>
 </head>
-<body>
+<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 
 <h1>Invalid Username or Password. Please try again or return home.</h1>
 

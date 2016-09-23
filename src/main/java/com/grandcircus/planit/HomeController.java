@@ -1,6 +1,7 @@
 package com.grandcircus.planit;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.hibernate.Session;
+import org.hibernate.event.spi.DeleteEvent;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -61,6 +64,10 @@ public class HomeController {
 			Model model,
 			@ModelAttribute("loginForm") User user, 
 			HttpServletResponse response) {
+		//BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+	    //String encryptedpassword = passwordEncryptor.encryptPassword(user.getPassword());
+	    //user.setPassword(encryptedpassword);
+	    
 		User checkedUser = DAO.userAndPassValidator(user);
 		if(checkedUser != null){
 			//set the model's session
@@ -118,7 +125,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/adduser", method=RequestMethod.POST)    
-    public ModelAndView checkPersonInfo(Map<String, Object> model, @ModelAttribute("addUser") User addUser) {
+    public ModelAndView checkPersonInfo(HttpSession session, Model model, @ModelAttribute("addUser") User addUser,HttpServletResponse response) {
     		
     //validate user info?
 
@@ -134,6 +141,12 @@ public class HomeController {
         	return new ModelAndView ("loginfailed");
         }
         
+        Cookie username = new Cookie ("username", addUser.getUsername());
+		Cookie userID = new Cookie("userid", ("" + addUser.getID()));
+		response.addCookie(username);
+		response.addCookie(userID);
+		model.addAttribute("userid", addUser.getID());
+		model.addAttribute("username", addUser.getUsername());
         //return a success page
         return new ModelAndView ("userProfile");
     }
@@ -194,20 +207,34 @@ public class HomeController {
 			return new ModelAndView("home");
 		}
 		@RequestMapping(value = "/createTrip", method = RequestMethod.GET)
-		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrips trip){
-			DAO.addUserTrips(trip);
+		public ModelAndView createsTrip(Map<String, Object> model,@RequestParam("tripName") String tripName,@CookieValue("userid") Cookie userid){
+			UserTrips ut = new UserTrips();
+			ut.setTripName(tripName);
+			ut.setUserID(Integer.parseInt(userid.getValue()));
+			DAO.addUserTrips(ut);
 			return new ModelAndView("home");
 		}
 		
 		@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-		public ModelAndView addEenrrtwgnfjsig(Map<String, Object> model,@RequestParam("trip") String trip,@RequestParam("eventId") String eventId){
-			DAO.addEvent(trip, eventId);
-			return new ModelAndView("search");
+		public ModelAndView addEenrrtwgnfjsig(Map<String, Object> model,@ModelAttribute("addedEvent") tripDetails addedEvent){
+
+			return new ModelAndView("home");
 		}
 		@RequestMapping(value = "/addEvent", method = RequestMethod.GET)
-		public ModelAndView addEenrrtwfdsfdsfgnfjsig(Map<String, Object> model,@RequestParam("trip") String trip,@RequestParam("eventId") String eventId){
-			DAO.addEvent(trip, eventId);
-			return new ModelAndView("search");
+		public ModelAndView addEenrrtwfdsfdsfgnfjsig(Map<String, Object> model,@RequestParam("eventID") String event,@RequestParam("trip") int tripID){
+			tripDetails addedEvent = new tripDetails();
+			addedEvent.setTripID(tripID);
+			addedEvent.setEventID(event);
+			DAO.addEvent(addedEvent);
+			return new ModelAndView("home");
+		}
+		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
+		public ModelAndView viewAndModifyTrip(Map<String, Object> model,@RequestParam("tripID") int tripToViewID){
+			TicketmasterKey key = new TicketmasterKey();
+
+			model.put("events",FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(tripToViewID)));
+
+			return new ModelAndView("savedtrips","listevents",model);
 		}
 		
 		

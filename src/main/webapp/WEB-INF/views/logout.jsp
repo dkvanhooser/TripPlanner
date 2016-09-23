@@ -6,8 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Logout Page</title>
 </head>
-<body>
+<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 Logout Successful 
-<a href="home">Go home!</a>
+
+<form action="home" method="GET">
+    <input type="submit" value="Return to the home page!" 
+         name="Submit"/>         
+</form>
 </body>
 </html>

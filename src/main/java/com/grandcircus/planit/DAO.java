@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 
 import com.grandcircus.planit.User;
 import com.grandcircus.planit.UserTrips;
@@ -72,6 +73,8 @@ public class DAO {
 	public static String addUser(User u) {
 		if (factory == null)
 			setupFactory();
+		BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+		u.setPassword(passwordEncryptor.encryptPassword(u.getPassword()));
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
 		 hibernateSession.save(u);  
@@ -80,22 +83,32 @@ public class DAO {
 				    
 		 return null;  
 	}
-	public static boolean addEvent(String tripId, String eventId){
+	public static boolean addEvent(tripDetails newEvent){
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 tripDetails td = new tripDetails();
-		 td.setEventID(eventId);
-		 td.setTripID(Integer.parseInt(tripId));
+//		 tripDetails td = new tripDetails();
+//		 td.setEventID(eventId);
+//		 td.setTripID(Integer.parseInt(tripId));
 //		 String sqlquer = "INSERT INTO tripDetails(tripID, eventID) VALUES("+tripId + " , '"+ eventId +"')";
 //		 Query query = hibernateSession.createQuery(sqlquer);
 //		 query.executeUpdate();
-		 hibernateSession.save(td); 
+		 hibernateSession.save(newEvent); 
 		 hibernateSession.getTransaction().commit();
 		 hibernateSession.close();  
 		
 		return false;
+	}
+	public static boolean deleteEvent(tripDetails eventToDelete){
+		if (factory == null)
+			setupFactory();
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 String sqlquer = "DELETE * FROM tripDetails WHERE tripID ="+eventToDelete.getTripID()+" AND eventID = " + eventToDelete.getEventID() ;
+		 Query query = hibernateSession.createQuery(sqlquer);
+		 query.executeUpdate();
+		 return true;
 	}
 
 	public static List<UserTrips> findUserTrips(int userId){
@@ -112,16 +125,16 @@ public class DAO {
 			hibernateSession.close();  
 		return userTrips;
 	}
-	public static List<tripDetails> getTripEvents(String tripID){
+	public static ArrayList<String> getTripEvents(int tripID){
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String sqlquer = "FROM tripDetails WHERE tripID='%s";
+		 String sqlquer = "Select eventID FROM tripDetails WHERE tripID=%s";
 		 sqlquer = String.format(sqlquer,tripID);
-		 List<tripDetails> details= (List<tripDetails>)hibernateSession.createQuery(sqlquer, tripDetails.class).getResultList();
+		 ArrayList<String> details = (ArrayList<String>)hibernateSession.createQuery(sqlquer, String.class).getResultList();
 			hibernateSession.getTransaction().commit();
-			hibernateSession.close();  
+			hibernateSession.close();
 		
 		return details;
 	}
