@@ -7,6 +7,6 @@
 
 	<class name="com.grandcircus.planit.tripDetails" table="tripDetails">
 	<id name="tripID" column="tripID" type="int"> </id>
-		<property name="eventID" column="eventID" type="int"></property>
+		<property name="eventID" column="eventID" type="string"></property>
 	</class>
 </hibernate-mapping> 

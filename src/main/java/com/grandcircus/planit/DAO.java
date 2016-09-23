@@ -85,9 +85,13 @@ public class DAO {
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String sqlquer = "INSERT INTO tripDetails(tripID) VALUES("+tripId + " , "+ eventId +")";
-		 Query query = hibernateSession.createQuery(sqlquer);
-		 query.executeUpdate();
+		 tripDetails td = new tripDetails();
+		 td.setEventID(eventId);
+		 td.setTripID(Integer.parseInt(tripId));
+//		 String sqlquer = "INSERT INTO tripDetails(tripID, eventID) VALUES("+tripId + " , '"+ eventId +"')";
+//		 Query query = hibernateSession.createQuery(sqlquer);
+//		 query.executeUpdate();
+		 hibernateSession.save(td); 
 		 hibernateSession.getTransaction().commit();
 		 hibernateSession.close();  
 		
@@ -101,12 +105,11 @@ public class DAO {
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
 		 String sqlquer = "FROM "+UserTrips.class.getName() +" WHERE userID=%s";
-		 System.out.println(UserTrips.class.getName());
+		 System.out.println(userId);
 		 sqlquer = String.format(sqlquer,userId);
 		 List<UserTrips> userTrips= (List<UserTrips>)hibernateSession.createQuery(sqlquer, UserTrips.class).getResultList();
 			hibernateSession.getTransaction().commit();
 			hibernateSession.close();  
-		
 		return userTrips;
 	}
 	public static List<tripDetails> getTripEvents(String tripID){

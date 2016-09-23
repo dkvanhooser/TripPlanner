@@ -187,7 +187,7 @@ public class HomeController {
 		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName, @CookieValue("userid") Cookie userid){
 			UserTrips ut = new UserTrips();
 			ut.setTripName(tripName);
-			ut.setUserID(userid.getValue());
+			ut.setUserID(Integer.parseInt(userid.getValue()));
 			
 			DAO.addUserTrips(ut);
 			return new ModelAndView("home");
@@ -198,7 +198,16 @@ public class HomeController {
 			return new ModelAndView("home");
 		}
 		
-		
+		@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
+		public ModelAndView addEenrrtwgnfjsig(Map<String, Object> model,@RequestParam("trip") String trip,@RequestParam("eventId") String eventId){
+			DAO.addEvent(trip, eventId);
+			return new ModelAndView("search");
+		}
+		@RequestMapping(value = "/addEvent", method = RequestMethod.GET)
+		public ModelAndView addEenrrtwfdsfdsfgnfjsig(Map<String, Object> model,@RequestParam("trip") String trip,@RequestParam("eventId") String eventId){
+			DAO.addEvent(trip, eventId);
+			return new ModelAndView("search");
+		}
 		
 		
 		

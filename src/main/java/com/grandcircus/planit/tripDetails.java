@@ -3,19 +3,18 @@ package com.grandcircus.planit;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class tripDetails {
-@NotEmpty
 private int tripID;
-@NotEmpty int eventID;
+String eventID;
 public int getTripID() {
 	return tripID;
 }
 public void setTripID(int tripID) {
 	this.tripID = tripID;
 }
-public int getEventID() {
+public String getEventID() {
 	return eventID;
 }
-public void setEventID(int eventID) {
+public void setEventID(String eventID) {
 	this.eventID = eventID;
 }
 }
