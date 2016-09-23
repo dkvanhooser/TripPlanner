@@ -80,22 +80,32 @@ public class DAO {
 				    
 		 return null;  
 	}
-	public static boolean addEvent(String tripId, String eventId){
+	public static boolean addEvent(tripDetails newEvent){
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 tripDetails td = new tripDetails();
-		 td.setEventID(eventId);
-		 td.setTripID(Integer.parseInt(tripId));
+//		 tripDetails td = new tripDetails();
+//		 td.setEventID(eventId);
+//		 td.setTripID(Integer.parseInt(tripId));
 //		 String sqlquer = "INSERT INTO tripDetails(tripID, eventID) VALUES("+tripId + " , '"+ eventId +"')";
 //		 Query query = hibernateSession.createQuery(sqlquer);
 //		 query.executeUpdate();
-		 hibernateSession.save(td); 
+		 hibernateSession.save(newEvent); 
 		 hibernateSession.getTransaction().commit();
 		 hibernateSession.close();  
 		
 		return false;
+	}
+	public static boolean deleteEvent(tripDetails eventToDelete){
+		if (factory == null)
+			setupFactory();
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 String sqlquer = "DELETE * FROM tripDetails WHERE tripID ="+eventToDelete.getTripID()+" AND eventID = " + eventToDelete.getEventID() ;
+		 Query query = hibernateSession.createQuery(sqlquer);
+		 query.executeUpdate();
+		 return true;
 	}
 
 	public static List<UserTrips> findUserTrips(int userId){
@@ -112,14 +122,14 @@ public class DAO {
 			hibernateSession.close();  
 		return userTrips;
 	}
-	public static List<tripDetails> getTripEvents(String tripID){
+	public static List<tripDetails> getTripEvents(int tripID){
 		if (factory == null)
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
-		 String sqlquer = "FROM tripDetails WHERE tripID='%s";
+		 String sqlquer = "FROM tripDetails WHERE tripID=%s";
 		 sqlquer = String.format(sqlquer,tripID);
-		 List<tripDetails> details= (List<tripDetails>)hibernateSession.createQuery(sqlquer, tripDetails.class).getResultList();
+		 List<tripDetails> details= hibernateSession.createQuery(sqlquer, tripDetails.class).getResultList();
 			hibernateSession.getTransaction().commit();
 			hibernateSession.close();  
 		

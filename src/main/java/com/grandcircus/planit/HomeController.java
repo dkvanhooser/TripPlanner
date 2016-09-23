@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.hibernate.Session;
+import org.hibernate.event.spi.DeleteEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -193,20 +194,28 @@ public class HomeController {
 			return new ModelAndView("home");
 		}
 		@RequestMapping(value = "/createTrip", method = RequestMethod.GET)
-		public ModelAndView createsTrip(Map<String, Object> model,@ModelAttribute("UserTrip") UserTrips trip){
-			DAO.addUserTrips(trip);
+		public ModelAndView createsTrip(Map<String, Object> model,@RequestParam("tripName") String tripName,@CookieValue("userid") Cookie userid){
+			UserTrips ut = new UserTrips();
+			ut.setTripName(tripName);
+			ut.setUserID(Integer.parseInt(userid.getValue()));
+			DAO.addUserTrips(ut);
 			return new ModelAndView("home");
 		}
 		
 		@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-		public ModelAndView addEenrrtwgnfjsig(Map<String, Object> model,@RequestParam("trip") String trip,@RequestParam("eventId") String eventId){
-			DAO.addEvent(trip, eventId);
-			return new ModelAndView("search");
+		public ModelAndView addEenrrtwgnfjsig(Map<String, Object> model,@ModelAttribute("addedEvent") tripDetails addedEvent){
+			DAO.addEvent(addedEvent);
+			return new ModelAndView("Search");
 		}
 		@RequestMapping(value = "/addEvent", method = RequestMethod.GET)
-		public ModelAndView addEenrrtwfdsfdsfgnfjsig(Map<String, Object> model,@RequestParam("trip") String trip,@RequestParam("eventId") String eventId){
-			DAO.addEvent(trip, eventId);
-			return new ModelAndView("search");
+		public ModelAndView addEenrrtwfdsfdsfgnfjsig(Map<String, Object> model){
+			return new ModelAndView("Search");
+		}
+		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
+		public ModelAndView viewAndModifyTrip(Map<String, Object> model,@RequestParam("tripID") int tripToViewID){
+			TicketmasterKey key = new TicketmasterKey();
+			model.put("events",FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(tripToViewID)));
+			return new ModelAndView("savedtrips","listevents",model);
 		}
 		
 		

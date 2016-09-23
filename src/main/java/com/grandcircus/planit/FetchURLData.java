@@ -5,11 +5,12 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.stream.Stream;
-
+import java.util.List;
 import org.json.JSONException;
 
 import com.grandcircus.planit.resources.GoogleKey;
 import com.grandcircus.planit.resources.TicketmasterKey;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -53,13 +54,13 @@ public class FetchURLData {
 		return searchedEvents;
 	}
 
-	public static ArrayList<SearchEvent> fetchSavedEvents(TicketmasterKey key, String[] eventIds) {
+	public static List<SearchEvent> fetchSavedEvents(TicketmasterKey key, List<tripDetails> event) {
 		ArrayList<SearchEvent> searchedEvents = new ArrayList<SearchEvent>();
 
-		for (String s : eventIds) {
+		for (tripDetails s : event) {
 			try {
-
-				URL url = new URL("https://app.ticketmaster.com/discovery/v2/events/" + s + ".json?" + key.getAPI());
+				System.out.println(s.getEventID());
+				URL url = new URL("https://app.ticketmaster.com/discovery/v2/events/" + s.getEventID() + ".json?" + key.getAPI());
 				BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 				String strTemp = "";
 				while (null != (strTemp = br.readLine())) {

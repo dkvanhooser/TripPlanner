@@ -33,6 +33,7 @@
 			<td><c:out value ="${trip.tripName}" />	</td>
 			<td><c:out value ="${trip.tripID}" /></td>
 			<td><input type ="hidden" name ="tripID" value = "${trip.tripID}"></td>
+			<td><input type ="hidden" name ="tripID" value = "${trip.tripName}"></td>
 			<td><button type="submit">Modify this Trip</button></td>
 		</tr>
 		</form>

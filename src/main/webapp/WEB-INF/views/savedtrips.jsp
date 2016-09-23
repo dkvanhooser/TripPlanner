@@ -9,24 +9,24 @@
 <title>Saved trips</title>
 </head>
 <body>
-
-saved trips page
-
-  <table>
-		<c:forEach var="savedtrip" items="${trip.tripList}">
-		<form action = "<c:url value="addEvent" />">
+					
+<table>
+		<c:forEach var="event" items="${listevents.events}">
+		
 		<tr>
-			<td><c:out value ="${trip.tripID}" /></td>
-			<td><c:out value ="${trip.tripName}" />	</td>
-			<td><c:out value ="${trip.info}" /></td>
-			<input type ="hidden" name ="eventId" value = "${trip.id}">
+			<td><c:out value ="${event.name}" /></td>
+			<td><c:out value ="${event.url}" />	</td>
+			<td><c:out value ="${event.dateTime}" />	</td>
+			<td><c:out value ="${event.info}" /></td>
+			<input type ="hidden" name ="eventId" value = "${event.id}"></input>
 			</td>
-			<td><button type="submit">Save this Trip</button></td>
 		</tr>
 		</form>
 		</c:forEach>
 
 </table>
-</form>
+
+
+
 </body>
 </html>
