@@ -92,13 +92,16 @@ public class HomeController {
 	
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo,@CookieValue("userid") Cookie userid){
+	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo,@CookieValue(value="userid", required=false) Cookie userid){
 		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
 		GoogleKey gkey = new GoogleKey();	
 		model.put("gKey", gkey.getApi());
 		model.put("latAndLng",FetchURLData.fetchLngAndLat(gkey, city));
 		model.put("eventList", FetchURLData.fetchAllEvents(key));
-		model.put("trips", DAO.findUserTrips(Integer.parseInt(userid.getValue())));
+		if(userid instanceof Cookie){
+			model.put("trips", DAO.findUserTrips(Integer.parseInt(userid.getValue())));
+		}
+		
 		
 		return new ModelAndView("Search","events",model);
 	}
@@ -121,27 +124,19 @@ public class HomeController {
 
 	@RequestMapping(value = "/adduser", method=RequestMethod.POST)    
     public ModelAndView checkPersonInfo(HttpSession session, Model model, @ModelAttribute("addUser") User addUser,HttpServletResponse response) {
-    		
-    //validate user info?
-
-        logger.info("form submitted");
-        logger.info("Username: " + addUser.getUsername());
-        logger.info("Email: " + addUser.getEmail());
-        logger.info("Password: " + addUser.getPassword());
         
         if(!DAO.isUsernameTaken(addUser)){
         	DAO.addUser(addUser);
+        	Cookie username = new Cookie ("username", addUser.getUsername());
+    		Cookie userID = new Cookie("userid", ("" + addUser.getID()));
+    		response.addCookie(username);
+    		response.addCookie(userID);
+    		model.addAttribute("userid", addUser.getID());
+    		model.addAttribute("username", addUser.getUsername());
         }else{//please try again re-route to create account
         
         	return new ModelAndView ("loginfailed");
         }
-        
-        Cookie username = new Cookie ("username", addUser.getUsername());
-		Cookie userID = new Cookie("userid", ("" + addUser.getID()));
-		response.addCookie(username);
-		response.addCookie(userID);
-		model.addAttribute("userid", addUser.getID());
-		model.addAttribute("username", addUser.getUsername());
         //return a success page
         return new ModelAndView ("userProfile");
     }
@@ -163,16 +158,6 @@ public class HomeController {
 		   return new ModelAndView("userProfile","Profile",model);  
 
 	   }
-
-
-
-		/*@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-		public ModelAndView filterSearch1(Map<String, Object> model,@RequestParam("trip") String tripId,@RequestParam("eventId") String eventId){
-			DAO.addEvent(tripId, eventId);
-			
-			return new ModelAndView("Search");
-		} */
-
 		
 	 //here's a handler for the logout request
 		@RequestMapping("/logout")

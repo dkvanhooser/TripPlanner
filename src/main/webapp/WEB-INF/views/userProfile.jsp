@@ -35,7 +35,10 @@
 
 </table>
 <h3>Here are your current trips!</h3>
-
+<form action="home" method="GET">
+    <input type="submit" value="Return to home page!" 
+         name="Submit"/>         
+</form>
  <form:form action="savedtrips" commandName="savedtrips" method="GET">
  <td><button type="submit">View/Modify Trip</button></td>
   </div>
