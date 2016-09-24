@@ -1,19 +1,13 @@
 package com.grandcircus.planit;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.hibernate.Session;
-import org.hibernate.event.spi.DeleteEvent;
-import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -64,9 +58,6 @@ public class HomeController {
 			Model model,
 			@ModelAttribute("loginForm") User user, 
 			HttpServletResponse response) {
-		//BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-	    //String encryptedpassword = passwordEncryptor.encryptPassword(user.getPassword());
-	    //user.setPassword(encryptedpassword);
 	    
 		User checkedUser = DAO.userAndPassValidator(user);
 		if(checkedUser != null){
@@ -84,18 +75,6 @@ public class HomeController {
 		}
 }
 
-//	@RequestMapping(value = "/checklogin", method = RequestMethod.POST)
-//	public String checklog() {
-//		
-//		return "checklogin";
-//	}
-//	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
-//	public String failedlogin() {
-//		
-//		return "loginfailed";
-//	}
-	
-
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo,@CookieValue(value="userid", required=false) Cookie userid){
 		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
@@ -110,15 +89,7 @@ public class HomeController {
 		
 		return new ModelAndView("Search","events",model);
 	}
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ModelAndView filterSearch(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo){
-		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
-		GoogleKey gkey = new GoogleKey();		
-		model.put("latAndLng",FetchURLData.fetchLngAndLat(gkey, city));
-		model.put("eventList", FetchURLData.fetchAllEvents(key));
 
-		return new ModelAndView("Search","events",model);
-	}
 	@RequestMapping(value = "/createaccount", method = RequestMethod.GET)
 	public String createAccount(Map<String, Object> model) {
 		User user = new User();
@@ -201,18 +172,15 @@ public class HomeController {
 		}
 		
 		@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-		public ModelAndView addEenrrtwgnfjsig(Map<String, Object> model,@ModelAttribute("addedEvent") tripDetails addedEvent){
-
-			return new ModelAndView("home");
-		}
-		@RequestMapping(value = "/addEvent", method = RequestMethod.GET)
-		public ModelAndView addEenrrtwfdsfdsfgnfjsig(Map<String, Object> model,@RequestParam("eventID") String event,@RequestParam("trip") int tripID){
-			tripDetails addedEvent = new tripDetails();
-			addedEvent.setTripID(tripID);
-			addedEvent.setEventID(event);
+		public String filterSearch(HttpServletRequest request, HttpServletResponse response){
+			 tripDetails addedEvent = new tripDetails();
+			addedEvent.setEventID(request.getParameter("eventID"));
+			addedEvent.setTripID(Integer.parseInt(request.getParameter("tripID")));
 			DAO.addEvent(addedEvent);
-			return new ModelAndView("home");
+			
+			return "Search";
 		}
+
 		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
 		public ModelAndView viewAndModifyTrip(Map<String, Object> model,@RequestParam("tripID") int tripToViewID){
 			TicketmasterKey key = new TicketmasterKey();
@@ -222,7 +190,7 @@ public class HomeController {
 			return new ModelAndView("savedtrips","listevents",model);
 		}
 		
-		
+
 		
 }
 //is the username a valid username (validation)

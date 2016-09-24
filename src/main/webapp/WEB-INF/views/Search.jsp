@@ -18,6 +18,22 @@
         width:50%;
       }
     </style>
+    <script type="text/javascript"
+    src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+	function SubForm(eventid) {
+			console.log(eventid);
+			event.preventDefault();
+			$.ajax({
+				type: "POST",
+		        url: "search",
+		        data : $(('#addEventForm'+eventid)).serialize(),
+		        success : alert("ADDED TRIP BABYYYY")
+			});
+		};
+		
+	
+</script>
     <script>
 
       var map;
@@ -64,6 +80,9 @@
 	<title>PlanIT</title>
 </head>
 <body = background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<div id= "result">
+
+</div>
 <table border="0" width="100%">
 <tr>
 <td><h1 align = "center">
@@ -96,22 +115,25 @@
 </table>
 <table>
 		<c:forEach var="event" items="${events.eventList}">
-		<form action = "<c:url value="addEvent" />" method = "get">
+		
 		<tr>
 			<td><c:out value ="${event.name}" /></td>
 			<td><a href="<c:out value ="${event.url}" />">Click Here to View it on Ticketmaster!</a></td>
 			<td><c:out value ="${event.dateTime}" />	</td>
 			<td><c:out value ="${event.info}" /></td>
-			<td><select name="trip">
+			<td><c:out value ="${event.id}" /></td>
+			
+			<td><form id="addEventForm<c:out value ="${event.id}" />"><select name="tripID">
 			<c:forEach var="trip" items="${events.trips}">
-			<option value="${trip.tripID}">${trip.tripName}</option>
+			<option value="${trip.tripID}">${trip.tripName} ${trip.tripID}</option>
 			</c:forEach>
 			</select>
-			<input type ="hidden" name ="eventID" value = "${event.id}">
-			</td>
-			<td><button type="submit">Add to Trip</button></td>
+			<input type ="hidden" name ="eventID" value = "${event.id}"/>
+			
+			<button onclick = '<c:out value ="SubForm('${event.id}');" />' >Add to Trip</button>
+			</form></td>
 		</tr>
-		</form>
+		
 		</c:forEach>
 
 </table>
