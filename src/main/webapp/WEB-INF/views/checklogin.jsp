@@ -11,6 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Checking User Info...</title>
 </head>
+
 <body  background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 Welcome back ${username }
 <c:if test="${username != null }">

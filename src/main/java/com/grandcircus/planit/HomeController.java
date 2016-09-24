@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 import org.hibernate.Session;
 import org.hibernate.event.spi.DeleteEvent;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -63,6 +64,10 @@ public class HomeController {
 			Model model,
 			@ModelAttribute("loginForm") User user, 
 			HttpServletResponse response) {
+		//BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+	    //String encryptedpassword = passwordEncryptor.encryptPassword(user.getPassword());
+	    //user.setPassword(encryptedpassword);
+	    
 		User checkedUser = DAO.userAndPassValidator(user);
 		if(checkedUser != null){
 			//set the model's session
@@ -178,6 +183,7 @@ public class HomeController {
 		
 		@RequestMapping(value = "/createTrip", method = RequestMethod.POST)
 		public ModelAndView createTrip(Map<String, Object> model, @RequestParam("tripName") String tripName, @CookieValue("userid") Cookie userid){
+
 			UserTrips ut = new UserTrips();
 			ut.setTripName(tripName);
 			ut.setUserID(Integer.parseInt(userid.getValue()));

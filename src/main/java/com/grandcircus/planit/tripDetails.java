@@ -3,6 +3,7 @@ package com.grandcircus.planit;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class tripDetails {
+
 private int tripID;
 String eventID;
 public int getTripID() {
@@ -17,4 +18,5 @@ public String getEventID() {
 public void setEventID(String eventID) {
 	this.eventID = eventID;
 }
+
 }

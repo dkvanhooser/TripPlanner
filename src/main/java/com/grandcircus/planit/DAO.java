@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 
 import com.grandcircus.planit.User;
 import com.grandcircus.planit.UserTrips;
@@ -72,6 +73,8 @@ public class DAO {
 	public static String addUser(User u) {
 		if (factory == null)
 			setupFactory();
+		BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+		u.setPassword(passwordEncryptor.encryptPassword(u.getPassword()));
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
 		 hibernateSession.save(u);  
