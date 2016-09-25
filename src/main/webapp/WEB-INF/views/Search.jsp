@@ -26,7 +26,7 @@
 			event.preventDefault();
 			$.ajax({
 				type: "POST",
-		        url: "search",
+		        url: "addEvent",
 		        data : $(('#addEventForm'+eventid)).serialize(),
 		        success : alert("ADDED TRIP BABYYYY")
 			});
