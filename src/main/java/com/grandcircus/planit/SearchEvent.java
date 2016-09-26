@@ -1,5 +1,7 @@
 package com.grandcircus.planit;
 
+//this class creates variables to store events which are used in fetchURLData when making JSON Objects
+//getters+setters are made to be called in other classes
 public class SearchEvent {
 	private String name;
 	private String id;
