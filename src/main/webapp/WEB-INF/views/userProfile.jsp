@@ -20,10 +20,8 @@
   <br/>
  </form>
 </td><td>
-
 <c:if test="${cookie.username.value != null}">
 	logged in as: ${cookie.username.value} </br>
-	<a href="<c:url value="userProfile" />" align ="right" >Profile</a></br>
 	<a href="<c:url value="logout" />" align ="right" >Logout</a>
 </c:if>
 <c:if test="${cookie.username.value == null}">
@@ -32,7 +30,6 @@
 </td></tr>
 </form>
 </c:if>		
-
 </table>
 <h3>Here are your current trips!</h3>
 <form action="home" method="GET">
@@ -41,17 +38,16 @@
 </form>
   <table>
 		<c:forEach var="trip" items="${Profile.savedtrips}">
-		<form action = "<c:url value="modifyTrip" />" method= "GET">
+		<form:form commandName="tripsearch" method= "POST">
 		<tr>
-			<td><c:out value ="${trip.tripName}" />	</td>
+			<td><c:out value ="${trip.tripName}"/></td>
 			<td><c:out value ="${trip.tripID}" /></td>
-			<td><input type ="hidden" name ="tripID" value = "${trip.tripID}"></td>
-			<td><input type ="hidden" name ="tripID" value = "${trip.tripName}"></td>
-			<td><button type="submit">Modify this Trip</button></td>
+			<td><form:input type ="hidden" path="tripID" value ="${trip.tripID}"/></td>
+			<td><form:input type ="hidden" path="tripName" value ="${trip.tripName}"/></td>
+			<td><input type="submit" value="View/Modify Trip"/></td>
 		</tr>
-		</form>
+		</form:form>
 		</c:forEach>
-
 </table>
 </body>
 </html>
