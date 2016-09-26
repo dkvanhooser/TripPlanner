@@ -169,6 +169,7 @@ function PlacesSubForm(eventid) {
 
 
     <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${events.gKey}"/>&libraries=places&callback=initMap" async defer></script>
 
 </body>
 </html>

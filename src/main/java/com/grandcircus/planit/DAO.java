@@ -150,4 +150,14 @@ public class DAO {
 				    
 		 return null;  
 	}
-} 
+} 	
+	
+	public static ArrayList<String> getPlacesList(ArrayList<tripDetails> events){
+		ArrayList<String> listOfPlaces = new ArrayList<String>();
+		for(tripDetails e: events){
+		if (e.getTypeOfEvent().equals("place")) {
+			listOfPlaces.add(e.getEventID());
+			}
+		}
+		return listOfPlaces;
+	}

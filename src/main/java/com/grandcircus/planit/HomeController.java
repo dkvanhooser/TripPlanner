@@ -186,6 +186,7 @@ public class HomeController {
 		public ModelAndView viewAndModifyTrip(Map<String, Object> model,@RequestParam("tripID") int tripToViewID){
 			TicketmasterKey key = new TicketmasterKey();
 			GoogleKey gkey = new GoogleKey();	
+			//need to pass in google places arraylist of Strings still. 
 			model.put("gKey", gkey.getApi());
 			model.put("events", FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(tripToViewID)));
 			
