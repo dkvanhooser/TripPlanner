@@ -176,6 +176,7 @@ public class HomeController {
 			 tripDetails addedEvent = new tripDetails();
 			addedEvent.setEventID(request.getParameter("eventID"));
 			addedEvent.setTripID(Integer.parseInt(request.getParameter("tripID")));
+			addedEvent.setTypeOfEvent(request.getParameter("typeOfEvent"));
 			DAO.addEvent(addedEvent);
 			
 			return "Search";
@@ -184,9 +185,10 @@ public class HomeController {
 		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
 		public ModelAndView viewAndModifyTrip(Map<String, Object> model,@RequestParam("tripID") int tripToViewID){
 			TicketmasterKey key = new TicketmasterKey();
-
-			model.put("events",FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(tripToViewID)));
-
+			GoogleKey gkey = new GoogleKey();	
+			model.put("gKey", gkey.getApi());
+			model.put("events", FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(tripToViewID)));
+			
 			return new ModelAndView("savedtrips","listevents",model);
 		}
 		

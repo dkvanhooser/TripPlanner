@@ -39,13 +39,9 @@
     <input type="submit" value="Return to home page!" 
          name="Submit"/>         
 </form>
- <form:form action="savedtrips" commandName="savedtrips" method="GET">
- <td><button type="submit">View/Modify Trip</button></td>
-  </div>
-  </form:form>
   <table>
 		<c:forEach var="trip" items="${Profile.savedtrips}">
-		<form action = "<c:url value="modifyTrip" />">
+		<form action = "<c:url value="modifyTrip" />" method= "GET">
 		<tr>
 			<td><c:out value ="${trip.tripName}" />	</td>
 			<td><c:out value ="${trip.tripID}" /></td>

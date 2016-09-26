@@ -6,6 +6,8 @@ public class tripDetails {
 
 private int tripID;
 String eventID;
+
+String typeOfEvent;
 public int getTripID() {
 	return tripID;
 }
@@ -18,5 +20,13 @@ public String getEventID() {
 public void setEventID(String eventID) {
 	this.eventID = eventID;
 }
+
+public String getTypeOfEvent() {
+	return typeOfEvent;
+}
+public void setTypeOfEvent(String typeOfTrip) {
+	this.typeOfEvent = typeOfTrip;
+}
+
 
 }

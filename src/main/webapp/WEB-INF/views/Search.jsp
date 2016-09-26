@@ -21,19 +21,38 @@
     <script type="text/javascript"
     src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script type="text/javascript">
-	function SubForm(eventid) {
-			console.log(eventid);
-			event.preventDefault();
-			$.ajax({
-				type: "POST",
-		        url: "addEvent",
-		        data : $(('#addEventForm'+eventid)).serialize(),
-		        success : alert("ADDED TRIP BABYYYY")
-			});
-		};
-		
-	
+var tripid;
+function setTrip(){
+	tripid = $('select[name=tripID]').val();
+}
+function SubForm(eventid) {
+	event.preventDefault();
+	$.ajax({
+		type: "POST",
+        url: "addEvent",
+        data : {
+        	eventID: eventid,
+    		tripID: tripid,
+    		typeOfEvent: "event"
+        },
+        success : alert("ADDED TRIP BABYYYY")
+	});
+};
+function PlacesSubForm(eventid) {
+	event.preventDefault();
+	$.ajax({
+		type: "POST",
+        url: "addEvent",
+        data : {eventID: eventid,
+        		tripID: tripid,
+        		typeOfEvent: "place"
+        },
+        success : alert("ADDED TRIP BABYYYY")
+	});
+};
 </script>
+
+
     <script>
 
       var map;
@@ -69,13 +88,19 @@
           map: map,
           position: place.geometry.location
         });
-
+		
+        var infoContent = place.name
+		+"<button onclick = 'PlacesSubForm(\""
+		+place.id + "\")' >Add to Trip</button>";
+        
         google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
+          infowindow.setContent(infoContent);
           infowindow.open(map, this);
         });
       }
     </script>
+    
+    
 <meta charset="utf-8">
 	<title>PlanIT</title>
 </head>
@@ -113,7 +138,17 @@
 </form>
 </tr>
 </table>
+
+
+<select name="tripID" onchange = "setTrip();">
+<option>Please select a trip to add to</option>
+<c:forEach var="trip" items="${events.trips}">
+			<option id = "${trip.tripID}" value="${trip.tripID}">${trip.tripName} ${trip.tripID}</option>
+			</c:forEach>
+			</select>
+			
 <table>
+
 		<c:forEach var="event" items="${events.eventList}">
 		
 		<tr>
@@ -123,13 +158,7 @@
 			<td><c:out value ="${event.info}" /></td>
 			<td><c:out value ="${event.id}" /></td>
 			
-			<td><form id="addEventForm<c:out value ="${event.id}" />"><select name="tripID">
-			<c:forEach var="trip" items="${events.trips}">
-			<option value="${trip.tripID}">${trip.tripName} ${trip.tripID}</option>
-			</c:forEach>
-			</select>
-			<input type ="hidden" name ="eventID" value = "${event.id}"/>
-			
+			<td><form id="addEventForm<c:out value ="${event.id}" />">
 			<button onclick = '<c:out value ="SubForm('${event.id}');" />' >Add to Trip</button>
 			</form></td>
 		</tr>
@@ -140,7 +169,6 @@
 
 
     <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${events.gKey}"/>&libraries=places&callback=initMap" async defer></script>
 
 </body>
 </html>
