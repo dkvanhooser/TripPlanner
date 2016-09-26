@@ -1,5 +1,6 @@
 package com.grandcircus.planit;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -140,8 +141,14 @@ public class HomeController {
 			   @CookieValue("username") Cookie username,
 			   @CookieValue("userid") Cookie userid, 
 			   @ModelAttribute("tripsearch") UserTrips trips){
+		   TicketmasterKey key = new TicketmasterKey();
+			GoogleKey gkey = new GoogleKey();
+			//need to pass in google places arraylist of Strings still.
+			model.put("gKey", gkey.getApi());
+			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
+			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
 	 //need userID from session
-		   model.put("tripsearch", new UserTrips());
+
 		   model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
 		   
 		   return new ModelAndView("savedtrips","listevents",model);
@@ -195,54 +202,15 @@ public class HomeController {
 		}
 
 		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
-		public ModelAndView viewAndModifyTrip(Map<String, Object> model, @ModelAttribute("tripsearch") UserTrips trips){
+		public ModelAndView viewAndModifyTrip(Map<String, Object> model, @ModelAttribute("tripsearch") UserTrips trips,@CookieValue("userid") Cookie userid){
 			TicketmasterKey key = new TicketmasterKey();
-			GoogleKey gkey = new GoogleKey();	
-			//need to pass in google places arraylist of Strings still. 
+			GoogleKey gkey = new GoogleKey();
+			//need to pass in google places arraylist of Strings still.
 			model.put("gKey", gkey.getApi());
-			model.put("events", FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(trips.getTripID())));
-			
+			model.put("savedTripUserID", trips.getUserID());
+			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
+			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
 			return new ModelAndView("savedtrips","listevents",model);
 		}
 		
-
-		
 }
-//is the username a valid username (validation)
-//does the username exist in the database call the DAO
-//create new username in database
-
-//   @RequestMapping(value = "/adduser", method=RequestMethod.POST)
-//public ModelAndView checkPersonInfo(@Valid @ModelAttribute("addUser") User addUser, BindingResult bindingResult) {
-
-//if (bindingResult.hasErrors()) {
-//		logger.info("Erroneous form submitted");
-//		logger.info(bindingResult.toString());
-//		ModelAndView result = new ModelAndView("createaccount");
-//		result.addObject("addUser", addUser);
-//		FieldError usernameError = bindingResult.getFieldError("username"); 
-//		String usernameErrString = "";
-//		if (usernameError != null) {
-//			usernameErrString = usernameError.getDefaultMessage();
-//		}
-//			
-//		String passwordErrString = "";
-//		FieldError passwordError = bindingResult.getFieldError("password");
-//		if (passwordError != null) {
-//			passwordErrString = passwordError.getDefaultMessage();
-//		}
-//		String emailErrString = "";
-//		FieldError emailError = bindingResult.getFieldError("email");
-//		if (emailError != null) {
-//			emailErrString = emailError.getDefaultMessage();
-//		}
-//    result.addObject("usernameError", usernameErrString);
-//    result.addObject("passwordError", passwordErrString);
-//    result.addObject("emailError", emailErrString);
-//        
-//		return result;
-//}
-//
-//logger.info("correct form submitted");
-//return new ModelAndView ("result");
-//}
