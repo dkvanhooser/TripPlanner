@@ -20,16 +20,18 @@ import com.grandcircus.planit.UserTrips;
 
 public class DAO {
 	private static SessionFactory factory;
-
+	
+	//connection to mysql program
 	private static void setupFactory() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (Exception e) {
 
 		}
-
+		
+		//connecting to databases made in mysql 
 		Configuration configuration = new Configuration();
-		// modify these to match your XML files
+		// matching POJO created to hibernate
 		configuration.configure("hibernate.cfg.xml");
 		configuration.addResource("usertrip.hbm.xml");
 		configuration.addResource("tripdetails.hbm.xml");
@@ -38,11 +40,14 @@ public class DAO {
 				.applySettings(configuration.getProperties()).build();
 		factory = configuration.buildSessionFactory(serviceRegistry);
 	}
-
-	public static User userAndPassValidator(User user) {
+	
+	//hibernate session for user login 
+	public static User userAndPassValidator(User user){
 		if (factory == null)
 			setupFactory();
+		//get current session 
 		Session hibernateSession = factory.openSession();
+		//Transaction begins
 		hibernateSession.getTransaction().begin();
 		try {
 			String query = "FROM User WHERE username='" + user.getUsername() + "'";
@@ -70,6 +75,7 @@ public class DAO {
 	public static boolean isUsernameTaken(User user) {
 		if (factory == null)
 			setupFactory();
+		//get current session
 		Session hibernateSession = factory.openSession();
 		hibernateSession.getTransaction().begin();
 		try {
@@ -78,6 +84,7 @@ public class DAO {
 			User singleUser = (User) hibernateSession.createQuery(query).getSingleResult();
 			System.out.println("Found: " + singleUser.getUsername());
 		} catch (Exception e) {
+
 			System.out.println("Exception: " + e);
 			hibernateSession.close();
 			return false;
@@ -86,6 +93,7 @@ public class DAO {
 		// no exception = there was a single result
 		return true;
 	}
+	//adding user to database and encrypting their password
 
 	public static String addUser(User u) {
 		if (factory == null)
@@ -101,26 +109,20 @@ public class DAO {
 		return null;
 	}
 
-	public static boolean addEvent(tripDetails newEvent) {
+	//adding an event into trip details table
+	public static boolean addEvent(tripDetails newEvent){
 		if (factory == null)
 			setupFactory();
-		Session hibernateSession = factory.openSession();
-		hibernateSession.getTransaction().begin();
-		// tripDetails td = new tripDetails();
-		// td.setEventID(eventId);
-		// td.setTripID(Integer.parseInt(tripId));
-		// String sqlquer = "INSERT INTO tripDetails(tripID, eventID)
-		// VALUES("+tripId + " , '"+ eventId +"')";
-		// Query query = hibernateSession.createQuery(sqlquer);
-		// query.executeUpdate();
-		hibernateSession.save(newEvent);
-		hibernateSession.getTransaction().commit();
-		hibernateSession.close();
-
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 hibernateSession.save(newEvent); 
+		 hibernateSession.getTransaction().commit();
+		 hibernateSession.close();  
+		
 		return false;
 	}
-
-	public static boolean deleteEvent(tripDetails eventToDelete) {
+	//deleting an event out of users tripdetails table
+	public static boolean deleteEvent(tripDetails eventToDelete){
 		if (factory == null)
 			setupFactory();
 		Session hibernateSession = factory.openSession();
@@ -132,23 +134,26 @@ public class DAO {
 		return true;
 	}
 
-	public static List<UserTrips> findUserTrips(int userId) {
+	
+	// session to list all user's saved trips in database
+	public static List<UserTrips> findUserTrips(int userId){
 		if (factory == null)
 			setupFactory();
-
-		Session hibernateSession = factory.openSession();
-		hibernateSession.getTransaction().begin();
-		String sqlquer = "FROM " + UserTrips.class.getName() + " WHERE userID=%s";
-		System.out.println(userId);
-		sqlquer = String.format(sqlquer, userId);
-		List<UserTrips> userTrips = (List<UserTrips>) hibernateSession.createQuery(sqlquer, UserTrips.class)
-				.getResultList();
-		hibernateSession.getTransaction().commit();
-		hibernateSession.close();
+		
+		 Session hibernateSession = factory.openSession();
+		 hibernateSession.getTransaction().begin();
+		 String sqlquer = "FROM "+UserTrips.class.getName() +" WHERE userID=%s";
+		 System.out.println(userId);
+		 sqlquer = String.format(sqlquer,userId);
+		 List<UserTrips> userTrips= (List<UserTrips>)hibernateSession.createQuery(sqlquer, UserTrips.class).getResultList();
+			hibernateSession.getTransaction().commit();
+			hibernateSession.close();  
+		//gets list of all trips for specific user 
 		return userTrips;
 	}
+	//getting trip details (different events) from user saved trips table 
+	public static ArrayList<tripDetails> getTripEvents(int tripID){
 
-	public static ArrayList<tripDetails> getTripEvents(int tripID) {
 		if (factory == null)
 			setupFactory();
 		Session hibernateSession = factory.openSession();
@@ -162,7 +167,8 @@ public class DAO {
 
 		return details;
 	}
-
+	
+	//saving a user trip 
 	public static String addUserTrips(UserTrips t) {
 		if (factory == null)
 			setupFactory();
@@ -175,13 +181,16 @@ public class DAO {
 		return null;
 	}
 
-	public static ArrayList<String> getPlacesList(ArrayList<tripDetails> events) {
+	//checking for associated google places from tripDetails list 
+	public static ArrayList<String> getPlacesList(ArrayList<tripDetails> events){
 		ArrayList<String> listOfPlaces = new ArrayList<String>();
-		for (tripDetails e : events) {
-			if (e.getTypeOfEvent().equals("place")) {
-				listOfPlaces.add(e.getEventID());
+		for(tripDetails e: events){
+		//adding to array list of google places
+		if (e.getTypeOfEvent().equals("place")) {
+			listOfPlaces.add(e.getEventID());
 			}
 		}
+		//returns an array of google places
 		return listOfPlaces;
 	}
 }

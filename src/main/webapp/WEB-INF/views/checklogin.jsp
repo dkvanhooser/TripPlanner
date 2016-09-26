@@ -17,24 +17,8 @@ Welcome back ${username }
 <c:if test="${username != null }">
 	<a href="home">Click here to go home!</a>
 </c:if>
-<%--
-	String loginStatus = (String)session.getAttribute("loggedin");
-	//if (loginStatus == null)
-	if (loginStatus.equals("true"))
-		out.println("You are logged in");
-	else
-		out.println("You are not really logged in.");
---%>
-
 <jsp:useBean id="user" class="com.grandcircus.planit.User">  
 </jsp:useBean>
 <jsp:setProperty property="*" name="user"/>
-<%  
-//DAO.userAndPassValidator(user);
-//if (i)  
-//	out.print("Product successfully added");  
-//else
-//	out.println("Error; product not added");
-%>
 </body>
 </html>

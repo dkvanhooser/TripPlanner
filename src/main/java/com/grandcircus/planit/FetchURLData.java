@@ -16,27 +16,30 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class FetchURLData {
-
+	
+	//retrieving events from TicketMaster + creating JSON objects
 	public static ArrayList<SearchEvent> fetchAllEvents(TicketmasterKey key) {
 		ArrayList<SearchEvent> searchedEvents = new ArrayList<SearchEvent>();
 		try {
-
+			//getting API key from java class
 			URL url = new URL(key.getAPI());
 			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			String strTemp = "";
 			while (null != (strTemp = br.readLine())) {
-
+				//creating new JSON object and retrieving from ticketmaster API
 				JSONObject tempJsonObject = new JSONObject(strTemp);
 				JSONObject embedded = tempJsonObject.getJSONObject("_embedded");
-
+				//filtering based on list of events
 				JSONArray jsonEventArray = embedded.getJSONArray("events");
 				for (int i = 0; i < jsonEventArray.length(); i++) {
+					//getting list of all events 
 					SearchEvent se = new SearchEvent();
 					JSONObject jsonEventObject = jsonEventArray.getJSONObject(i);
 					try {
+						
 						JSONObject temp = (JSONObject) jsonEventObject.get("dates");
 						temp = (JSONObject) temp.get("start");
-
+						//getting information about each event 
 						se.setId((String) jsonEventObject.get("id"));
 						se.setUrl((String) jsonEventObject.get("url"));
 						se.setName((String) jsonEventObject.get("name"));
@@ -52,13 +55,16 @@ public class FetchURLData {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		//giving list of all events
 		return searchedEvents;
 	}
-
+	
+	//retrieving saved events from ticketmaster 
 	public static ArrayList<SearchEvent> fetchSavedEvents(TicketmasterKey key, ArrayList<tripDetails> event) {
 		ArrayList<SearchEvent> searchedEvents = new ArrayList<SearchEvent>();
-
+		//searching tripDetails ArrayList
 		for (tripDetails s : event) {
+			//if events found retrieving trip details from TicketMaster
 			if (s.getTypeOfEvent().equals("event")) {
 				try {
 					URL url = new URL(
@@ -66,8 +72,9 @@ public class FetchURLData {
 					BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 					String strTemp = "";
 					while (null != (strTemp = br.readLine())) {
-
+						//creating JSONObject
 						JSONObject jsonEventObject = new JSONObject(strTemp);
+						//creating new SearchEvents variable
 						SearchEvent se = new SearchEvent();
 
 						try {
@@ -91,11 +98,12 @@ public class FetchURLData {
 				}
 			}
 		}
-
+		//giving list of all events saved in a user trip 
 		return searchedEvents;
 	}
 
 	public static String fetchLngAndLat(GoogleKey key, String city) {
+		//instantiating location variables
 		double lat = 0;
 		double lng = 0;
 		try {
@@ -110,18 +118,23 @@ public class FetchURLData {
 				sb.append(strTemp);
 				strTemp = br.readLine();
 			}
+			//creating new JSONObject
 			JSONObject tempJsonObject = new JSONObject(sb.toString());
+			//creating array filtering by results in google search
 			JSONArray jsonGoogleArray = tempJsonObject.getJSONArray("results");
-
+			
 			JSONObject jsonGoogleObject = jsonGoogleArray.getJSONObject(0);
+			//creating JSONObjects to filter by searched location
 			JSONObject temp1 = (JSONObject) jsonGoogleObject.get("geometry");
 			JSONObject latnlng = (JSONObject) temp1.get("location");
+			//creating variables for latitude + longitude
 			lat = (Double) latnlng.get("lat");
 			lng = (Double) latnlng.get("lng");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		//returning location of searched city 
 		return "lat: " + lat + ", lng: " + lng;
 
 	}

@@ -9,9 +9,6 @@
 <body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 Logout Successful 
 
-<form action="home" method="GET">
-    <input type="submit" value="Return to the home page!" 
-         name="Submit"/>         
-</form>
+<a href="home">Go Home</a>
 </body>
 </html>
