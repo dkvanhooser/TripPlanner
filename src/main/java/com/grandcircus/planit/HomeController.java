@@ -129,13 +129,14 @@ public class HomeController {
 	   public ModelAndView Trips(Map<String, Object> model,
 			   @CookieValue("username") Cookie username,
 			   @CookieValue("userid") Cookie userid){
-	 //need userID from session
+
 		   model.put("tripsearch", new UserTrips());
 		   model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
 		   
 		   return new ModelAndView("userProfile","Profile",model);  
 
 	   }
+	   
 	   @RequestMapping(value = "/userProfile", method = RequestMethod.POST)
 	   public ModelAndView Tripslist(Map<String, Object> model,
 			   @CookieValue("username") Cookie username,
@@ -151,9 +152,18 @@ public class HomeController {
 
 		   model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
 		   
-		   return new ModelAndView("savedtrips","listevents",model);
-
+		   if(trips.getUserID() != Integer.parseInt(userid.getValue()))
+			   return new ModelAndView("accessdenied","tripsearch",model);
+           
+           model.put("tripsearch", new UserTrips());
+           model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
+           
+           return new ModelAndView("savedtrips","listevents",model);
 	   }
+	   
+
+
+
 	 //here's a handler for the logout request
 		@RequestMapping("/logout")
 		public ModelAndView accessLogout(@CookieValue("username") Cookie username,@CookieValue("userid") Cookie userid, HttpServletResponse response){
@@ -202,6 +212,7 @@ public class HomeController {
 		}
 
 		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
+
 		public ModelAndView viewAndModifyTrip(Map<String, Object> model, @ModelAttribute("tripsearch") UserTrips trips,@CookieValue("userid") Cookie userid){
 			TicketmasterKey key = new TicketmasterKey();
 			GoogleKey gkey = new GoogleKey();
@@ -210,6 +221,17 @@ public class HomeController {
 			model.put("savedTripUserID", trips.getUserID());
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
 			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
+			//return new ModelAndView("savedtrips","listevents",model);
+			if(trips.getUserID() == Integer.parseInt(userid.getValue())){
+				model.put("sameUser",false);
+				
+			}else if(trips.getUserID() != Integer.parseInt(userid.getValue())){
+				model.put("sameUser", true);
+				return new ModelAndView("accessdenied","tripsearch",model);
+			}
+			
+			model.put("events", FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(trips.getTripID())));
+			
 			return new ModelAndView("savedtrips","listevents",model);
 		}
 		

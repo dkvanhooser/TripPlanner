@@ -63,7 +63,9 @@ public class DAO {
 			System.out.println("Found: " + singleUser.getUsername());
 		}catch(Exception e){
 			System.out.println("Exception: " + e);
+			hibernateSession.close();  
 			return false;
+			
 		}
 		
 		//no exception = there was a single result
@@ -150,7 +152,7 @@ public class DAO {
 				    
 		 return null;  
 	}
-} 	
+ 	
 	
 	public static ArrayList<String> getPlacesList(ArrayList<tripDetails> events){
 		ArrayList<String> listOfPlaces = new ArrayList<String>();
@@ -161,3 +163,4 @@ public class DAO {
 		}
 		return listOfPlaces;
 	}
+}

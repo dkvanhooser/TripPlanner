@@ -35,6 +35,7 @@ function SubForm(eventid) {
     		tripID: tripid,
     		typeOfEvent: "event"
         },
+
         success : alert("ADDED TRIP BABYYYY")
 	});
 };
