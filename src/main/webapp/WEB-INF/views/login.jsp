@@ -15,5 +15,6 @@
 <td>Password:<form:input path="password" type="password" size="30"/></td>
 <td><input type="submit" value="Login!"/></td>
 </form:form>
+<a href="createaccount" align ="right" >Or Register</a>
 </body>
 </html>

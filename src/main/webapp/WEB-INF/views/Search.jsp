@@ -116,13 +116,12 @@ function PlacesSubForm(eventid) {
 </h1></td>
 <c:if test="${cookie.username.value != null}">
 	<td>logged in as: ${cookie.username.value} </br>
-	<a href="<c:url value="userProfile" />" align ="right" >Profile</a></br>
-	<a href="<c:url value="logout" />" align ="right" >Logout</a></td>
+	<a href="userProfile" align ="right" >Profile</a></br>
+	<a href="logout" align ="right" >Logout</a></td>
 </c:if>
 <c:if test="${cookie.username.value == null}">
-<td><a href="<c:url value="login" />" align ="right" >Login</a><br/>
-<a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
-
+<td><a href="login" align ="right" >Login</a><br/>
+<a href="createaccount" align ="right" >Register</a></td>
 </form>
 </c:if>
 </tr>

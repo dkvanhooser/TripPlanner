@@ -21,14 +21,14 @@
 <a href="<c:url value="login" />" align ="right" >Login</a><br/>
 <a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
 </c:if>
-<c:if test="${listevents.sameUser == \"true\"}">
+<c:if test="${listevents.sameUser == true}">
 
 YEAHH BOYYYYEWEEEE
 </c:if>
 </td></tr>
 </form>	
 <tr><td>
-${listevents.sameUser}
+
 <table>
 		<c:forEach var="event" items="${listevents.events}">
 		

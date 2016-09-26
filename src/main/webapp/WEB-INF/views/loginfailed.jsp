@@ -10,13 +10,8 @@
 
 <h1>Invalid Username or Password. Please try again or return home.</h1>
 
-<form action="login" method="GET">
-    <input type="submit" value="Try Logging in again!" 
-         name="Submit"/>         
-</form>
-<form action="home" method="GET">
-    <input type="submit" value="Return to home page!" 
-         name="Submit"/>         
-</form>
+<a href="login" align ="right" >Login</a><br/>
+<a href="createaccount" align ="right" >Register</a></br>
+<a href="home" align ="right">Go Home</a>
 </body>
 </html>
