@@ -25,6 +25,14 @@
 </c:if>		
 <tr><td>
 <table>
+
+
+		<c:forEach var="place" items="${listevents.places}">
+		<tr><td><c:out value = " ${place} " />	</td>
+
+		</tr>
+		</c:forEach>
+		
 		<c:forEach var="event" items="${listevents.events}">
 		
 		<tr>

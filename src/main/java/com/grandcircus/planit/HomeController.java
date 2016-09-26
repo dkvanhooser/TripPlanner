@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -30,7 +28,6 @@ import com.grandcircus.planit.resources.TicketmasterKey;
 @Controller
 public class HomeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -76,6 +73,7 @@ public class HomeController {
 		}
 }
 
+	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo,@CookieValue(value="userid", required=false) Cookie userid){
 		TicketmasterKey key = new TicketmasterKey(city,dateFrom,dateTo);
@@ -148,11 +146,11 @@ public class HomeController {
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
 			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
 	 //need userID from session
-
+			model.put("places", DAO.getPlacesList(ls));
 		   model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
 		   
 		   return new ModelAndView("savedtrips","listevents",model);
-
+		   
 	   }
 	 //here's a handler for the logout request
 		@RequestMapping("/logout")
