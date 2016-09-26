@@ -14,12 +14,12 @@
 
 <c:if test="${cookie.username.value != null}">
 	logged in as: ${cookie.username.value} </br>
-	<a href="<c:url value="userProfile" />" align ="right" >Profile</a></br>
-	<a href="<c:url value="logout" />" align ="right" >Logout</a>
+	<a href="userProfile" align ="right" >Profile</a></br>
+	<a href="logout" align ="right" >Logout</a>
 </c:if>
 <c:if test="${cookie.username.value == null}">
-<a href="<c:url value="login" />" align ="right" >Login</a><br/>
-<a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
+<a href="login" align ="right" >Login</a><br/>
+<a href="createaccount" align ="right" >Register</a></td>
 </td></tr>
 </form>
 </c:if>		
@@ -39,10 +39,7 @@
 		</c:forEach>
 
 </table>
-<form action="userProfile" method="GET">
-    <input type="submit" value="Return to profile page!" 
-         name="Submit"/>         
-</form>
+<a href="home">Go Home</a>
 
 </table>
 </td></tr>

@@ -16,6 +16,7 @@
 
 <%-- </c:otherwise> --%>
 <%-- </c:if> --%>
+
 <form:form action="adduser" commandName="addUser" method="POST">
 <label class="fieldLabel">Username:
 	
@@ -38,6 +39,7 @@
     <input type="reset" name="reset" value="Clear Form" />
   </div>
   </form:form>
+<td><a href="login" align ="right" >Or Login here!</a><br/></td>
 </body>
 
 </html>

@@ -22,20 +22,17 @@
 </td><td>
 <c:if test="${cookie.username.value != null}">
 	logged in as: ${cookie.username.value} </br>
-	<a href="<c:url value="logout" />" align ="right" >Logout</a>
+	<a href="logout" align ="right" >Logout</a>
 </c:if>
 <c:if test="${cookie.username.value == null}">
-<a href="<c:url value="login" />" align ="right" >Login</a><br/>
-<a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
+<a href="login" align ="right" >Login</a><br/>
+<a href="createaccount" align ="right" >Register</a></td>
 </td></tr>
 </form>
 </c:if>		
 </table>
 <h3>Here are your current trips!</h3>
-<form action="home" method="GET">
-    <input type="submit" value="Return to home page!" 
-         name="Submit"/>         
-</form>
+<a href="home">Go Home</a>
   <table>
 		<c:forEach var="trip" items="${Profile.savedtrips}">
 		<form:form commandName="tripsearch" method= "POST">
