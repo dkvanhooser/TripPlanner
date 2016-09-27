@@ -95,10 +95,10 @@ function deleteEvent(eventid, tripid) {
         data : {eventID: eventid,
         		tripID: tripid
         },
-        success: function() {
-			location.reload(true);
-            alert("event removed");
-        }
+        success:
+        	function() {
+	        	  $( "div.success" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+			location.reload(true);}
        
 	});
 };</script>
@@ -108,6 +108,7 @@ function deleteEvent(eventid, tripid) {
 
 </head>
 <body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<div class="alert-box success">Event Deleted!</div>
 <h1 align = "center">Saved Trip</h1>
 <table><tr><td></td><td>
 
@@ -131,6 +132,7 @@ function deleteEvent(eventid, tripid) {
 		<c:forEach var="place" items="${listevents.places}">
 		<tr><td><c:out value = " ${place.name} " />	</td>
 		<td><c:out value = " ${place.address} " />	</td>
+		<td><button onclick = "deleteEvent( '${place.placeID}', '${savedtrip}')">Delete Event</button></td>
 		</tr>
 		</c:forEach>
 		
