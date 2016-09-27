@@ -11,6 +11,7 @@ import org.hibernate.NonUniqueResultException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.SharedSessionContract;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -29,8 +30,7 @@ public class DAO {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (Exception e) {
 			
-		}
-		
+		}	
 		//connecting to databases made in mysql 
 		Configuration configuration = new Configuration();
 		// matching POJO created to hibernate
@@ -53,10 +53,8 @@ public class DAO {
 		hibernateSession.getTransaction().begin();
 		//searching users table
 		List<User> users = hibernateSession.createQuery("FROM User ").list();
-		hibernateSession.getTransaction().commit();
-		hibernateSession.close();
 		return UserSearch.checkUserAndPass((ArrayList<User>)users, user.getUsername(), user.getPassword());
-	}// rework to search for username = username that is passed in and then check is the recieved password is the same as the one in the database
+	}// rework to search for username = username that is passed in and then check is the received password is the same as the one in the database
 	//hibernate session to test if username is taken
 	public static boolean isUsernameTaken(User user){
 		if (factory == null)
@@ -105,14 +103,24 @@ public class DAO {
 	}
 	//deleting an event out of users tripdetails table
 	public static boolean deleteEvent(tripDetails eventToDelete){
-		if (factory == null)
+		 if (factory == null)
 			setupFactory();
-		 Session hibernateSession = factory.openSession();
-		 hibernateSession.getTransaction().begin();
-		 String sqlquer = "DELETE * FROM tripDetails WHERE tripID ="+eventToDelete.getTripID()+" AND eventID = " + eventToDelete.getEventID() ;
-		 Query query = hibernateSession.createQuery(sqlquer);
-		 query.executeUpdate();
-		 return true;
+		 Session hibernateSession;
+		 try {
+			hibernateSession = factory.openSession();
+			hibernateSession.getTransaction().begin();
+			String sqlquer = "DELETE FROM tripDetails WHERE tripID =" + eventToDelete.getTripID()
+					+ " AND eventID = '" + eventToDelete.getEventID() + "'";
+			Query query = hibernateSession.createQuery(sqlquer);
+			query.executeUpdate();
+			hibernateSession.getTransaction().commit();
+			hibernateSession.close();
+			 
+		} finally {
+			
+			
+		}
+		return true;
 	}
 	
 	// session to list all user's saved trips in database

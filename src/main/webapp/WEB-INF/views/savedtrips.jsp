@@ -7,6 +7,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Saved trips</title>
+  <script type="text/javascript"
+    src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+function deleteEvent(eventid, tripid) {
+	event.preventDefault();
+	$.ajax({
+		type: "POST",
+        url: "deleteEvent",
+        data : {eventID: eventid,
+        		tripID: tripid,
+        		typeOfEvent: "place"
+        },
+        success: function() {
+            window.location.reload(true);
+            alert("event removed")
+        }
+       
+	});
+};</script>
+
 </head>
 <body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 <h1 align = "center">Saved Trip</h1>
@@ -30,13 +50,16 @@
 		<tr>
 			<td><c:out value ="${event.name}" /></td>
 			<td><a href="<c:out value ="${event.url}" />">Click Here to View it on Ticketmaster!</a>	</td>
-			<td><c:out value ="${event.dateTime}" />	</td>
-			<td><c:out value ="${event.info}" /></td>
+			<td><c:out value ="${event.dateTime}" /></td>
+			<td><c:out value ="${event.info}" /></td></br>
+			<td><button onclick = "deleteEvent( '${event.id}', '${tripsearch.tripID}')">Delete Event</button></td>
+			
 			<input type ="hidden" name ="eventId" value = "${event.id}"></input>
 			</td>
 		</tr>
 		</form>
 		</c:forEach>
+
 
 </table>
 <a href="home">Go Home</a>

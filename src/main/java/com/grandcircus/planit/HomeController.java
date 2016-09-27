@@ -228,6 +228,20 @@ public class HomeController {
 			//sending back to search page 
 			return "Search";
 		}
+		@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
+		public String deleteEvent(HttpServletRequest request, HttpServletResponse response){
+			System.out.println("Got to Delete");
+			//creating new variable to add event  
+			tripDetails event = new tripDetails();
+			//getting eventID, trip ID, and event type 
+			event.setEventID(request.getParameter("eventID"));
+			event.setTripID(Integer.parseInt(request.getParameter("tripID")));
+			event.setTypeOfEvent(request.getParameter("typeOfEvent"));
+			//putting event into tripDetails
+			DAO.deleteEvent(event);
+			//sending back to search page 
+			return "Search";
+		}
 		//mapping to allow user to change saved trips 
 		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
 		public ModelAndView viewAndModifyTrip(Map<String, Object> model, @ModelAttribute("tripsearch") UserTrips trips,@CookieValue("userid") Cookie userid){

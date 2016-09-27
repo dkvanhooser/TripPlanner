@@ -50,6 +50,8 @@ function PlacesSubForm(eventid) {
         success : alert("ADDED TRIP BABYYYY")
 	});
 };
+
+
 </script>
 
 
