@@ -17,6 +17,26 @@
         height: 50%;
         width:50%;
       }
+
+	.alert-box {
+	
+	padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;  
+}	
+.success {
+	margin-top:-270px;
+	top:50%;
+    left:50%;
+	position:fixed;
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    display: none;
+    text-align:center;
+}
+	
     </style>
     <script type="text/javascript"
     src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
@@ -36,7 +56,9 @@ function SubForm(eventid) {
     		typeOfEvent: "event"
         },
 
-        success : alert("ADDED TRIP BABYYYY")
+        success : function() {
+        	  $( "div.success" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+        }
 	});
 };
 function PlacesSubForm(eventid) {
@@ -48,11 +70,11 @@ function PlacesSubForm(eventid) {
         		tripID: tripid,
         		typeOfEvent: "place"
         },
-        success : alert("ADDED TRIP BABYYYY")
+        success : function() {
+        	  $( "div.success" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );}
 	});
 };
 </script>
-
 
     <script>
 
@@ -106,9 +128,8 @@ function PlacesSubForm(eventid) {
 	<title>PlanIT</title>
 </head>
 <body = background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
-<div id= "result">
+<div class="alert-box success">Event Added!</div>
 
-</div>
 <table border="0" width="100%">
 <tr>
 <td><h1 align = "center">
@@ -159,14 +180,13 @@ function PlacesSubForm(eventid) {
 			<td><c:out value ="${event.id}" /></td>
 			
 			<td><form id="addEventForm<c:out value ="${event.id}" />">
-			<button onclick = '<c:out value ="SubForm('${event.id}');" />' >Add to Trip</button>
+			<button id = "sub" onclick = '<c:out value ="SubForm('${event.id}');" />' >Add to Trip</button>
 			</form></td>
 		</tr>
 		
 		</c:forEach>
 
 </table>
-
 
     <div id="map"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${events.gKey}"/>&libraries=places&callback=initMap" async defer></script>

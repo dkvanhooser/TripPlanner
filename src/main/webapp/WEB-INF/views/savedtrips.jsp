@@ -17,6 +17,24 @@
       #map {
         height: 50%;
       }
+      .alert-box {
+	
+	padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;  
+}	
+.success {
+	margin-top:-270px;
+	top:50%;
+    left:50%;
+	position:fixed;
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    display: none;
+    text-align:center;
+}
       
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
