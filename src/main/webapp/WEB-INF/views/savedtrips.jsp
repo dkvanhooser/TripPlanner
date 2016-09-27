@@ -84,7 +84,28 @@
 	  }
    
   </script>
+  <script type="text/javascript"
+    src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+function deleteEvent(eventid, tripid) {
+	event.preventDefault();
+	$.ajax({
+		type: "POST",
+        url: "deleteEvent",
+        data : {eventID: eventid,
+        		tripID: tripid
+        },
+        success: function() {
+			location.reload(true);
+            alert("event removed");
+        }
+       
+	});
+};</script>
+
+
 <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${gKey}"/>&libraries=places&callback=initMap" async defer></script>
+
 </head>
 <body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 <h1 align = "center">Saved Trip</h1>
@@ -119,12 +140,17 @@
 			<td><c:out value ="${event.name}" /></td>
 			<td><a href="<c:out value ="${event.url}" />">Click Here to View it on Ticketmaster!</a>	</td>
 			<td><c:out value ="${event.dateTime}" /></td>
-			<td><c:out value ="${event.info}" /></td>
-			<input type ="hidden" name ="eventId" value = "${event.id}"></input>
+
+			<td><c:out value ="${event.info}" /></td></br>
+			<td><button onclick = "deleteEvent( '${event.id}', '${savedtrip}')">Delete Event</button></td>
+			
+
+
 			</td>
 		</tr>
 		</form>
 		</c:forEach>
+
 
 </table>
 <form action="userProfile" method="GET">

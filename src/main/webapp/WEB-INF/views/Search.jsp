@@ -74,6 +74,8 @@ function PlacesSubForm(eventid) {
         	  $( "div.success" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );}
 	});
 };
+
+
 </script>
 
     <script>

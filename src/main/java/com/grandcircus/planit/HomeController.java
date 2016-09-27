@@ -177,7 +177,7 @@ public class HomeController {
 			model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
 			model.put("places", savedPlacesDetails);
 			//putting searched events into model 
-			model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
+			model.put("savedtrip",trips.getTripID());
 
 		   if(trips.getUserID() != Integer.parseInt(userid.getValue()))
 			   return new ModelAndView("accessdenied","tripsearch",model);
@@ -236,6 +236,22 @@ public class HomeController {
 			addedEvent.setTypeOfEvent(request.getParameter("typeOfEvent"));
 			//putting event into tripDetails
 			DAO.addEvent(addedEvent);
+			//sending back to search page 
+			return "Search";
+		}
+		@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
+		public String deleteEvent(HttpServletRequest request, HttpServletResponse response){
+			System.out.println("Got to Delete");
+			//creating new variable to add event  
+			tripDetails event = new tripDetails();
+			//getting eventID, trip ID, and event type 
+			
+			System.out.println(request.getParameter("eventID") +"    "+ request.getParameter("tripID"));
+			event.setEventID(request.getParameter("eventID"));
+			event.setTripID(Integer.parseInt(request.getParameter("tripID")));
+			event.setTypeOfEvent(request.getParameter("typeOfEvent"));
+			//putting event into tripDetails
+			DAO.deleteEvent(event);
 			//sending back to search page 
 			return "Search";
 		}

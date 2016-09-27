@@ -10,6 +10,7 @@ import org.hibernate.NonUniqueResultException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.SharedSessionContract;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -27,8 +28,11 @@ public class DAO {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (Exception e) {
 
+
+
 		}
 		
+
 		//connecting to databases made in mysql 
 		Configuration configuration = new Configuration();
 		// matching POJO created to hibernate
@@ -124,14 +128,24 @@ public class DAO {
 	}
 	//deleting an event out of users tripdetails table
 	public static boolean deleteEvent(tripDetails eventToDelete){
-		if (factory == null)
+		 if (factory == null)
 			setupFactory();
-		Session hibernateSession = factory.openSession();
-		hibernateSession.getTransaction().begin();
-		String sqlquer = "DELETE * FROM tripDetails WHERE tripID =" + eventToDelete.getTripID() + " AND eventID = "
-				+ eventToDelete.getEventID();
-		Query query = hibernateSession.createQuery(sqlquer);
-		query.executeUpdate();
+		 Session hibernateSession;
+		 System.out.println(eventToDelete.getEventID() +"    yeeee   "+eventToDelete.getTripID());
+		 try {
+			hibernateSession = factory.openSession();
+			hibernateSession.getTransaction().begin();
+			String sqlquer = "DELETE FROM tripDetails WHERE tripID =" + eventToDelete.getTripID()
+					+ " AND eventID = '" + eventToDelete.getEventID() + "'";
+			Query query = hibernateSession.createQuery(sqlquer);
+			query.executeUpdate();
+			hibernateSession.getTransaction().commit();
+			hibernateSession.close();
+			 
+		} finally {
+			
+			
+		}
 		return true;
 	}
 
