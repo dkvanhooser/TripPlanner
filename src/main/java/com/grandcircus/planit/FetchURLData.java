@@ -28,6 +28,7 @@ public class FetchURLData {
 			while (null != (strTemp = br.readLine())) {
 				//creating new JSON object and retrieving from ticketmaster API
 				JSONObject tempJsonObject = new JSONObject(strTemp);
+				System.out.println(tempJsonObject.toString());
 				JSONObject embedded = tempJsonObject.getJSONObject("_embedded");
 				//filtering based on list of events
 				JSONArray jsonEventArray = embedded.getJSONArray("events");
@@ -130,7 +131,7 @@ public class FetchURLData {
 			//creating variables for latitude + longitude
 			lat = (Double) latnlng.get("lat");
 			lng = (Double) latnlng.get("lng");
-
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -139,4 +140,48 @@ public class FetchURLData {
 
 	}
 
+	public static ArrayList<PlacesDetails> fetchPlaceDetails(GoogleKey key, ArrayList<String> places){
+		ArrayList<PlacesDetails> listOfPlaces = new ArrayList<PlacesDetails>();
+		for (String s: places){
+			PlacesDetails pd = new PlacesDetails();
+		try {
+
+			URL url = new URL(
+					"https://maps.googleapis.com/maps/api/place/details/json?placeid=" + s + "&key=" + key.getApi());
+			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+			StringBuilder sb = new StringBuilder();
+			String strTemp = "";
+
+			while (strTemp != null) {
+				sb.append(strTemp);
+				strTemp = br.readLine();
+			}
+			//creating new JSONObject
+			JSONObject resultJsonObject = new JSONObject(sb.toString()).getJSONObject("result");
+
+			//creating array filtering by results in google search
+			
+			pd.setAddress((String)resultJsonObject.get("formatted_address"));
+			pd.setName((String)resultJsonObject.get("name"));
+			pd.setPlaceID(s);
+			//creating JSONObjects to filter by searched location
+			JSONObject geometry = (JSONObject) resultJsonObject.get("geometry");
+			JSONObject latnlng = (JSONObject) geometry.get("location");
+			//creating variables for latitude + longitude
+			pd.setLat((Double)latnlng.get("lat"));
+			pd.setLng((Double)latnlng.get("lng"));
+			 
+			 listOfPlaces.add(pd);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		}
+		//returning location of searched city 
+
+		
+		return listOfPlaces;
+	}
+	
+	
 }

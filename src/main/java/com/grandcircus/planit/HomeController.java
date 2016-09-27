@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -30,7 +29,6 @@ import com.grandcircus.planit.resources.TicketmasterKey;
 @Controller
 public class HomeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -51,8 +49,7 @@ public class HomeController {
 	//returns back to login page and posts user information
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loggingin(Model model) {
-		User user = new User();
-		model.addAttribute("loginForm", user);
+		model.addAttribute("loginForm", new User());
 		
 		return "login";
 	}
@@ -83,7 +80,9 @@ public class HomeController {
 			return "loginfailed";
 		}
 }
+
 	//mapping for search page on website
+
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ModelAndView search(Map<String, Object> model,@RequestParam("search") String city,@RequestParam("dateFrom") String dateFrom,@RequestParam("dateTo") String dateTo,@CookieValue(value="userid", required=false) Cookie userid){
 		//creating new  ticketmaster key variable 
@@ -91,6 +90,7 @@ public class HomeController {
 		//creating new google key variable 
 		GoogleKey gkey = new GoogleKey();
 		//retrieving API key from java file
+
 		model.put("gKey", gkey.getApi());
 		//putting searched city and events from search into model
 		model.put("latAndLng",FetchURLData.fetchLngAndLat(gkey, city));
@@ -147,6 +147,7 @@ public class HomeController {
 	   public ModelAndView Trips(Map<String, Object> model,
 			   @CookieValue("username") Cookie username,
 			   @CookieValue("userid") Cookie userid){
+
 		   //adding saved trips and user searches to model 
 		   model.put("tripsearch", new UserTrips());
 		   model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
@@ -154,12 +155,14 @@ public class HomeController {
 		   return new ModelAndView("userProfile","Profile",model);  
 
 	   }
+
 	   //mapping for information fed back to userProfile page
 	   @RequestMapping(value = "/userProfile", method = RequestMethod.POST)
 	   public ModelAndView Tripslist(Map<String, Object> model,
 			   @CookieValue("username") Cookie username,
 			   @CookieValue("userid") Cookie userid, 
 			   @ModelAttribute("tripsearch") UserTrips trips){
+		   model.put("tripsearch", new UserTrips());
 		   //creating new key variables for TM and google
 		    TicketmasterKey key = new TicketmasterKey();
 			GoogleKey gkey = new GoogleKey();
@@ -167,14 +170,22 @@ public class HomeController {
 			//putting API key into model so it can be passed into JSP page
 			model.put("gKey", gkey.getApi());
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
-			//putting searched events into model 
 			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
-			//putting saved trips in model by trip IDs of specific user 
-		    model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
-		   //Sending back to saved trips page with list of events from above
-		   return new ModelAndView("savedtrips","listevents",model);
 
+			ArrayList<PlacesDetails> savedPlacesDetails = FetchURLData.fetchPlaceDetails(gkey, DAO.getPlacesList(ls));
+			System.out.println(new JSONArray(savedPlacesDetails));
+			model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
+			model.put("places", savedPlacesDetails);
+			//putting searched events into model 
+			model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
+
+		   if(trips.getUserID() != Integer.parseInt(userid.getValue()))
+			   return new ModelAndView("accessdenied","tripsearch",model);
+           
+           return new ModelAndView("savedtrips","listevents",model);
 	   }
+	   
+
 	  //here's a handler for mapping logout request
 		@RequestMapping("/logout")
 		public ModelAndView accessLogout(@CookieValue("username") Cookie username,@CookieValue("userid") Cookie userid, HttpServletResponse response){
@@ -244,6 +255,7 @@ public class HomeController {
 		}
 		//mapping to allow user to change saved trips 
 		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
+
 		public ModelAndView viewAndModifyTrip(Map<String, Object> model, @ModelAttribute("tripsearch") UserTrips trips,@CookieValue("userid") Cookie userid){
 			//creating new variables to hold API keys
 			TicketmasterKey key = new TicketmasterKey();
@@ -257,6 +269,13 @@ public class HomeController {
 			//creating arraylist with trip events using specified tripID
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
 			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
+			//return new ModelAndView("savedtrips","listevents",model);
+			if(trips.getUserID() != Integer.parseInt(userid.getValue())){			
+				return new ModelAndView("accessdenied","tripsearch",model);
+			}
+			
+			model.put("events", FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(trips.getTripID())));
+			
 			//sending back to saved trips page with list of events 
 			return new ModelAndView("savedtrips","listevents",model);
 		}

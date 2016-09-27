@@ -15,7 +15,8 @@
 <form action="createTrip" method="get">
 	<input type = "hidden" name= "userID" value = "${cookie.userID.value}"/>
   	<input type="text" name ="tripName" size="30" name="tripName"/>
-  <button type="submit">Click here to create trip!</button>
+  <button  type="submit">Click here to create trip!</button>
+ 
   </form>
   <br/>
  </form>
@@ -41,10 +42,13 @@
 			<td><c:out value ="${trip.tripID}" /></td>
 			<td><form:input type ="hidden" path="tripID" value ="${trip.tripID}"/></td>
 			<td><form:input type ="hidden" path="tripName" value ="${trip.tripName}"/></td>
+			<td><form:input type ="hidden" path="userID" value ="${trip.userID}"/></td>
 			<td><input type="submit" value="View/Modify Trip"/></td>
 		</tr>
 		</form:form>
 		</c:forEach>
+		
+		
 </table>
 </body>
 </html>
