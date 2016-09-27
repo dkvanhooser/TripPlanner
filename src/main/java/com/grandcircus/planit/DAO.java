@@ -131,6 +131,7 @@ public class DAO {
 		 if (factory == null)
 			setupFactory();
 		 Session hibernateSession;
+		 System.out.println(eventToDelete.getEventID() +"    yeeee   "+eventToDelete.getTripID());
 		 try {
 			hibernateSession = factory.openSession();
 			hibernateSession.getTransaction().begin();

@@ -75,12 +75,11 @@ function deleteEvent(eventid, tripid) {
 		type: "POST",
         url: "deleteEvent",
         data : {eventID: eventid,
-        		tripID: tripid,
-        		typeOfEvent: "place"
+        		tripID: tripid
         },
         success: function() {
-            window.location.reload(true);
-            alert("event removed")
+			location.reload(true);
+            alert("event removed");
         }
        
 	});
@@ -123,14 +122,12 @@ function deleteEvent(eventid, tripid) {
 			<td><c:out value ="${event.name}" /></td>
 			<td><a href="<c:out value ="${event.url}" />">Click Here to View it on Ticketmaster!</a>	</td>
 			<td><c:out value ="${event.dateTime}" /></td>
-<<<<<<< HEAD
+
 			<td><c:out value ="${event.info}" /></td></br>
-			<td><button onclick = "deleteEvent( '${event.id}', '${tripsearch.tripID}')">Delete Event</button></td>
+			<td><button onclick = "deleteEvent( '${event.id}', '${savedtrip}')">Delete Event</button></td>
 			
-=======
-			<td><c:out value ="${event.info}" /></td>
->>>>>>> 3ed106d4d313e8563dc3e09c1c62cf73a8c64b6c
-			<input type ="hidden" name ="eventId" value = "${event.id}"></input>
+
+
 			</td>
 		</tr>
 		</form>
