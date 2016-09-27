@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -48,8 +49,7 @@ public class HomeController {
 	//returns back to login page and posts user information
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loggingin(Model model) {
-		User user = new User();
-		model.addAttribute("loginForm", user);
+		model.addAttribute("loginForm", new User());
 		
 		return "login";
 	}
@@ -90,6 +90,7 @@ public class HomeController {
 		//creating new google key variable 
 		GoogleKey gkey = new GoogleKey();
 		//retrieving API key from java file
+
 		model.put("gKey", gkey.getApi());
 		//putting searched city and events from search into model
 		model.put("latAndLng",FetchURLData.fetchLngAndLat(gkey, city));
@@ -161,6 +162,7 @@ public class HomeController {
 			   @CookieValue("username") Cookie username,
 			   @CookieValue("userid") Cookie userid, 
 			   @ModelAttribute("tripsearch") UserTrips trips){
+		   model.put("tripsearch", new UserTrips());
 		   //creating new key variables for TM and google
 		    TicketmasterKey key = new TicketmasterKey();
 			GoogleKey gkey = new GoogleKey();
@@ -168,16 +170,17 @@ public class HomeController {
 			//putting API key into model so it can be passed into JSP page
 			model.put("gKey", gkey.getApi());
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
-			//putting searched events into model 
 			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
 
-		   model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
-		   
+			ArrayList<PlacesDetails> savedPlacesDetails = FetchURLData.fetchPlaceDetails(gkey, DAO.getPlacesList(ls));
+			System.out.println(new JSONArray(savedPlacesDetails));
+			model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
+			model.put("places", savedPlacesDetails);
+			//putting searched events into model 
+			model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
+
 		   if(trips.getUserID() != Integer.parseInt(userid.getValue()))
 			   return new ModelAndView("accessdenied","tripsearch",model);
-           
-           model.put("tripsearch", new UserTrips());
-           model.put("savedtrips",DAO.findUserTrips(Integer.parseInt(userid.getValue())));
            
            return new ModelAndView("savedtrips","listevents",model);
 	   }
@@ -253,11 +256,7 @@ public class HomeController {
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
 			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
 			//return new ModelAndView("savedtrips","listevents",model);
-			if(trips.getUserID() == Integer.parseInt(userid.getValue())){
-				model.put("sameUser",false);
-				
-			}else if(trips.getUserID() != Integer.parseInt(userid.getValue())){
-				model.put("sameUser", true);
+			if(trips.getUserID() != Integer.parseInt(userid.getValue())){			
 				return new ModelAndView("accessdenied","tripsearch",model);
 			}
 			

@@ -60,16 +60,16 @@ function PlacesSubForm(eventid) {
       var infowindow;
 
       function initMap() {
-        var pyrmont = {<c:out value="${events.latAndLng}"/>};
+        var city = {<c:out value="${events.latAndLng}"/>};
         map = new google.maps.Map(document.getElementById('map'), {
-          center: pyrmont,
+          center: city,
           zoom: 15
         });
 
         infowindow = new google.maps.InfoWindow();
         var service = new google.maps.places.PlacesService(map);
         service.nearbySearch({
-          location: pyrmont,
+          location: city,
           radius: 5000,
           types: ['art_gallery','zoo','museum','library','aquarium']
         }, callback);
@@ -82,7 +82,7 @@ function PlacesSubForm(eventid) {
           }
         }
       }
-
+      var place = autocomplete.getPlace();
       function createMarker(place) {
         var placeLoc = place.geometry.location;
         var marker = new google.maps.Marker({
@@ -92,7 +92,7 @@ function PlacesSubForm(eventid) {
 		
         var infoContent = place.name
 		+"<button onclick = 'PlacesSubForm(\""
-		+place.id + "\")' >Add to Trip</button>";
+		+place.place_id + "\")' >Add to Trip</button>";
         
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(infoContent);

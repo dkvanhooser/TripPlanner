@@ -40,8 +40,9 @@
 		<tr>
 			<td><c:out value ="${trip.tripName}"/></td>
 			<td><c:out value ="${trip.tripID}" /></td>
-			<td><form:input type ="hidden" path="tripID" value ="10"/></td>
+			<td><form:input type ="hidden" path="tripID" value ="${trip.tripID}"/></td>
 			<td><form:input type ="hidden" path="tripName" value ="${trip.tripName}"/></td>
+			<td><form:input type ="hidden" path="userID" value ="${trip.userID}"/></td>
 			<td><input type="submit" value="View/Modify Trip"/></td>
 		</tr>
 		</form:form>

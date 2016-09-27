@@ -7,6 +7,66 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Saved trips</title>
+
+<style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 50%;
+      }
+      
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+    
+    	var infowindow;
+    	var map;
+    	var places;
+	    
+	    
+	    // Initialize the map.
+	 function initMap() {
+	    $( function() {
+	   	  places = ${jsonPlaces};
+	      map = new google.maps.Map(document.getElementById('map'), {
+	        zoom: 14,
+	        center: {lat: places[0].lat, lng: places[0].lng}
+	      });
+	      infowindow = new google.maps.InfoWindow;
+	      
+	      google.maps.event.addListener(map, 'click', function() {	 
+   		 	infowindow.close();
+ 		  });
+	      
+	      for (var i = 0; i < places.length; i++) {
+	    	  
+	    	  var gMarker = new google.maps.Marker({
+	    	    map: map,
+	    	    position: new google.maps.LatLng(places[i].lat, places[i].lng),
+	    	    title:places[i].name,
+	    	    animation: google.maps.Animation.DROP
+	    	  });
+	    	  
+	    	  
+	    	  google.maps.event.addListener(gMarker, 'click', function() {
+	    		marker = this;
+	    		map.panTo(marker.position);
+				infowindow.setContent(marker.title);
+				infowindow.open(map, marker);
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+				setTimeout(function(){
+					marker.setAnimation(null);
+				}, 1500);
+	    	  });
+	      } 
+	    });
+	  }
+   
+  </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${gKey}"/>&libraries=places&callback=initMap" async defer></script>
 </head>
 <body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 <h1 align = "center">Saved Trip</h1>
@@ -21,10 +81,7 @@
 <a href="<c:url value="login" />" align ="right" >Login</a><br/>
 <a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
 </c:if>
-<c:if test="${listevents.sameUser == true}">
 
-YEAHH BOYYYYEWEEEE
-</c:if>
 </td></tr>
 </form>	
 <tr><td>
@@ -33,8 +90,8 @@ YEAHH BOYYYYEWEEEE
 
 
 		<c:forEach var="place" items="${listevents.places}">
-		<tr><td><c:out value = " ${place} " />	</td>
-
+		<tr><td><c:out value = " ${place.name} " />	</td>
+		<td><c:out value = " ${place.address} " />	</td>
 		</tr>
 		</c:forEach>
 		
@@ -58,7 +115,9 @@ YEAHH BOYYYYEWEEEE
 </form>
 
 </table>
-</td></tr>
-</table>
+
+<div id="map"></div>
 </body>
+<footer>
+</footer>
 </html>
