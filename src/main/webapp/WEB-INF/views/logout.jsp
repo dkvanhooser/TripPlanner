@@ -9,6 +9,6 @@
 <body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 Logout Successful 
 
-<a href="home">Go Home</a>
+<a href="home" align ="right"><input type="button" value="Home"/></a>
 </body>
 </html>

@@ -23,17 +23,17 @@
 </td><td>
 <c:if test="${cookie.username.value != null}">
 	logged in as: ${cookie.username.value} </br>
-	<a href="logout" align ="right" >Logout</a>
+	<a href="logout" align ="right"><input type="button" value="Logout"/>
 </c:if>
 <c:if test="${cookie.username.value == null}">
-<a href="login" align ="right" >Login</a><br/>
-<a href="createaccount" align ="right" >Register</a></td>
+<a href="login" align ="right"><input type="button" value="Login"/></a><br/>
+<a href="createaccount" align ="right"><input type="button" value="Register"/></td>
 </td></tr>
 </form>
 </c:if>		
 </table>
 <h3>Here are your current trips!</h3>
-<a href="home">Go Home</a>
+<a href="home" align ="right"><input type="button" value="Home"/></a>
   <table>
 		<c:forEach var="trip" items="${Profile.savedtrips}">
 		<form:form commandName="tripsearch" method= "POST">

@@ -38,12 +38,12 @@
  
 <c:if test="${cookie.username.value != null}">
 	<td>logged in as: ${cookie.username.value} </br>
-	<a href="userProfile" align ="right" >Profile</a></br>
-	<a href="logout" align ="right" >Logout</a></td>
+	<a href="userProfile" align ="right"><input type="button" value="Profile"/></a></br>
+	<a href="logout" align ="right"><input type="button" value="Logout"/></td>
 </c:if>
 <c:if test="${cookie.username.value == null}">
-<td><a href="login" align ="right" >Login</a><br/>
-<a href="createaccount" align ="right" >Register</a></td>
+<td><a href="login" align ="right"><input type="button" value="Login"/></a><br/>
+<a href="createaccount" align ="right"><input type="button" value="Register"/></td>
 
 </form>
 </c:if>

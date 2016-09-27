@@ -114,12 +114,12 @@ function deleteEvent(eventid, tripid) {
 
 <c:if test="${cookie.username.value != null}">
 	logged in as: ${cookie.username.value} </br>
-	<a href="<c:url value="userProfile" />" align ="right" >Profile</a></br>
-	<a href="<c:url value="logout" />" align ="right" >Logout</a>
+	<a href="userProfile" align ="right"><input type="button" value="Profile"/></a></br>
+	<a href="logout" align ="right"><input type="button" value="Logout"/>
 </c:if>
 <c:if test="${cookie.username.value == null}">
-<a href="<c:url value="login" />" align ="right" >Login</a><br/>
-<a href="<c:url value="createaccount" />" align ="right" >Register</a></td>
+<a href="login" align ="right"><input type="button" value="Login"/></a><br/>
+<a href="createaccount" align ="right"><input type="button" value="Register"/></td>
 </c:if>
 
 </td></tr>
@@ -155,10 +155,6 @@ function deleteEvent(eventid, tripid) {
 
 
 </table>
-<form action="userProfile" method="GET">
-    <input type="submit" value="Return to profile page!" 
-         name="Submit"/>         
-</form>
 
 </table>
 

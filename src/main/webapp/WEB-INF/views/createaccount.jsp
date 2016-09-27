@@ -39,7 +39,7 @@
     <input type="reset" name="reset" value="Clear Form" />
   </div>
   </form:form>
-<td><a href="login" align ="right" >Or Login here!</a><br/></td>
+<td><a href="login" align ="right"><input type="button" value="Login"/></a></td>
 </body>
 
 </html>

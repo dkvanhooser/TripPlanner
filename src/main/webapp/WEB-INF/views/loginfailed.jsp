@@ -10,8 +10,8 @@
 
 <h1>Invalid Username or Password. Please try again or return home.</h1>
 
-<a href="login" align ="right" >Login</a><br/>
-<a href="createaccount" align ="right" >Register</a></br>
-<a href="home" align ="right">Go Home</a>
+<a href="login" align ="right"><input type="button" value="Login"/></a><br/>
+<a href="createaccount" align ="right"><input type="button" value="Register"/></a>
+<a href="home" align ="right"><input type="button" value="Home"/></a>
 </body>
 </html>
