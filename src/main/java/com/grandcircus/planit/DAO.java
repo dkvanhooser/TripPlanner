@@ -1,7 +1,11 @@
 package com.grandcircus.planit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
@@ -197,5 +201,12 @@ public class DAO {
 		hibernateSession.close();
 
 		return null;
+	}
+	public static Set<String> getDistinctGenres(ArrayList<SearchEvent> searchedEvents){
+		ArrayList<String> genres = new ArrayList<String>();
+		for(SearchEvent s: searchedEvents){
+			genres.add(s.getGenre());
+		}		
+		return new TreeSet<String>(genres);
 	}
 }

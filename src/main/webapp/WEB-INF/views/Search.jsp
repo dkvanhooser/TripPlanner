@@ -5,7 +5,7 @@
 
 <html>
 <head>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -43,6 +43,16 @@
     <script type="text/javascript"
     src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script type="text/javascript">
+function hideStuff(genre){
+	
+	if(document.getElementById(genre).checked) {
+		$('div.'+genre).fadeIn( 400 );
+	} else {
+		$('div.'+genre).fadeOut( 400 );
+	}
+	
+}
+
 var tripid;
 var dateP;
 function setDate(){
@@ -141,6 +151,10 @@ function PlacesSubForm(eventid) {
 	<title>PlanIT</title>
 </head>
 <body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<div class="container-fluid">
+<div class="row">
+
+
 <div class="alert-box success">Event Added!</div>
 
 <table border="0" width="100%">
@@ -177,32 +191,43 @@ function PlacesSubForm(eventid) {
 <select name="tripID" onchange = "setTrip();">
 <option>Please select a trip to add to</option>
 <c:forEach var="trip" items="${events.trips}">
-			<option id = "${trip.tripID}" value="${trip.tripID}">${trip.tripName} ${trip.tripID}</option>
+			<option id = "${trip.tripID}" value="${trip.tripID}">${trip.tripName}</option>
 			</c:forEach>
 			</select>
-			
-<table>
+			<table>
+			<tr>
 
-		<c:forEach var="event" items="${events.eventList}">
 		
-		<tr>
-			<td><c:out value ="${event.name}" /></td>
-			<td><a href="<c:out value ="${event.url}" />">Click Here to View it on Ticketmaster!</a></td>
-			<td><c:out value ="${event.dateTime}" />	</td>
-			<td><c:out value ="${event.info}" /></td>
-			<td><c:out value ="${event.id}" /></td>
-			
-			<td><form id="addEventForm<c:out value ="${event.id}" />">
-			<button id = "sub" onclick = '<c:out value ="SubForm('${event.id}', '${event.dateTime}');" />' >Add to Trip</button>
-			</form></td>
-		</tr>
-		
-		</c:forEach>
-
+		<c:forEach var="genre" items="${events.genres}">
+		<td>${genre}<br/><input type="checkbox" id="${genre}" onchange ='hideStuff("${genre}")'checked/></td>
+		</c:forEach></tr>
 </table>
 
+
+		<c:forEach var="event" items="${eventList}">
+	<div class="col-sm-3">
+		<div class ="${event.genre}">
+		<table>
+		<tr><td><c:out value ="${event.name}" /></td></tr>
+			<tr><td><a href="<c:out value ="${event.url}" />">Click here for more details!</a></td></tr>
+			<tr><td><c:out value ="${event.dateTime}" />	</td></tr>
+			<tr><td><c:out value ="${event.info}" /></td></tr>
+			<tr><td><button id = "sub" onclick = '<c:out value ="SubForm('${event.id}', '${event.dateTime}');" />' >Add to Trip</button></td></tr>
+			
+		</table>
+		</div>
+		</div>
+
+		</c:forEach>
+	
+	</div>
+
+	</div>
     <div id="map"></div>
-            <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${events.gKey}"/>&libraries=places&callback=initMap" async defer></script>
     
+    
+    
+            <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${events.gKey}"/>&libraries=places&callback=initMap" async defer></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
 </body>
 </html>
