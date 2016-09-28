@@ -96,11 +96,12 @@ public class HomeController {
 		//creating new google key variable 
 		GoogleKey gkey = new GoogleKey();
 		//retrieving API key from java file
-
+		ArrayList<SearchEvent> al = FetchURLData.fetchAllEvents(key);
+		model.put("genres", DAO.getDistinctGenres(al));
 		model.put("gKey", gkey.getApi());
 		//putting searched city and events from search into model
 		model.put("latAndLng",FetchURLData.fetchLngAndLat(gkey, city));
-		model.put("eventList", FetchURLData.fetchAllEvents(key));
+		model.put("eventList", al);
 		//if cookie exists adds saved trips to the model from the DAO 
 		if(userid instanceof Cookie){
 			model.put("trips", DAO.findUserTrips(Integer.parseInt(userid.getValue())));
@@ -178,8 +179,7 @@ public class HomeController {
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
 			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
 
-			ArrayList<PlacesDetails> savedPlacesDetails = FetchURLData.fetchPlaceDetails(gkey, DAO.getPlacesList(ls));
-			System.out.println(new JSONArray(savedPlacesDetails));
+			ArrayList<PlacesDetails> savedPlacesDetails = FetchURLData.fetchPlaceDetails(gkey, ls);
 			model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
 			model.put("places", savedPlacesDetails);
 			//putting searched events into model 
@@ -234,28 +234,26 @@ public class HomeController {
 		//mapping to add event to tripID
 		@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 		public String filterSearch(HttpServletRequest request, HttpServletResponse response){
-			//creating new variable to add event  
 			tripDetails addedEvent = new tripDetails();
 			//getting eventID, trip ID, and event type 
 			addedEvent.setEventID(request.getParameter("eventID"));
 			addedEvent.setTripID(Integer.parseInt(request.getParameter("tripID")));
 			addedEvent.setTypeOfEvent(request.getParameter("typeOfEvent"));
-			//putting event into tripDetails
+			addedEvent.setDateOfEvent(request.getParameter("date"));
 			DAO.addEvent(addedEvent);
-			//sending back to search page 
 			return "Search";
 		}
 		@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
 		public String deleteEvent(HttpServletRequest request, HttpServletResponse response){
-			System.out.println("Got to Delete");
 			//creating new variable to add event  
 			tripDetails event = new tripDetails();
 			//getting eventID, trip ID, and event type 
 			
-			System.out.println(request.getParameter("eventID") +"    "+ request.getParameter("tripID"));
 			event.setEventID(request.getParameter("eventID"));
 			event.setTripID(Integer.parseInt(request.getParameter("tripID")));
-			event.setTypeOfEvent(request.getParameter("typeOfEvent"));
+			if(request.getParameter("typeOfEvent") != null)
+				event.setTypeOfEvent(request.getParameter("typeOfEvent"));
+			
 			//putting event into tripDetails
 			DAO.deleteEvent(event);
 			//sending back to search page 

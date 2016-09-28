@@ -26,9 +26,9 @@ public class FetchURLData {
 			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			String strTemp = "";
 			while (null != (strTemp = br.readLine())) {
+				System.out.println(strTemp);
 				//creating new JSON object and retrieving from ticketmaster API
 				JSONObject tempJsonObject = new JSONObject(strTemp);
-				System.out.println(tempJsonObject.toString());
 				JSONObject embedded = tempJsonObject.getJSONObject("_embedded");
 				//filtering based on list of events
 				JSONArray jsonEventArray = embedded.getJSONArray("events");
@@ -37,7 +37,8 @@ public class FetchURLData {
 					SearchEvent se = new SearchEvent();
 					JSONObject jsonEventObject = jsonEventArray.getJSONObject(i);
 					try {
-						
+						JSONArray ja = jsonEventObject.getJSONArray("classifications");
+						se.setGenre(ja.getJSONObject(0).getJSONObject("segment").getString("name"));
 						JSONObject temp = (JSONObject) jsonEventObject.get("dates");
 						temp = (JSONObject) temp.get("start");
 						//getting information about each event 
@@ -47,7 +48,7 @@ public class FetchURLData {
 						se.setDateTime((String) temp.get("localDate"));
 						se.setInfo((String) jsonEventObject.get("info"));
 					} catch (JSONException e) {
-
+						System.out.println("file not found");
 					}
 					searchedEvents.add(se);
 				}
@@ -87,15 +88,15 @@ public class FetchURLData {
 							se.setDateTime((String) temp.get("localDate"));
 							se.setInfo((String) jsonEventObject.get("info"));
 						} catch (JSONException e) {
-
+							e.printStackTrace();
 						}
 						searchedEvents.add(se);
 
 					}
 				} catch (FileNotFoundException ex) {
-					System.out.println("stuff happened");
+					System.out.println("File not Found");
 				} catch (Exception ex) {
-					System.out.println(" other stuff happened");
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -140,14 +141,16 @@ public class FetchURLData {
 
 	}
 
-	public static ArrayList<PlacesDetails> fetchPlaceDetails(GoogleKey key, ArrayList<String> places){
+	public static ArrayList<PlacesDetails> fetchPlaceDetails(GoogleKey key, ArrayList<tripDetails> places){
 		ArrayList<PlacesDetails> listOfPlaces = new ArrayList<PlacesDetails>();
-		for (String s: places){
+		for (tripDetails s: places){
 			PlacesDetails pd = new PlacesDetails();
 		try {
-
+			if(s.getTypeOfEvent().equals("event")){
+				break;
+			}
 			URL url = new URL(
-					"https://maps.googleapis.com/maps/api/place/details/json?placeid=" + s + "&key=" + key.getApi());
+					"https://maps.googleapis.com/maps/api/place/details/json?placeid=" + s.getEventID() + "&key=" + key.getApi());
 			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			StringBuilder sb = new StringBuilder();
 			String strTemp = "";
@@ -163,7 +166,8 @@ public class FetchURLData {
 			
 			pd.setAddress((String)resultJsonObject.get("formatted_address"));
 			pd.setName((String)resultJsonObject.get("name"));
-			pd.setPlaceID(s);
+			pd.setPlaceID(s.getEventID());
+			pd.setDate(s.getDateOfEvent());
 			//creating JSONObjects to filter by searched location
 			JSONObject geometry = (JSONObject) resultJsonObject.get("geometry");
 			JSONObject latnlng = (JSONObject) geometry.get("location");

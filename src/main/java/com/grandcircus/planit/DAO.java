@@ -1,7 +1,11 @@
 package com.grandcircus.planit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
@@ -84,7 +88,6 @@ public class DAO {
 		hibernateSession.getTransaction().begin();
 		try {
 			String query = "FROM User WHERE username='" + user.getUsername() + "'";
-			System.out.println(query);
 			User singleUser = (User) hibernateSession.createQuery(query).getSingleResult();
 			System.out.println("Found: " + singleUser.getUsername());
 		} catch (Exception e) {
@@ -131,7 +134,6 @@ public class DAO {
 		 if (factory == null)
 			setupFactory();
 		 Session hibernateSession;
-		 System.out.println(eventToDelete.getEventID() +"    yeeee   "+eventToDelete.getTripID());
 		 try {
 			hibernateSession = factory.openSession();
 			hibernateSession.getTransaction().begin();
@@ -158,7 +160,6 @@ public class DAO {
 		 Session hibernateSession = factory.openSession();
 		 hibernateSession.getTransaction().begin();
 		 String sqlquer = "FROM "+UserTrips.class.getName() +" WHERE userID=%s";
-		 System.out.println(userId);
 		 sqlquer = String.format(sqlquer,userId);
 		 List<UserTrips> userTrips= (List<UserTrips>)hibernateSession.createQuery(sqlquer, UserTrips.class).getResultList();
 			hibernateSession.getTransaction().commit();
@@ -189,24 +190,23 @@ public class DAO {
 			setupFactory();
 		Session hibernateSession = factory.openSession();
 		hibernateSession.getTransaction().begin();
-		hibernateSession.save(t);
+		try{
+			hibernateSession.save(t);
+		
+		}catch(Exception e){
+			hibernateSession.getTransaction().commit();
+			hibernateSession.close();
+		}
 		hibernateSession.getTransaction().commit();
 		hibernateSession.close();
 
 		return null;
 	}
-
-	//checking for associated google places from tripDetails list 
-
-	public static ArrayList<String> getPlacesList(ArrayList<tripDetails> events){
-		ArrayList<String> listOfPlaces = new ArrayList<String>();
-		for(tripDetails e: events){
-		//adding to array list of google places
-		if (e.getTypeOfEvent().equals("place")) {
-			listOfPlaces.add(e.getEventID());
-			}
-		}
-		//returns an array of google places
-		return listOfPlaces;
+	public static Set<String> getDistinctGenres(ArrayList<SearchEvent> searchedEvents){
+		ArrayList<String> genres = new ArrayList<String>();
+		for(SearchEvent s: searchedEvents){
+			genres.add(s.getGenre());
+		}		
+		return new TreeSet<String>(genres);
 	}
 }

@@ -8,6 +8,7 @@ public class SearchEvent {
 	private String url;
 	private String dateTime;
 	private String info = "";
+	private String genre;
 	
 	public String getName() {
 		return name;
@@ -38,6 +39,13 @@ public class SearchEvent {
 	}
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	
+	public String getGenre() {
+		return genre;
+	}
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
 	public String toString(){
 		return name + " "+ id + " " + url + " " + dateTime +" " + info;
