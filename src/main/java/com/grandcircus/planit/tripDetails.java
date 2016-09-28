@@ -5,9 +5,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class tripDetails {
 
 private int tripID;
-String eventID;
+private String eventID;
+private String dateOfEvent;
+private String typeOfEvent;
 
-String typeOfEvent;
 public int getTripID() {
 	return tripID;
 }
@@ -27,6 +28,13 @@ public String getTypeOfEvent() {
 public void setTypeOfEvent(String typeOfTrip) {
 	this.typeOfEvent = typeOfTrip;
 }
+public String getDateOfEvent() {
+	return dateOfEvent;
+}
+public void setDateOfEvent(String dateOfEvent) {
+	this.dateOfEvent = dateOfEvent;
+}
+
 
 
 }

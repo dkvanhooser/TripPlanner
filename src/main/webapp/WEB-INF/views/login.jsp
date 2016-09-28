@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Page</title>
 </head>
-<body>
+<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 <form:form commandName="loginForm" method="post">
 <td>Username:<form:input type="text" path="username" size="30"/></td>
 <td>Password:<form:input path="password" type="password" size="30"/></td>

@@ -20,21 +20,7 @@
 <td><h1 align = "center">
 	Welcome to PlanIt! 
 </h1></td>
-<%--
-<%
-	String username = null;
-	Cookie[] cookies = request.getCookies();
-	if (cookies != null) {
-		for (Cookie c: cookies) {
-			if (c.getName().equals("username")) {
-				username = c.getValue();
-			}
-		}
-	}
-		
-%>
-   <%= "You are logged in as " + username %>
- --%>
+
  
 <c:if test="${cookie.username.value != null}">
 	<td>logged in as: ${cookie.username.value} </br>
@@ -55,9 +41,9 @@
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
 <form action = "<c:url value="search" />">
-<td><input type="text" path="search" name = "search" size="30"/></td>
-<td><input path="dateFrom" type="date" name = "dateFrom" size="30"/></td>
-<td><input path="dateTo" type="date" name ="dateTo" size="30"/></td>
+<td><input type="text"  name = "search" size="30"/></td>
+<td><input type="date" name = "dateFrom" size="30"/></td>
+<td><input type="date" name ="dateTo" size="30"/></td>
 <td><input type = "submit" value = "Search"></td>
 </form>
 </tr>

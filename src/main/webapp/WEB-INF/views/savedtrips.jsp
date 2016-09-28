@@ -131,6 +131,7 @@ function deleteEvent(eventid, tripid) {
 
 		<c:forEach var="place" items="${listevents.places}">
 		<tr><td><c:out value = " ${place.name} " />	</td>
+		<td><c:out value = " ${place.date} " />	</td>
 		<td><c:out value = " ${place.address} " />	</td>
 		<td><button onclick = "deleteEvent( '${place.placeID}', '${savedtrip}')">Delete Event</button></td>
 		</tr>

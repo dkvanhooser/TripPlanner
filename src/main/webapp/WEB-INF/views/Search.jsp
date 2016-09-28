@@ -5,6 +5,7 @@
 
 <html>
 <head>
+
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -36,16 +37,24 @@
     display: none;
     text-align:center;
 }
-	
+
     </style>
+    
     <script type="text/javascript"
     src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script type="text/javascript">
 var tripid;
+var dateP;
+function setDate(){
+	dateP =document.getElementById("date").value;
+}
+function resetDate(){
+	dateP = null;
+}
 function setTrip(){
 	tripid = $('select[name=tripID]').val();
 }
-function SubForm(eventid) {
+function SubForm(eventid, dateE) {
 	event.preventDefault();
 	$.ajax({
 		type: "POST",
@@ -53,7 +62,8 @@ function SubForm(eventid) {
         data : {
         	eventID: eventid,
     		tripID: tripid,
-    		typeOfEvent: "event"
+    		typeOfEvent: "event",
+    		date: dateE
         },
 
         success : function() {
@@ -68,7 +78,8 @@ function PlacesSubForm(eventid) {
         url: "addEvent",
         data : {eventID: eventid,
         		tripID: tripid,
-        		typeOfEvent: "place"
+        		typeOfEvent: "place",
+        		date: dateP
         },
         success : function() {
         	  $( "div.success" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );}
@@ -106,7 +117,6 @@ function PlacesSubForm(eventid) {
           }
         }
       }
-      var place = autocomplete.getPlace();
       function createMarker(place) {
         var placeLoc = place.geometry.location;
         var marker = new google.maps.Marker({
@@ -115,11 +125,12 @@ function PlacesSubForm(eventid) {
         });
 		
         var infoContent = place.name
-		+"<button onclick = 'PlacesSubForm(\""
-		+place.place_id + "\")' >Add to Trip</button>";
+		+ "<br/>When will you want to visit?<input type=\"date\" id =\"date\" size=\"30\" onchange ='setDate()'/>"+"<br/><button onclick = 'PlacesSubForm(\""
+		+place.place_id + "\")' >Add to Trip</button>" ;
         
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(infoContent);
+          
           infowindow.open(map, this);
         });
       }
@@ -129,7 +140,7 @@ function PlacesSubForm(eventid) {
 <meta charset="utf-8">
 	<title>PlanIT</title>
 </head>
-<body = background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 <div class="alert-box success">Event Added!</div>
 
 <table border="0" width="100%">
@@ -182,7 +193,7 @@ function PlacesSubForm(eventid) {
 			<td><c:out value ="${event.id}" /></td>
 			
 			<td><form id="addEventForm<c:out value ="${event.id}" />">
-			<button id = "sub" onclick = '<c:out value ="SubForm('${event.id}');" />' >Add to Trip</button>
+			<button id = "sub" onclick = '<c:out value ="SubForm('${event.id}', '${event.dateTime}');" />' >Add to Trip</button>
 			</form></td>
 		</tr>
 		
@@ -191,7 +202,7 @@ function PlacesSubForm(eventid) {
 </table>
 
     <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${events.gKey}"/>&libraries=places&callback=initMap" async defer></script>
-
+            <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${events.gKey}"/>&libraries=places&callback=initMap" async defer></script>
+    
 </body>
 </html>
