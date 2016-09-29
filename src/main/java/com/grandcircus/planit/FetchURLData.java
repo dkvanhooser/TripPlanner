@@ -38,7 +38,7 @@ public class FetchURLData {
 					JSONObject jsonEventObject = jsonEventArray.getJSONObject(i);
 					try {
 						JSONArray ja = jsonEventObject.getJSONArray("classifications");
-						se.setGenre(ja.getJSONObject(0).getJSONObject("segment").getString("name"));
+						
 						JSONObject temp = (JSONObject) jsonEventObject.get("dates");
 						temp = (JSONObject) temp.get("start");
 						//getting information about each event 
@@ -46,6 +46,7 @@ public class FetchURLData {
 						se.setUrl((String) jsonEventObject.get("url"));
 						se.setName((String) jsonEventObject.get("name"));
 						se.setDateTime((String) temp.get("localDate"));
+						se.setGenre(ja.getJSONObject(0).getJSONObject("segment").getString("name").replace("&", "").replace(" ",""));
 						se.setInfo((String) jsonEventObject.get("info"));
 					} catch (JSONException e) {
 						System.out.println("file not found");

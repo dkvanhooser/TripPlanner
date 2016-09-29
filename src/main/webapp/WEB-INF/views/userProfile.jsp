@@ -5,10 +5,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="resources/css/userProfile.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User Profile</title>
 </head>
-<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<body background="https://images5.alphacoders.com/374/374293.jpg">
 <h1>Welcome!</h1>
 <table><tr><td>
 <h3>Let's plan a trip!</h3>
@@ -35,6 +37,7 @@
 <h3>Here are your current trips!</h3>
 <a href="home" align ="right"><input type="button" value="Home"/></a>
   <table>
+  
 		<c:forEach var="trip" items="${Profile.savedtrips}">
 		<form:form commandName="tripsearch" method= "POST">
 		<tr>
