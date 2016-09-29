@@ -48,10 +48,16 @@ public class HomeController {
 	//sends to login.jsp when login button on home page is clicked, 
 	//returns back to login page and posts user information
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loggingin(Model model) {
+	public String loggingin(Model model, @CookieValue(value="username", required=false) Cookie username, @CookieValue(value="userid", required=false) Cookie userid) {
 		model.addAttribute("loginForm", new User());
-		
-		return "login";
+	//	if(!(username.getValue().equals("none"))){
+	//		return "accessdenied";
+	//	}else if(!(userid.getValue().equals("none"))){
+	//		return "accessdenied";
+	//	}else
+		if (username == null || userid == null)
+			return "login";
+		return "alreadylogged";
 	}
 	//gets login information typed by user
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -311,5 +317,11 @@ public class HomeController {
 //			//sending back to saved trips page with list of events 
 //			return new ModelAndView("savedtrips","listevents",model);
 //		}
+		@RequestMapping(value = "/alreadylogged", method = RequestMethod.GET)
+		public String alreadylogged() {
+			return "alreadylogged";
+		}
+		
+
 		
 }

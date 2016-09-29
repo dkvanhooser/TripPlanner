@@ -1,0 +1,13 @@
+@CHARSET "ISO-8859-1";
+td, h1 {
+    text-align: center;
+	font-family:'Josefin Sans',sans-serif;
+	color: #0000a0;
+}
+table {
+    width: 100%;
+
+}
+table, th, td {
+    border: 1px solid royalblue;
+}

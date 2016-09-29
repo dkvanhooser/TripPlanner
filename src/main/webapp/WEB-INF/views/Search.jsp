@@ -5,6 +5,7 @@
 
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -19,7 +20,7 @@
         width:50%;
       }
 
-	.alert-box {
+.alert-box {
 	
 	padding: 15px;
     margin-bottom: 20px;
@@ -52,10 +53,35 @@
     z-index:99;
 }
 
-table.eventTable td{
-	max-height: 50px;
-    overflow-y: scroll;
+
+.col-sm-3{
+	padding: 15px;
+	border: 1px solid;
+	margin-left: 10px;
+	margin-right: 15px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 25%;
+	display: table-cell;
+	background:lightblue;
+	opacity: .6;
+
 }
+.col-sm-3:hover {
+    opacity: 1.0;
+    box-shadow:7px 7px 5px #888888;
+}
+
+.genreCheck{
+	padding: 5px;
+	border: 1px double;
+	border-color: royalblue;
+	background:lightblue;
+}
+.col-sm-3 .tables{
+	opacity: 1.0;
+}
+
     </style>
     
     <script type="text/javascript"
@@ -70,6 +96,7 @@ function hideStuff(genre){
 	}
 	
 }
+
 
 var tripid;
 var dateP;
@@ -176,7 +203,7 @@ function PlacesSubForm(eventid) {
 <meta charset="utf-8">
 	<title>PlanIT</title>
 </head>
-<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<body background="https://images5.alphacoders.com/374/374293.jpg">
 <div class="container-fluid">
 <div class="row">
 
@@ -215,33 +242,34 @@ function PlacesSubForm(eventid) {
 </tr>
 </table>
 
-
+<div class="dropdown">
 <select name="tripID" onchange = "setTrip();">
 <option>Please select a trip to add to</option>
 <c:forEach var="trip" items="${events.trips}">
 			<option id = "${trip.tripID}" value="${trip.tripID}">${trip.tripName}</option>
 			</c:forEach>
 			</select>
-			<table>
-			<tr>
+		</div>
+<table class="checkboxes">
+	<tr>
 
 		
 		<c:forEach var="genre" items="${events.genres}">
-		<td>${genre}<br/><input type="checkbox" id="${genre}" onchange ='hideStuff("${genre}")'checked/></td>
+		<td class = "genreCheck">${genre}<br/><input type="checkbox" id="${genre}" onchange ='hideStuff("${genre}")'checked/></td>
 		</c:forEach></tr>
 </table>
 
 
 		<c:forEach var="event" items="${eventList}">
-				<div class ="${event.genre}">
-	<div class="col-sm-3">
 
-		<table class = "eventTable">
-		<tr><th><c:out value ="${event.name}" /></td></tr>
-			<tr><td><a href="<c:out value ="${event.url}" />">Click here for more details!</a></td></tr>
-			<tr><td><c:out value ="${event.dateTime}" />	</td></tr>
-			<tr><td><c:out value ="${event.info}" /></td></tr>
-			<tr><td><button id = "sub" onclick = '<c:out value ="SubForm('${event.id}', '${event.dateTime}');" />' >Add to Trip</button></td></tr>
+	<div class="col-sm-3 ${event.genre}">
+		<div class ="tables">
+		<table class="eventTable">
+		<tr><th style = "word-break:break-word;"><c:out value ="${event.name}" /></td></tr>
+			<tr><td style = "word-break:break-word;"><a href="<c:out value ="${event.url}" />">Click here for more details!</a></td></tr>
+			<tr><td style = "word-break:break-word;"><c:out value ="${event.dateTime}" />	</td></tr>
+			<tr><td style = "word-break:break-word;"><c:out value ="${event.info}" /></td></tr>
+			<tr><td style = "word-break:break-word;"><button id = "sub" onclick = '<c:out value ="SubForm('${event.id}', '${event.dateTime}');" />' >Add to Trip</button></td></tr>
 			
 		</table>
 		</div>

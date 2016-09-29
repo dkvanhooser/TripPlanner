@@ -9,7 +9,7 @@
 <title>Create a new account</title>
 </head>
 
-<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<body background="https://images5.alphacoders.com/374/374293.jpg">
 <%-- <c:if test ="${usernameTaken.validation=='true'}"> --%>
 <!-- 	<script type="text/javascript">alert("That username already exists");</script> -->
 <%-- <c:otherwise> --%>

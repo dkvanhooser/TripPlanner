@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Logout Page</title>
 </head>
-<body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<body background="https://images5.alphacoders.com/374/374293.jpg">
 Logout Successful 
 
 <a href="home" align ="right"><input type="button" value="Home"/></a>
