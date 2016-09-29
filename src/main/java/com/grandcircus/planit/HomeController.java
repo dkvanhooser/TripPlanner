@@ -138,9 +138,32 @@ public class HomeController {
     }
 		//mapping to saved trips page from user profile
 	   @RequestMapping(value = "/savedtrips", method = RequestMethod.GET)
-		public String savedtrips()
+		public ModelAndView savedtrips(Map<String, Object> model,
+				   @CookieValue(value = "username", required = false) Cookie username,
+				   @CookieValue(value = "userid", required = false) Cookie userid, @RequestParam("tripID") String tripid)
 		{ 
-			return "savedtrips";
+		   UserTrips ut = DAO.getUserTrip(Integer.parseInt(tripid));
+		   if(ut.getPrivacy() == 0 ){
+			   if(ut.getUserID() != Integer.parseInt(userid.getValue())){
+				   return new ModelAndView("accessdenied");
+			   }
+		   }
+			   //creating new key variables for TM and google
+			    TicketmasterKey key = new TicketmasterKey();
+				GoogleKey gkey = new GoogleKey();
+				//need to pass in google places arraylist of Strings still.(current)
+				//putting API key into model so it can be passed into JSP page
+				model.put("gKey", gkey.getApi());
+				ArrayList<tripDetails> ls = DAO.getTripEvents(Integer.parseInt(tripid));
+				model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
+
+				ArrayList<PlacesDetails> savedPlacesDetails = FetchURLData.fetchPlaceDetails(gkey, ls);
+				model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
+				model.put("places", savedPlacesDetails);
+				//putting searched events into model 
+				model.put("savedtrip",tripid);
+	           
+	           return new ModelAndView("savedtrips","listevents",model);
 		}
 	   //mapping at user profiles page 
 	   @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
@@ -163,6 +186,8 @@ public class HomeController {
 			   @CookieValue("username") Cookie username,
 			   @CookieValue("userid") Cookie userid, 
 			   @ModelAttribute("tripsearch") UserTrips trips){
+		   if(trips.getUserID() != Integer.parseInt(userid.getValue()))
+			   return new ModelAndView("accessdenied","tripsearch",model);
 		   model.put("tripsearch", new UserTrips());
 		   //creating new key variables for TM and google
 		    TicketmasterKey key = new TicketmasterKey();
@@ -176,9 +201,10 @@ public class HomeController {
 			ArrayList<PlacesDetails> savedPlacesDetails = FetchURLData.fetchPlaceDetails(gkey, ls);
 			model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
 			model.put("places", savedPlacesDetails);
-			//putting searched events into model 
-			model.put("savedtrip",trips.getTripID());
-
+			//putting searched events into model
+			trips = DAO.getUserTrip(trips.getTripID());
+			model.put("savedtrip",trips);
+			
 		   if(trips.getUserID() != Integer.parseInt(userid.getValue()))
 			   return new ModelAndView("accessdenied","tripsearch",model);
            
@@ -233,7 +259,8 @@ public class HomeController {
 			addedEvent.setEventID(request.getParameter("eventID"));
 			addedEvent.setTripID(Integer.parseInt(request.getParameter("tripID")));
 			addedEvent.setTypeOfEvent(request.getParameter("typeOfEvent"));
-			addedEvent.setDateOfEvent(request.getParameter("date"));
+			if(request.getParameter("date")!=null)
+				addedEvent.setDateOfEvent(request.getParameter("date"));
 			DAO.addEvent(addedEvent);
 			return "Search";
 		}
@@ -253,31 +280,36 @@ public class HomeController {
 			//sending back to search page 
 			return "Search";
 		}
-		//mapping to allow user to change saved trips 
-		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
-
-		public ModelAndView viewAndModifyTrip(Map<String, Object> model, @ModelAttribute("tripsearch") UserTrips trips,@CookieValue("userid") Cookie userid){
-			//creating new variables to hold API keys
-			TicketmasterKey key = new TicketmasterKey();
-			GoogleKey gkey = new GoogleKey();
-			//need to pass in google places arraylist of Strings still.(current)
-		
-			//adding Keys to models 
-			model.put("gKey", gkey.getApi());
-			//putting savedTripUserID into model and setting value to UserID
-			model.put("savedTripUserID", trips.getUserID());
-			//creating arraylist with trip events using specified tripID
-			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
-			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
-			//return new ModelAndView("savedtrips","listevents",model);
-			if(trips.getUserID() != Integer.parseInt(userid.getValue())){			
-				return new ModelAndView("accessdenied","tripsearch",model);
-			}
-			
-			model.put("events", FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(trips.getTripID())));
-			
-			//sending back to saved trips page with list of events 
-			return new ModelAndView("savedtrips","listevents",model);
+		@RequestMapping(value = "/updatePrivacy", method = RequestMethod.POST)
+		public String filterSedarch(HttpServletRequest request, HttpServletResponse response){
+			//getting eventID, trip ID, and event type 
+			DAO.privacyUpdate(Integer.parseInt(request.getParameter("privacy")),Integer.parseInt(request.getParameter("tripID")));
+			return "Search";
 		}
+		//mapping to allow user to change saved trips 
+//		@RequestMapping(value = "/modifyTrip", method = RequestMethod.GET)
+//
+//		public ModelAndView viewAndModifyTrip(Map<String, Object> model, @ModelAttribute("tripsearch") UserTrips trips,@CookieValue("userid") Cookie userid){
+//			//creating new variables to hold API keys
+//			TicketmasterKey key = new TicketmasterKey();
+//			GoogleKey gkey = new GoogleKey();
+//			//need to pass in google places arraylist of Strings still.(current)
+//		
+//			//adding Keys to models 
+//			model.put("gKey", gkey.getApi());
+//			//putting savedTripUserID into model and setting value to UserID
+//			model.put("savedTripUserID", trips.getUserID());
+//			//creating arraylist with trip events using specified tripID
+//			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
+//			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
+//			if(trips.getUserID() != Integer.parseInt(userid.getValue())){			
+//				return new ModelAndView("accessdenied","tripsearch",model);
+//			}
+//			
+//			model.put("events", FetchURLData.fetchSavedEvents(key, DAO.getTripEvents(trips.getTripID())));
+//			
+//			//sending back to saved trips page with list of events 
+//			return new ModelAndView("savedtrips","listevents",model);
+//		}
 		
 }

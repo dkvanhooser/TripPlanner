@@ -25,6 +25,7 @@
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;  
+    z-index:98;
 }	
 .success {
 	margin-top:-270px;
@@ -36,8 +37,25 @@
     border-color: #d6e9c6;
     display: none;
     text-align:center;
+    z-index:99;
+}
+.failure {
+	margin-top:-270px;
+	top:50%;
+    left:50%;
+	position:fixed;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    display: none;
+    text-align:center;
+    z-index:99;
 }
 
+table.eventTable td{
+	max-height: 50px;
+    overflow-y: scroll;
+}
     </style>
     
     <script type="text/javascript"
@@ -46,9 +64,9 @@
 function hideStuff(genre){
 	
 	if(document.getElementById(genre).checked) {
-		$('div.'+genre).fadeIn( 400 );
+		$('div.'+genre).toggle( 400 );
 	} else {
-		$('div.'+genre).fadeOut( 400 );
+		$('div.'+genre).toggle( 400 );
 	}
 	
 }
@@ -65,6 +83,10 @@ function setTrip(){
 	tripid = $('select[name=tripID]').val();
 }
 function SubForm(eventid, dateE) {
+	if(tripid == null){
+		$( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+		return;
+	}
 	event.preventDefault();
 	$.ajax({
 		type: "POST",
@@ -82,6 +104,10 @@ function SubForm(eventid, dateE) {
 	});
 };
 function PlacesSubForm(eventid) {
+	if(tripid == null){
+		$( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+		return;
+	}
 	event.preventDefault();
 	$.ajax({
 		type: "POST",
@@ -156,6 +182,8 @@ function PlacesSubForm(eventid) {
 
 
 <div class="alert-box success">Event Added!</div>
+<div class="alert-box failure">Please select a trip to add to!</div>
+
 
 <table border="0" width="100%">
 <tr>
@@ -205,10 +233,11 @@ function PlacesSubForm(eventid) {
 
 
 		<c:forEach var="event" items="${eventList}">
+				<div class ="${event.genre}">
 	<div class="col-sm-3">
-		<div class ="${event.genre}">
-		<table>
-		<tr><td><c:out value ="${event.name}" /></td></tr>
+
+		<table class = "eventTable">
+		<tr><th><c:out value ="${event.name}" /></td></tr>
 			<tr><td><a href="<c:out value ="${event.url}" />">Click here for more details!</a></td></tr>
 			<tr><td><c:out value ="${event.dateTime}" />	</td></tr>
 			<tr><td><c:out value ="${event.info}" /></td></tr>

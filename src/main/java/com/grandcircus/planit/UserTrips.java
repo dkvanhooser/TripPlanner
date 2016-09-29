@@ -4,6 +4,7 @@ public class UserTrips {
 	private int userID;
 	private int tripID;
 	private String tripName;
+	private int privacy;
 	
 	public int getTripID() {
 		return tripID;
@@ -24,5 +25,13 @@ public class UserTrips {
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
+	public int getPrivacy() {
+		return privacy;
+	}
+	public void setPrivacy(int privacy) {
+		this.privacy = privacy;
+	}
+	
+	
 	
 }

@@ -87,6 +87,19 @@
   <script type="text/javascript"
     src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script>
+function setPrivacy(privacyP, tripid){
+	event.preventDefault();
+	$.ajax({
+		type: "POST",
+        url: "updatePrivacy",
+        data : {privacy: privacyP,
+        		tripID: tripid
+        },
+        success : function() {
+        	  $( "div.success" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+        	  location.reload(true);}
+	});
+}
 function deleteEvent(eventid, tripid) {
 	event.preventDefault();
 	$.ajax({
@@ -101,7 +114,8 @@ function deleteEvent(eventid, tripid) {
 			location.reload(true);}
        
 	});
-};</script>
+};
+</script>
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${gKey}"/>&libraries=places&callback=initMap" async defer></script>
@@ -126,6 +140,18 @@ function deleteEvent(eventid, tripid) {
 </form>	
 <tr><td>
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<c:if test="${savedtrip.privacy == 1}"><div class="fb-share-button" data-href="http://planit-env.us-west-2.elasticbeanstalk.com/savedtrips?tripID=${savedtrip}" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplanit-env.us-west-2.elasticbeanstalk.com%2Fsavedtrips%3FtripID%3D%2524%257Bsavedtrip%257D&amp;src=sdkpreparse">Share</a></div></c:if>
+<c:if test="${savedtrip.privacy == 0}"><br/>To share this trip on Facebook, make this trip public!<button onclick = 'setPrivacy("1", ${savedtrip.tripID})'>Set this trip to Public</button></c:if>
+<c:if test="${savedtrip.privacy == 1}"><button onclick = 'setPrivacy("0", ${savedtrip.tripID})'>Set this trip to Private</button></c:if>
 <table>
 
 
