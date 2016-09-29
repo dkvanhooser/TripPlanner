@@ -150,7 +150,7 @@ public class FetchURLData {
 			PlacesDetails pd = new PlacesDetails();
 		try {
 			if(s.getTypeOfEvent().equals("event")){
-				break;
+				continue;
 			}
 			URL url = new URL(
 					"https://maps.googleapis.com/maps/api/place/details/json?placeid=" + s.getEventID() + "&key=" + key.getApi());
@@ -177,7 +177,8 @@ public class FetchURLData {
 			//creating variables for latitude + longitude
 			pd.setLat((Double)latnlng.get("lat"));
 			pd.setLng((Double)latnlng.get("lng"));
-			 
+			System.out.println(pd.getLng());
+			System.out.println(pd.getLat());
 			 listOfPlaces.add(pd);
 		} catch (Exception ex) {
 			ex.printStackTrace();

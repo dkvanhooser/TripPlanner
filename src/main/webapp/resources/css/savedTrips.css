@@ -17,6 +17,32 @@ h1{
 table{
 	color:midnightblue;
 }
+body{
+	color:white;
+    padding-top: 70px;
+  
+}
+input{
+	color:black;
+	
+}
+button{
+	background-color:blue;
+	color:black;
+	display: inline-block;
+}
 .button{
+	background-color:blue;
+	color:black;
+	display: inline-block;
+}
+p4{
 	color:black;
 }
+.navbar-default {
+    background-color: white;
+    border-color: black;
+}
+li{
+	color:white;
+} 

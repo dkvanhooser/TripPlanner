@@ -5,19 +5,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="resources/css/savedTrips.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="resources/css/savedTrips.css">
+
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Saved trips</title>
 
 <style>
-      html, body {
+       body {
         height: 100%;
         margin: 0;
-        padding: 0;
-        color:white;
+		color:white;
         
       }
       #map {
@@ -150,19 +150,46 @@ function deleteEvent(eventid, tripid) {
 <h1 align = "center">Saved Trip</h1>
 
 
-<c:if test="${cookie.username.value != null}">
-	<p>logged in as: ${cookie.username.value}</p>
-	<a href="userProfile"><input type="button" value="Profile"/></a>
-	<a href="logout"><input type="button" value="Logout"/></a>
-</c:if>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		
+      </button>
+      <a class="navbar-brand" href="home">Home</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
 <c:if test="${cookie.username.value == null}">
-<a href="login"><input type="button" value="Login"/></a><br/>
-<a href="createaccount"><input type="button" value="Register"/></a>
->>>>>>> 2288cdbfe43c68cf71c23a3931b56f182480708e
-</c:if>
-</td></tr>
-</form>	
-<tr><td>
+          <ul class="nav navbar-nav navbar-right">
+        <li><a href="createaccount">Register</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="login">Login</a></li>
+      </ul>
+      </c:if>
+      <c:if test="${cookie.username.value != null}">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="userProfile">Profile</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="logout">Logout</a></li>
+      </ul>
+            <ul class="nav navbar-nav navbar-right">
+        <li>	<p class="navbar-text">Logged in as: ${cookie.username.value}</p></li>
+      </ul>
+      </c:if>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -176,7 +203,6 @@ function deleteEvent(eventid, tripid) {
 <c:if test="${savedtrip.privacy == 1}"><div class="fb-share-button" data-href="http://planit-env.us-west-2.elasticbeanstalk.com/savedtrips?tripID=${savedtrip}" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplanit-env.us-west-2.elasticbeanstalk.com%2Fsavedtrips%3FtripID%3D%2524%257Bsavedtrip%257D&amp;src=sdkpreparse">Share</a></div></c:if>
 <c:if test="${savedtrip.privacy == 0}"><br/>To share this trip on Facebook, make this trip public!<button onclick = 'setPrivacy("1", ${savedtrip.tripID})'>Set this trip to Public</button></c:if>
 <c:if test="${savedtrip.privacy == 1}"><button onclick = 'setPrivacy("0", ${savedtrip.tripID})'>Set this trip to Private</button></c:if>
-<table>
 
 
 <div class="row">

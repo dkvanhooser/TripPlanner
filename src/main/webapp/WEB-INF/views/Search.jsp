@@ -5,8 +5,9 @@
 
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -85,9 +86,6 @@
 
 .col-sm-3 .tables{
 	opacity: 1.0;
-}
-#button{
-	color:black;
 }
 
     </style>
@@ -195,9 +193,9 @@ function PlacesSubForm(eventid) {
           position: place.geometry.location
         });
 		
-        var infoContent = place.name
+        var infoContent = "<p4>" + place.name
 		+ "<br/>When will you want to visit?<input type=\"date\" id =\"date\" size=\"30\" onchange ='setDate()'/>"+"<br/><button onclick = 'PlacesSubForm(\""
-		+place.place_id + "\")' >Add to Trip</button>" ;
+		+place.place_id + "\")' >Add to Trip</button></p4>" ;
         
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(infoContent);

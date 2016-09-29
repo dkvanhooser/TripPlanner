@@ -2,7 +2,7 @@
 td, h1 {
     text-align: center;
 	font-family:'Josefin Sans',sans-serif;
-	color:#ffffff;
+
 	
 }
 table {
@@ -11,9 +11,32 @@ table {
 table, th, td {
     border: 1px white;
 }
-.button{
-	color:black;
-}
 body{
 	color:white;
+    padding-top: 70px;
+  
 }
+input{
+	color:black;
+	
+}
+button{
+	background-color:blue;
+	color:black;
+	display: inline-block;
+}
+.button{
+	background-color:blue;
+	color:black;
+	display: inline-block;
+}
+p4{
+	color:black;
+}
+.navbar-default {
+    background-color: white;
+    border-color: black;
+}
+li{
+	color:white;
+} 

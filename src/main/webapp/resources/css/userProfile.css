@@ -16,3 +16,33 @@ h3{
 table{
 	color:lightgrey;
 }
+body{
+	color:white;
+    padding-top: 70px;
+  
+}
+input{
+	background-color:white;
+	color:black;
+	
+}
+button{
+	background-color:blue;
+	color:black;
+	display: inline-block;
+}
+.button{
+	background-color:blue;
+	color:black;
+	display: inline-block;
+}
+p4{
+	color:black;
+}
+.navbar-default {
+    background-color: white;
+    border-color: black;
+}
+li{
+	color:white;
+} 

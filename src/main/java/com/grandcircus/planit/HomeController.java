@@ -202,11 +202,13 @@ public class HomeController {
 			//putting API key into model so it can be passed into JSP page
 			model.put("gKey", gkey.getApi());
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
-			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
-
 			ArrayList<PlacesDetails> savedPlacesDetails = FetchURLData.fetchPlaceDetails(gkey, ls);
 			model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
+			System.out.println( new JSONArray(savedPlacesDetails).toString());
 			model.put("places", savedPlacesDetails);
+			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
+
+
 			//putting searched events into model
 			trips = DAO.getUserTrip(trips.getTripID());
 			model.put("savedtrip",trips);
@@ -265,6 +267,7 @@ public class HomeController {
 			addedEvent.setEventID(request.getParameter("eventID"));
 			addedEvent.setTripID(Integer.parseInt(request.getParameter("tripID")));
 			addedEvent.setTypeOfEvent(request.getParameter("typeOfEvent"));
+			System.out.println(Integer.parseInt(request.getParameter("tripID")) + " and "+request.getParameter("eventID")+" event "+request.getParameter("typeOfEvent"));
 			if(request.getParameter("date")!=null)
 				addedEvent.setDateOfEvent(request.getParameter("date"));
 			DAO.addEvent(addedEvent);

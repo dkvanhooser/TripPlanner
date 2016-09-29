@@ -6,10 +6,13 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="resources/css/userProfile.css">
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User Profile</title>
+
 </head>
 <body background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
 <h1>Welcome!</h1>
@@ -22,7 +25,7 @@
  
   </form>
   <br/>
- </form>
+
 </td><td>
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
@@ -66,7 +69,6 @@
 </nav>
 </table>
 <h3>Here are your current trips!</h3>
-<a href="home" align ="right"><input type="button" value="Home"/></a>
   <table>
   
 		<c:forEach var="trip" items="${Profile.savedtrips}">
