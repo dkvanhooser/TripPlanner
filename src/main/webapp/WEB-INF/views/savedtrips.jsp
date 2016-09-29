@@ -110,18 +110,22 @@ function deleteEvent(eventid, tripid) {
 <body background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
 <div class="alert-box success">Event Deleted!</div>
 <h1 align = "center">Saved Trip</h1>
-<table><tr><td></td><td>
+<table><tr><td>
+</td>
+</td>
+<td>
 
 <c:if test="${cookie.username.value != null}">
 	logged in as: ${cookie.username.value} </br>
+
 	<a href="userProfile" align ="right"><input type="button" value="Profile"/></a></br>
 	<a href="logout" align ="right"><input type="button" value="Logout"/></a>
 </c:if>
 <c:if test="${cookie.username.value == null}">
+<a href="home" align ="right"><input type="button" value="Search for more events!"/></a></br>
 <a href="login" align ="right"><input type="button" value="Login"/></a><br/>
 <a href="createaccount" align ="right"><input type="button" value="Register"/></a></td>
 </c:if>
-
 </td></tr>
 </form>	
 <tr><td>
@@ -154,8 +158,8 @@ function deleteEvent(eventid, tripid) {
 		</form>
 		</c:forEach>
 
-
 </table>
+<a href="home" align ="center"><input type="button" value="Search for more events!"/></a></br>
 
 </table>
 

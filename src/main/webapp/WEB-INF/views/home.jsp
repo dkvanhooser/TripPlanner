@@ -41,7 +41,7 @@
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
 <form action = "<c:url value="search" />">
-<td><input type="text"  name = "search" size="30"/></td>
+<td><input type="text"  name = "search" size="30" placeholder="Search by City"/></td>
 <td><input type="date" name = "dateFrom" size="30"/></td>
 <td><input type="date" name ="dateTo" size="30"/></td>
 <td><input type = "submit" value = "Search"></td>
