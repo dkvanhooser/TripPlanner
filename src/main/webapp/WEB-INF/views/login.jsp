@@ -16,5 +16,10 @@
 <td><input type="submit" value="Login!"/></td>
 </form:form>
 <a href="createaccount" align ="right"><input type="button" value="Register New Account"/></a>
+<c:if test="${cookie.username.value != null}">
+	<td>logged in as: ${cookie.username.value} </br>
+	<a href="userProfile" align ="right"><input type="button" value="Profile"/></a></br>
+	<a href="logout" align ="right"><input type="button" value="Logout"/></a></td>
+</c:if>
 </body>
 </html>

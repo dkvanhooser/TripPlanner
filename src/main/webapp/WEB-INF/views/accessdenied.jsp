@@ -8,5 +8,6 @@
 </head>
 <body background="https://images5.alphacoders.com/374/374293.jpg">
 <h1>You do not have access to this page!</h1>
+<a href="home" align ="right"><input type="button" value="Home"/></a>
 </body>
 </html>
