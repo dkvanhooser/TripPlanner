@@ -69,7 +69,10 @@
 
 </tr>
 </table>
-<table>
+<br/>
+<br/>
+<br/>
+<table align = "center">
 <tr><td></td><td align = "right">Trip</td><td>date</td></tr>
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>

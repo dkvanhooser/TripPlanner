@@ -13,7 +13,7 @@
 
 </head>
 
-<body background="background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg"">
+<body background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
 
 
 <nav class="navbar navbar-default navbar-fixed-top">

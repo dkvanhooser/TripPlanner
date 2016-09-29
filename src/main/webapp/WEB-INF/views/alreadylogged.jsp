@@ -11,6 +11,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Error</title>
@@ -53,8 +55,9 @@
         <li>	<p class="navbar-text">Logged in as: ${cookie.username.value}</p></li>
       </ul>
       </c:if>
-    </div>
-  </div>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
 
 
@@ -66,11 +69,8 @@
 	<a href="logout"><input type="button" value="Logout"/></a>
 </c:if>
 <c:if test="${cookie.username.value == null}">
-<h1>Please stop trying to break our app!</h1>
-<a href="home"><input type="button" value="Home"/></a></br>
-<a href="login" align ="right"><input type="button" value="Login"/></a><br/>
-<a href="createaccount" align ="right"><input type="button" value="Register"/></a>
-</form>
+<h1>How did you get here?</h1>
+
 </c:if>
 
 

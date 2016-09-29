@@ -2,13 +2,10 @@ package com.grandcircus.planit;
 
 import java.util.ArrayList;
 import java.util.Map;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-//import com.grandcircus.planit.TicketmasterKey;
-
 import com.grandcircus.planit.resources.GoogleKey;
 import com.grandcircus.planit.resources.TicketmasterKey;
 
@@ -204,7 +199,6 @@ public class HomeController {
 			ArrayList<tripDetails> ls = DAO.getTripEvents(trips.getTripID());
 			ArrayList<PlacesDetails> savedPlacesDetails = FetchURLData.fetchPlaceDetails(gkey, ls);
 			model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
-			System.out.println( new JSONArray(savedPlacesDetails).toString());
 			model.put("places", savedPlacesDetails);
 			model.put("events", FetchURLData.fetchSavedEvents(key,  ls));
 
@@ -267,7 +261,6 @@ public class HomeController {
 			addedEvent.setEventID(request.getParameter("eventID"));
 			addedEvent.setTripID(Integer.parseInt(request.getParameter("tripID")));
 			addedEvent.setTypeOfEvent(request.getParameter("typeOfEvent"));
-			System.out.println(Integer.parseInt(request.getParameter("tripID")) + " and "+request.getParameter("eventID")+" event "+request.getParameter("typeOfEvent"));
 			if(request.getParameter("date")!=null)
 				addedEvent.setDateOfEvent(request.getParameter("date"));
 			DAO.addEvent(addedEvent);

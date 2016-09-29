@@ -194,8 +194,8 @@ function PlacesSubForm(eventid) {
         });
 		
         var infoContent = "<p4>" + place.name
-		+ "<br/>When will you want to visit?<input type=\"date\" id =\"date\" size=\"30\" onchange ='setDate()'/>"+"<br/><button onclick = 'PlacesSubForm(\""
-		+place.place_id + "\")' >Add to Trip</button></p4>" ;
+		+ "<br/>When will you want to visit?<input type=\"date\" id =\"date\" size=\"30\" onchange ='setDate()'/>"+"<br/>"+"<c:if test="${cookie.username.value != null}">"+"<button onclick = 'PlacesSubForm(\""
+		+place.place_id + "\")' >Add to Trip</button>"+"</c:if>"+"</p4>" ;
         
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(infoContent);
@@ -268,7 +268,7 @@ function PlacesSubForm(eventid) {
 	Search
 </h1></td></tr>
 </table>
-<table>
+<table align = "center">
 <tr><td></td><td align = "right">Trip</td><td>date</td></tr>
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
@@ -280,7 +280,7 @@ function PlacesSubForm(eventid) {
 </form>
 </tr>
 </table>
-
+<c:if test="${cookie.username.value != null}">
 <div class="dropdown">
 <select name="tripID" onchange = "setTrip();">
 <option>Please select a trip to add to</option>
@@ -289,7 +289,8 @@ function PlacesSubForm(eventid) {
 			</c:forEach>
 			</select>
 		</div>
-<table class="checkboxes">
+		</c:if>
+<table class="checkboxes" align = "center">
 	<tr>
 
 		
@@ -301,14 +302,14 @@ function PlacesSubForm(eventid) {
 
 		<c:forEach var="event" items="${eventList}">
 
-	<div class="col-sm-3 ${event.genre}">
+	<div class="col-sm-3 ${event.genre} " style="min-width: 275px">
 		<div class ="tables">
 		<table class="eventTable" style="table-layout: fixed;">
 		<tr><th style = "word-break:break-word;"><c:out value ="${event.name}" /></td></tr>
 			<tr><td style = "word-break:break-word;"><a href="<c:out value ="${event.url}" />">Click here for more details!</a></td></tr>
 			<tr><td style = "word-break:break-word;"><c:out value ="${event.dateTime}" />	</td></tr>
 			<tr><td style = "word-break:break-word;"><c:out value ="${event.info}" /></td></tr>
-			<tr><td style = "word-break:break-word;"><button id = "sub" onclick = '<c:out value ="SubForm('${event.id}', '${event.dateTime}');" />' >Add to Trip</button></td></tr>
+			<c:if test="${cookie.username.value != null}"><tr><td style = "word-break:break-word;"><button id = "sub" onclick = '<c:out value ="SubForm('${event.id}', '${event.dateTime}');" />' >Add to Trip</button></td></tr></c:if>
 			
 		</table>
 		</div>

@@ -26,7 +26,6 @@ public class FetchURLData {
 			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			String strTemp = "";
 			while (null != (strTemp = br.readLine())) {
-				System.out.println(strTemp);
 				//creating new JSON object and retrieving from ticketmaster API
 				JSONObject tempJsonObject = new JSONObject(strTemp);
 				JSONObject embedded = tempJsonObject.getJSONObject("_embedded");
@@ -177,8 +176,6 @@ public class FetchURLData {
 			//creating variables for latitude + longitude
 			pd.setLat((Double)latnlng.get("lat"));
 			pd.setLng((Double)latnlng.get("lng"));
-			System.out.println(pd.getLng());
-			System.out.println(pd.getLat());
 			 listOfPlaces.add(pd);
 		} catch (Exception ex) {
 			ex.printStackTrace();

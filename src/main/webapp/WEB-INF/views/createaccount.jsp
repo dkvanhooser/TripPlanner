@@ -6,9 +6,10 @@
 <html>
 <head>
 
-<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create a new account</title>
 </head>
@@ -77,7 +78,6 @@
     <input type="reset" name="reset" value="Clear Form" />
   </div>
   </form:form>
-<td><a href="login" align ="right"><input type="button" value="Login"/></a></td>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
 
 </body>
