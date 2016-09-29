@@ -3,11 +3,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Logout Page</title>
+
 </head>
-<body background="https://images5.alphacoders.com/374/374293.jpg">
+
+<body background="background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg"">
 
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -50,6 +56,7 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
 Logout Successful 
 
 <a href="home" align ="right"><input type="button" value="Home"/></a>

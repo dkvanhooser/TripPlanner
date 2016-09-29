@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User Profile</title>
 </head>
-<body background="https://images5.alphacoders.com/374/374293.jpg">
+<body background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
 <h1>Welcome!</h1>
 <table><tr><td>
 <h3>Let's plan a trip!</h3>

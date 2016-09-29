@@ -17,7 +17,7 @@
 <meta charset="utf-8">
 	<title>PlanIT</title>
 </head>
-<body = background="https://images5.alphacoders.com/374/374293.jpg">
+<body = background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
 <table border="0" width="100%">
 <tr>
 <td><h1 align = "center">
@@ -73,10 +73,12 @@
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
 <form action = "<c:url value="search" />">
-<td><input type="text"  name = "search" size="30"/></td>
+
+<td><input type="text"  name = "search" size="30" placeholder="Search by City"/></td>
 <td><input type="date" name = "dateFrom" size="30"/></td>
 <td><input type="date" name ="dateTo" size="30"/></td>
 <td><input type = "submit" value = "Search"></td>
+
 </form>
 </tr>
 </table>

@@ -2,12 +2,18 @@
 td, h1 {
     text-align: center;
 	font-family:'Josefin Sans',sans-serif;
-	color: #0000a0;
+	color:#ffffff;
+	
 }
 table {
     width: 100%;
-
 }
 table, th, td {
-    border: 1px solid royalblue;
+    border: 1px white;
+}
+.button{
+	color:black;
+}
+body{
+	color:white;
 }

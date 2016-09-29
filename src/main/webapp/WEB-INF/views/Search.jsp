@@ -11,6 +11,8 @@
     <meta charset="utf-8">
     <style>
       html, body {
+      background-attachment: fixed, scroll;
+       background-image:url("http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg");
         height: 100%;
         margin: 0;
         padding: 0;
@@ -65,8 +67,8 @@
 	margin-bottom: 5px;
 	width: 25%;
 	display: table-cell;
-	background:lightblue;
-	opacity: .6;
+	background:navy;
+	opacity: .8;
 
 }
 .col-sm-3:hover {
@@ -78,11 +80,14 @@
 	padding: 5px;
 	border: 1px double;
 	border-color: royalblue;
-	background:lightblue;
+	background:navy;
 }
 
 .col-sm-3 .tables{
 	opacity: 1.0;
+}
+#button{
+	color:black;
 }
 
     </style>
@@ -205,7 +210,7 @@ function PlacesSubForm(eventid) {
     
 <meta charset="utf-8">
 	<title>PlanIT</title>
-</head>
+
 <body background="https://images5.alphacoders.com/374/374293.jpg">
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
@@ -247,6 +252,7 @@ function PlacesSubForm(eventid) {
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
 <div class="container-fluid">
 
 <div class="row">
@@ -269,7 +275,7 @@ function PlacesSubForm(eventid) {
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
 <form action = "<c:url value="search" />">
-<td><input type="text" path="search" name = "search" size="30"/></td>
+<td><input type="text" path="search" name = "search" size="30" placeholder="Search by City"/></td>
 <td><input path="dateFrom" type="date" name = "dateFrom" size="30"/></td>
 <td><input path="dateTo" type="date" name ="dateTo" size="30"/></td>
 <td><input type = "submit" value = "Search"></td>
