@@ -11,6 +11,7 @@
 
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <meta charset="utf-8">
@@ -24,17 +25,46 @@
 </h1></td>
 
  
-<c:if test="${cookie.username.value != null}">
-	<td>logged in as: ${cookie.username.value} </br>
-	<a href="userProfile" align ="right"><input type="button" value="Profile"/></a></br>
-	<a href="logout" align ="right"><input type="button" value="Logout"/></a></td>
-</c:if>
-<c:if test="${cookie.username.value == null}">
-<td><a href="login" align ="right"><input type="button" value="Login"/></a><br/>
-<a href="createaccount" align ="right"><input type="button" value="Register"/></a></td>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		
+      </button>
+      <a class="navbar-brand" href="home">Home</a>
+    </div>
 
-</form>
-</c:if>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
+<c:if test="${cookie.username.value == null}">
+          <ul class="nav navbar-nav navbar-right">
+        <li><a href="createaccount">Register</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="login">Login</a></li>
+      </ul>
+      </c:if>
+      <c:if test="${cookie.username.value != null}">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="userProfile">Profile</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="logout">Logout</a></li>
+      </ul>
+            <ul class="nav navbar-nav navbar-right">
+        <li>	<p class="navbar-text">Logged in as: ${cookie.username.value}</p></li>
+      </ul>
+      </c:if>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
 </tr>
 </table>
@@ -50,6 +80,7 @@
 </form>
 </tr>
 </table>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
 
 </body>
 </html>

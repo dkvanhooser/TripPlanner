@@ -26,6 +26,7 @@
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;  
+    z-index:98;
 }	
 .success {
 	margin-top:-270px;
@@ -37,6 +38,19 @@
     border-color: #d6e9c6;
     display: none;
     text-align:center;
+    z-index:99;
+}
+.privacy {
+	margin-top:-270px;
+	top:50%;
+    left:50%;
+	position:fixed;
+    color: #3c763d;
+    background-color: white;
+    border-color: grey;
+    display: none;
+    text-align:center;
+    z-index:99;
 }
 
       
@@ -100,7 +114,7 @@ function setPrivacy(privacyP, tripid){
         		tripID: tripid
         },
         success : function() {
-        	  $( "div.success" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+        	  $( "div.privacy" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
         	  location.reload(true);}
 	});
 }
@@ -128,6 +142,7 @@ function deleteEvent(eventid, tripid) {
 <body background="https://images5.alphacoders.com/374/374293.jpg">
 
 <div class="alert-box success">Event Deleted!</div>
+<div class="alert-box privacy">Privacy Updated!</div>
 <h1 align = "center">Saved Trip</h1>
 
 <c:if test="${cookie.username.value != null}">
@@ -190,6 +205,7 @@ function deleteEvent(eventid, tripid) {
 </div><!-- end bs container -->
 
 <div id="map"></div>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
 
 </body>
 </html>

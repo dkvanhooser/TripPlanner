@@ -129,9 +129,9 @@ public class HomeController {
         	DAO.addUser(addUser);
         	//creating new cookie with username + user id
         	Cookie username = new Cookie ("username", addUser.getUsername());
-    		Cookie userID = new Cookie("userid", ("" + addUser.getID()));
+    		Cookie userid = new Cookie("userid", ("" + addUser.getID()));
     		response.addCookie(username);
-    		response.addCookie(userID);
+    		response.addCookie(userid);
     		//adding values to model with ID/Username
     		model.addAttribute("userid", addUser.getID());
     		model.addAttribute("username", addUser.getUsername());

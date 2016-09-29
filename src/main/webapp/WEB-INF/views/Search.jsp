@@ -15,6 +15,7 @@
         margin: 0;
         padding: 0;
         background-attachment: fixed;
+        padding-top: 70px;
       }
       #map {
         height: 50%;
@@ -79,6 +80,7 @@
 	border-color: royalblue;
 	background:lightblue;
 }
+
 .col-sm-3 .tables{
 	opacity: 1.0;
 }
@@ -205,7 +207,48 @@ function PlacesSubForm(eventid) {
 	<title>PlanIT</title>
 </head>
 <body background="https://images5.alphacoders.com/374/374293.jpg">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		
+      </button>
+      <a class="navbar-brand" href="home">Home</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
+<c:if test="${cookie.username.value == null}">
+          <ul class="nav navbar-nav navbar-right">
+        <li><a href="createaccount">Register</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="login">Login</a></li>
+      </ul>
+      </c:if>
+      <c:if test="${cookie.username.value != null}">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="userProfile">Profile</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="logout">Logout</a></li>
+      </ul>
+            <ul class="nav navbar-nav navbar-right">
+        <li>	<p class="navbar-text">Logged in as: ${cookie.username.value}</p></li>
+      </ul>
+      </c:if>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 <div class="container-fluid">
+
 <div class="row">
 
 
@@ -215,20 +258,11 @@ function PlacesSubForm(eventid) {
 
 <table border="0" width="100%">
 <tr>
+
+      
 <td><h1 align = "center">
 	Search
-</h1></td>
-<c:if test="${cookie.username.value != null}">
-	<td>logged in as: ${cookie.username.value} </br>
-	<a href="userProfile" align ="right"><input type="button" value="Profile"/></a></br>
-	<a href="logout" align ="right"><input type="button" value="Logout"/></a></td>
-</c:if>
-<c:if test="${cookie.username.value == null}">
-<td><a href="login" align ="right"><input type="button" value="Login"/></a><br/>
-<a href="createaccount" align ="right"><input type="button" value="Register"/></a></td>
-</form>
-</c:if>
-</tr>
+</h1></td></tr>
 </table>
 <table>
 <tr><td></td><td align = "right">Trip</td><td>date</td></tr>
@@ -265,7 +299,7 @@ function PlacesSubForm(eventid) {
 
 	<div class="col-sm-3 ${event.genre}">
 		<div class ="tables">
-		<table class="eventTable">
+		<table class="eventTable" style="table-layout: fixed;">
 		<tr><th style = "word-break:break-word;"><c:out value ="${event.name}" /></td></tr>
 			<tr><td style = "word-break:break-word;"><a href="<c:out value ="${event.url}" />">Click here for more details!</a></td></tr>
 			<tr><td style = "word-break:break-word;"><c:out value ="${event.dateTime}" />	</td></tr>
