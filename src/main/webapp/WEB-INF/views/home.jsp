@@ -11,10 +11,12 @@
 
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <meta charset="utf-8">
 	<title>PlanIT</title>
 </head>
-<body = background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<body = background="https://images5.alphacoders.com/374/374293.jpg">
 <table border="0" width="100%">
 <tr>
 <td><h1 align = "center">

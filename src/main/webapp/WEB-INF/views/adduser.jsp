@@ -7,8 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add User</title>
-</head  background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
-<body>
+</head>
+<body background="https://images5.alphacoders.com/374/374293.jpg">
 <form:form action="form" method="post" modelAttribute="addUser">
             <table>
                 <tr>

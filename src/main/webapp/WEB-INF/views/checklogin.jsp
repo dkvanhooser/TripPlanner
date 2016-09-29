@@ -12,7 +12,7 @@
 <title>Checking User Info...</title>
 </head>
 
-<body  background="http://picview.info/download/20150530/soft-light-color-line-shape-2880x1800.jpg">
+<body background="https://images5.alphacoders.com/374/374293.jpg">
 Welcome back ${username }
 <c:if test="${username != null }">
 	<a href="home" align ="right"><input type="button" value="Home"/></a>
