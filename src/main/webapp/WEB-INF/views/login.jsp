@@ -8,7 +8,6 @@
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="resources/css/main.css">
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Page</title>
 </head>
@@ -53,17 +52,20 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<h1 align = "center">
+	Log In!
+</h1>
+<table align="center">
+<tr>
 <form:form commandName="loginForm" method="post">
-<td>Username:<form:input type="text" path="username" size="30"/></td>
-<td>Password:<form:input path="password" type="password" size="30"/></td>
-<td><input type="submit" value="Login!"/></td>
+<td>Username:</td><td><form:input type="text" path="username" size="30"/></td>
+</tr><tr>
+<td>Password:</td><td><form:input path="password" type="password" size="30"/></td>
+</tr><tr><td align = "center"><input type="submit" value="Login!"/></td></tr>
 </form:form>
-<a href="createaccount" align ="right"><input type="button" value="Register New Account"/></a>
-<c:if test="${cookie.username.value != null}">
-	<td>logged in as: ${cookie.username.value} </br>
-	<a href="userProfile" align ="right"><input type="button" value="Profile"/></a></br>
-	<a href="logout" align ="right"><input type="button" value="Logout"/></a></td>
-</c:if>
+</table>
+
+
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
 
 </body>

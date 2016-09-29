@@ -230,7 +230,7 @@ function deleteEvent(eventid, tripid) {
 
 		</tr>
 		</c:forEach>
-<a href="home" align ="center"><input type="button" value="Search for more events!"/></a></br>
+<a href="home" align ="center"><input type="button" value="Search for more events!"/></a>
 
 	</table>
 </div><!-- end bs row -->
