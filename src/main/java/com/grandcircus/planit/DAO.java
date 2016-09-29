@@ -99,6 +99,7 @@ public class DAO {
 		}
 
 		// no exception = there was a single result
+		hibernateSession.close(); 
 		return true;
 	}
 	//adding user to database and encrypting their password
@@ -145,9 +146,10 @@ public class DAO {
 			hibernateSession.close();
 			 
 		} finally {
-			
+		
 			
 		}
+		 
 		return true;
 	}
 
@@ -185,7 +187,7 @@ public class DAO {
 	}
 	
 	//saving a user trip 
-	public static String addUserTrips(UserTrips t) {
+	public static void addUserTrips(UserTrips t) {
 		if (factory == null)
 			setupFactory();
 		Session hibernateSession = factory.openSession();
@@ -200,13 +202,52 @@ public class DAO {
 		hibernateSession.getTransaction().commit();
 		hibernateSession.close();
 
-		return null;
+		
 	}
 	public static Set<String> getDistinctGenres(ArrayList<SearchEvent> searchedEvents){
 		ArrayList<String> genres = new ArrayList<String>();
 		for(SearchEvent s: searchedEvents){
-			genres.add(s.getGenre());
+			if (s.getGenre() != null){
+				genres.add(s.getGenre());
+				
+			}
+			
 		}		
+		
 		return new TreeSet<String>(genres);
 	}
+	
+	public static void privacyUpdate(int privacy, int tripID){
+		if (factory == null)
+			setupFactory();
+		Session hibernateSession = factory.openSession();
+		hibernateSession.getTransaction().begin();
+		String sqlquer = "UPDATE UserTrips SET privacy = "+privacy+" WHERE tripID = "+tripID;
+		Query query  = hibernateSession.createQuery(sqlquer);
+		query.executeUpdate();
+		hibernateSession.getTransaction().commit();
+		hibernateSession.close();
+	}
+	public static UserTrips getUserTrip(int tripID) {
+		if (factory == null)
+			setupFactory();
+		UserTrips usertrip;
+		//get current session
+		Session hibernateSession = factory.openSession();
+		hibernateSession.getTransaction().begin();
+		try {
+			String query = "FROM UserTrips WHERE tripID=" + tripID;
+			 usertrip = (UserTrips) hibernateSession.createQuery(query).getSingleResult();
+		} catch (Exception e) {
+
+			System.out.println("Exception: " + e);
+			hibernateSession.close();  
+			return null;
+			
+		}
+		hibernateSession.close(); 
+		// no exception = there was a single result
+		return usertrip;
+	}
+	
 }

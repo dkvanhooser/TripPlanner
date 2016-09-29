@@ -10,5 +10,6 @@
 		 </id>
 		<property name="userID" column="userID" type="int"></property>
 		<property name="tripName" column="tripName" type="string"></property>
+		<property name="privacy" column="privacy" type="int"></property>
 	</class>
 </hibernate-mapping> 

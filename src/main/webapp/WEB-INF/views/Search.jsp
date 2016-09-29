@@ -16,6 +16,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        background-attachment: fixed;
       }
       #map {
         height: 50%;
@@ -28,6 +29,7 @@
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;  
+    z-index:98;
 }	
 .success {
 	margin-top:-270px;
@@ -39,7 +41,21 @@
     border-color: #d6e9c6;
     display: none;
     text-align:center;
+    z-index:99;
 }
+.failure {
+	margin-top:-270px;
+	top:50%;
+    left:50%;
+	position:fixed;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    display: none;
+    text-align:center;
+    z-index:99;
+}
+
 
 .col-sm-3{
 	padding: 15px;
@@ -80,9 +96,9 @@
 function hideStuff(genre){
 	
 	if(document.getElementById(genre).checked) {
-		$('div.'+genre).fadeIn( 400 );
+		$('div.'+genre).toggle( 400 );
 	} else {
-		$('div.'+genre).fadeOut( 400 );
+		$('div.'+genre).toggle( 400 );
 	}
 	
 }
@@ -100,6 +116,10 @@ function setTrip(){
 	tripid = $('select[name=tripID]').val();
 }
 function SubForm(eventid, dateE) {
+	if(tripid == null){
+		$( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+		return;
+	}
 	event.preventDefault();
 	$.ajax({
 		type: "POST",
@@ -117,6 +137,10 @@ function SubForm(eventid, dateE) {
 	});
 };
 function PlacesSubForm(eventid) {
+	if(tripid == null){
+		$( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+		return;
+	}
 	event.preventDefault();
 	$.ajax({
 		type: "POST",
@@ -151,7 +175,7 @@ function PlacesSubForm(eventid) {
         service.nearbySearch({
           location: city,
           radius: 5000,
-          types: ['art_gallery','zoo','museum','library','aquarium']
+          types: ['art_gallery','zoo','museum','aquarium']
         }, callback);
       }
 
@@ -191,6 +215,8 @@ function PlacesSubForm(eventid) {
 
 
 <div class="alert-box success">Event Added!</div>
+<div class="alert-box failure">Please select a trip to add to!</div>
+
 
 <table border="0" width="100%">
 <tr>
@@ -214,7 +240,7 @@ function PlacesSubForm(eventid) {
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
 <form action = "<c:url value="search" />">
-<td><input type="text" path="search" name = "search" size="30"/></td>
+<td><input type="text" path="search" name = "search" size="30" placeholder="Search by City"/></td>
 <td><input path="dateFrom" type="date" name = "dateFrom" size="30"/></td>
 <td><input path="dateTo" type="date" name ="dateTo" size="30"/></td>
 <td><input type = "submit" value = "Search"></td>
@@ -241,10 +267,11 @@ function PlacesSubForm(eventid) {
 
 
 		<c:forEach var="event" items="${eventList}">
+
 	<div class="col-sm-3 ${event.genre}">
 		<div class ="tables">
 		<table class="eventTable">
-		<tr><td style = "word-break:break-word;"><c:out value ="${event.name}" /></td></tr>
+		<tr><th style = "word-break:break-word;"><c:out value ="${event.name}" /></td></tr>
 			<tr><td style = "word-break:break-word;"><a href="<c:out value ="${event.url}" />">Click here for more details!</a></td></tr>
 			<tr><td style = "word-break:break-word;"><c:out value ="${event.dateTime}" />	</td></tr>
 			<tr><td style = "word-break:break-word;"><c:out value ="${event.info}" /></td></tr>
