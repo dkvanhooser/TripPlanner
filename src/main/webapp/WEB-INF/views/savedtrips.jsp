@@ -6,8 +6,9 @@
 <html>
 <head>
 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="resources/css/savedTrips.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Saved trips</title>
 
@@ -16,11 +17,13 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        color:white;
+        
       }
       #map {
         height: 50%;
       }
-      .alert-box {
+ .alert-box {
 	
 	padding: 15px;
     margin-bottom: 20px;
@@ -38,6 +41,7 @@
     display: none;
     text-align:center;
 }
+
 
       
 </style>
@@ -111,13 +115,13 @@ function deleteEvent(eventid, tripid) {
 <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${gKey}"/>&libraries=places&callback=initMap" async defer></script>
 
 </head>
-<body background="https://images5.alphacoders.com/374/374293.jpg">
+<body id ="thebody" background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
 
 <div class="alert-box success">Event Deleted!</div>
 <h1 align = "center">Saved Trip</h1>
 
 <c:if test="${cookie.username.value != null}">
-	logged in as: ${cookie.username.value}
+	<p>logged in as: ${cookie.username.value}</p>
 	<a href="userProfile"><input type="button" value="Profile"/></a>
 	<a href="logout"><input type="button" value="Logout"/></a>
 </c:if>

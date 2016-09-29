@@ -1,13 +1,18 @@
 @CHARSET "ISO-8859-1";
 h1{
 	font-family:'Josefin Sans',sans-serif;
-	color: #0000a0;
+	color:white;
+	font-size:30pt;
 }
 h2{
-	color: #0000a0;
+	color:white;
 	font-family:'Josefin Sans',sans-serif;
 }
 h3{
-	color: #0000a0;
+	color: white;
 	font-family:'Josefin Sans',sans-serif;
+	font-size: 20pt;
+}
+table{
+	color:lightgrey;
 }

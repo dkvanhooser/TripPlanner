@@ -6,10 +6,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Page</title>
 </head>
-<body background="https://images5.alphacoders.com/374/374293.jpg">
+<body background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
 <form:form commandName="loginForm" method="post">
 <td>Username:<form:input type="text" path="username" size="30"/></td>
 <td>Password:<form:input path="password" type="password" size="30"/></td>
