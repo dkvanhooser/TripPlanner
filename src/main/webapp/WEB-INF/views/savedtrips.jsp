@@ -168,7 +168,7 @@ function deleteEvent(eventid, tripid) {
 		<tr><td><c:out value = " ${place.name} " />	</td>
 		<td><c:out value = " ${place.date} " />	</td>
 		<td><c:out value = " ${place.address} " />	</td>
-		<td><button onclick = "deleteEvent( '${place.placeID}', '${savedtrip}')">Delete Event</button></td>
+		<td><button onclick = "deleteEvent( '${place.placeID}', '${savedtrip.tripID}')">Delete Event</button></td>
 		</tr>
 		</c:forEach>
 		
@@ -180,7 +180,7 @@ function deleteEvent(eventid, tripid) {
 			<td><c:out value ="${event.dateTime}" /></td>
 
 			<td><c:out value ="${event.info}" /></td>
-			<td><button onclick = "deleteEvent( '${event.id}', '${savedtrip}')">Delete Event</button></td>
+			<td><button onclick = "deleteEvent( '${event.id}', '${savedtrip.tripID}')">Delete Event</button></td>
 
 		</tr>
 		</c:forEach>

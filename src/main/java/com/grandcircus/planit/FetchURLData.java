@@ -39,12 +39,14 @@ public class FetchURLData {
 					try {
 						JSONArray ja = jsonEventObject.getJSONArray("classifications");
 						
-						JSONObject temp = (JSONObject) jsonEventObject.get("dates");
-						temp = (JSONObject) temp.get("start");
+						
 						//getting information about each event 
 						se.setId((String) jsonEventObject.get("id"));
-						se.setUrl((String) jsonEventObject.get("url"));
 						se.setName((String) jsonEventObject.get("name"));
+						
+						se.setUrl((String) jsonEventObject.get("url"));
+						JSONObject temp = (JSONObject) jsonEventObject.get("dates");
+						temp = (JSONObject) temp.get("start");
 						se.setDateTime((String) temp.get("localDate"));
 						se.setGenre(ja.getJSONObject(0).getJSONObject("segment").getString("name").replace("&", "").replace(" ",""));
 						se.setInfo((String) jsonEventObject.get("info"));

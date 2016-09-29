@@ -14,6 +14,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        background-attachment: fixed;
       }
       #map {
         height: 50%;
@@ -169,7 +170,7 @@ function PlacesSubForm(eventid) {
         service.nearbySearch({
           location: city,
           radius: 5000,
-          types: ['art_gallery','zoo','museum','library','aquarium']
+          types: ['art_gallery','zoo','museum','aquarium']
         }, callback);
       }
 
