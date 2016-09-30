@@ -64,7 +64,7 @@ public class DAO {
 			if (passwordEncryptor.checkPassword(user.getPassword(), singleUser.getPassword())) {
 				hibernateSession.getTransaction().commit();
 				hibernateSession.close();
-				return user;
+				return singleUser;
 			} else {
 				hibernateSession.getTransaction().commit();
 				hibernateSession.close();
