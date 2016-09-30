@@ -162,7 +162,7 @@ public class HomeController {
 				model.put("jsonPlaces", new JSONArray(savedPlacesDetails));
 				model.put("places", savedPlacesDetails);
 				//putting searched events into model 
-				model.put("savedtrip",tripid);
+				model.put("savedtrip",ut);
 	           
 	           return new ModelAndView("savedtrips","listevents",model);
 		}

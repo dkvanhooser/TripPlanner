@@ -31,28 +31,7 @@
     
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     
-<c:if test="${cookie.username.value == null}">
-          <ul class="nav navbar-nav navbar-right">
-        <li><a href="createaccount">Register</a></li>
-      </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="login">Login</a></li>
-      </ul>
-      </c:if>
-      <c:if test="${cookie.username.value != null}">
-
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="userProfile">Profile</a></li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="logout">Logout</a></li>
-      </ul>
-            <ul class="nav navbar-nav navbar-right">
-        <li>	<p class="navbar-text">Logged in as: ${cookie.username.value}</p></li>
-      </ul>
-      </c:if>
 
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

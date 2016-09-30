@@ -5,6 +5,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta property="og:title"              content="My Saved Trip!" />
+<meta property="og:description"        content="Check out my trip!" />
+<meta property="og:image"              content="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg" />
+<meta property="og:url"                content="http://planit-env.us-west-2.elasticbeanstalk.com/savedtrips?tripID=${savedtrip.tripID}" />
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="resources/css/savedTrips.css">
@@ -87,7 +91,7 @@
 	    	  var gMarker = new google.maps.Marker({
 	    	    map: map,
 	    	    position: new google.maps.LatLng(places[i].lat, places[i].lng),
-	    	    title:places[i].name,
+	    	    title: "<p4>"+places[i].name+"</p4>",
 	    	    animation: google.maps.Animation.DROP
 	    	  });
 	    	  
@@ -95,8 +99,8 @@
 	    	  google.maps.event.addListener(gMarker, 'click', function() {
 	    		marker = this;
 	    		map.panTo(marker.position);
-				infowindow.setContent(marker.title);
 				infowindow.open(map, marker);
+				infowindow.setContent(marker.title);
 				marker.setAnimation(google.maps.Animation.BOUNCE);
 				setTimeout(function(){
 					marker.setAnimation(null);
@@ -212,8 +216,8 @@ function deleteEvent(eventid, tripid) {
 
 	
 		<tr><td><c:out value = " ${place.name} " />	</td>
-		<td><c:out value = " ${place.date} " />	</td>
 		<td><c:out value = " ${place.address} " />	</td>
+		<c:if test="${place.date != \"null\" }"><td><c:out value = " ${place.date} " />	</td></c:if>
 		<td><button onclick = "deleteEvent( '${place.placeID}', '${savedtrip.tripID}')">Delete Event</button></td>
 		</tr>
 		</c:forEach>
