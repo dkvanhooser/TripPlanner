@@ -57,9 +57,8 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-Logout Successful 
+<h1 align = "center">Logout Successful </h1>
 
-<a href="home" align ="right"><input type="button" value="Home"/></a>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
 
 </body>

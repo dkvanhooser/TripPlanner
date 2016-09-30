@@ -58,10 +58,8 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-Welcome back ${username }
-<c:if test="${username != null }">
-	<a href="home" align ="right"><input type="button" value="Home"/></a>
-</c:if>
+<h1 align = "center">Welcome back ${username}</h1>
+
 <jsp:useBean id="user" class="com.grandcircus.planit.User">  
 </jsp:useBean>
 <jsp:setProperty property="*" name="user"/>
