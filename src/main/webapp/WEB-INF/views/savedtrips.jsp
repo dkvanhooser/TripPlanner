@@ -14,14 +14,15 @@
 <title>Saved trips</title>
 
 <style>
-       body {
+       html, body {
         height: 100%;
-        margin: 0;
+		width: 100%;
 		color:white;
         
       }
       #map {
-        height: 50%;
+        height: 75%;
+        width:50%;
       }
  .alert-box {
 	
@@ -140,7 +141,6 @@ function deleteEvent(eventid, tripid) {
 </script>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${gKey}"/>&libraries=places&callback=initMap" async defer></script>
 
 </head>
 <body id ="thebody" background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
@@ -200,7 +200,7 @@ function deleteEvent(eventid, tripid) {
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-<c:if test="${savedtrip.privacy == 1}"><div class="fb-share-button" data-href="http://planit-env.us-west-2.elasticbeanstalk.com/savedtrips?tripID=${savedtrip}" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplanit-env.us-west-2.elasticbeanstalk.com%2Fsavedtrips%3FtripID%3D%2524%257Bsavedtrip%257D&amp;src=sdkpreparse">Share</a></div></c:if>
+<c:if test="${savedtrip.privacy == 1}"><div class="fb-share-button" data-href="http://planit-env.us-west-2.elasticbeanstalk.com/savedtrips?tripID=${savedtrip.tripID}" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplanit-env.us-west-2.elasticbeanstalk.com%2Fsavedtrips%3FtripID&amp;src=sdkpreparse">Share</a></div></c:if>
 <c:if test="${savedtrip.privacy == 0}"><br/>To share this trip on Facebook, make this trip public!<button onclick = 'setPrivacy("1", ${savedtrip.tripID})'>Set this trip to Public</button></c:if>
 <c:if test="${savedtrip.privacy == 1}"><button onclick = 'setPrivacy("0", ${savedtrip.tripID})'>Set this trip to Private</button></c:if>
 
@@ -235,10 +235,11 @@ function deleteEvent(eventid, tripid) {
 	</table>
 </div><!-- end bs row -->
 </div><!-- end bs container -->
-
+</div>
 
 <div id="map"></div>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
+<script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${gKey}"/>&libraries=places&callback=initMap" async defer></script>
 
 </body>
 </html>

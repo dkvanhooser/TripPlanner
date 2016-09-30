@@ -5,6 +5,7 @@
 
 <html>
 <head>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="resources/css/main.css">
 
@@ -280,16 +281,7 @@ function PlacesSubForm(eventid) {
 </form>
 </tr>
 </table>
-<c:if test="${cookie.username.value != null}">
-<div class="dropdown">
-<select name="tripID" onchange = "setTrip();">
-<option>Please select a trip to add to</option>
-<c:forEach var="trip" items="${events.trips}">
-			<option id = "${trip.tripID}" value="${trip.tripID}">${trip.tripName}</option>
-			</c:forEach>
-			</select>
-		</div>
-		</c:if>
+<br/>
 <table class="checkboxes" align = "center">
 	<tr>
 
@@ -299,6 +291,19 @@ function PlacesSubForm(eventid) {
 		</c:forEach></tr>
 </table>
 
+<br/>
+<c:if test="${cookie.username.value != null}">
+<div class="dropdown" align = "center">
+<select name="tripID" onchange = "setTrip();" style = "display: inline-block;" class = "form-control">
+<option>Please select a trip to add to</option>
+<c:forEach var="trip" items="${events.trips}">
+			<option id = "${trip.tripID}" value="${trip.tripID}">${trip.tripName}</option>
+			</c:forEach>
+			</select>
+		</div>
+		</c:if>
+
+<br/>
 
 		<c:forEach var="event" items="${eventList}">
 

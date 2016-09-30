@@ -64,9 +64,7 @@
 
 <c:if test="${cookie.username.value != null}">
 	<h1>Error 9001: You are already logged in as: ${cookie.username.value}</h1></br>
-	<a href="home"><input type="button" value="Home"/></a></br>
-	<a href="userProfile"><input type="button" value="Profile"/></a></br>
-	<a href="logout"><input type="button" value="Logout"/></a>
+
 </c:if>
 <c:if test="${cookie.username.value == null}">
 <h1>How did you get here?</h1>

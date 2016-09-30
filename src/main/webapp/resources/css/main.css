@@ -11,11 +11,17 @@ table {
 table, th, td {
     border: 1px white;
 }
+.form-control {
+   color: black;
+   background:cornflowerblue;
+   background-color:cornflowerblue;
+   width: 25%;
+}
 body{
 	color:white;
     padding-top: 70px;
     background: "http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg";
-    
+     background-attachment: fixed, scroll;
   
 }
 input{
@@ -39,6 +45,9 @@ p4{
     background-color: white;
     border-color: black;
 }
-li{
-	color:white;
-} 
+
+.option
+{    
+    color:black;
+    font-size:14px;
+}
