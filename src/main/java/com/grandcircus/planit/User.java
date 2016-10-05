@@ -1,16 +1,8 @@
 package com.grandcircus.planit;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.jasypt.util.password.BasicPasswordEncryptor;
-import org.jasypt.util.password.PasswordEncryptor;
 public class User {
-	@NotEmpty
 	private String username;
-	@NotEmpty
 	private String password;
-	@Email
-	@NotEmpty
 	private String email;
 	private int ID;
 	
