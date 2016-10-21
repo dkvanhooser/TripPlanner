@@ -113,7 +113,7 @@ public class FetchURLData {
 		try {
 
 			URL url = new URL(
-					"https://maps.googleapis.com/maps/api/geocode/json?address=" + city + "&key=" + key.getApi());
+					"https://maps.googleapis.com/maps/api/geocode/json?address=" + city.replaceAll(" ", "") + "&key=" + key.getApi());
 			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			StringBuilder sb = new StringBuilder();
 			String strTemp = "";
