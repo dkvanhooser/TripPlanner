@@ -22,9 +22,14 @@
         padding-top: 70px;
       }
       #map {
-        height: 50%;
-        width:50%;
+        height: 75%;
+        width:100%;
       }
+
+h3 {
+text-align: center;
+color : black;
+}
 
 .alert-box {
 	
@@ -195,7 +200,7 @@ function PlacesSubForm(eventid) {
         });
 		
         var infoContent = "<p4>" + place.name
-		+ "<br/>When will you want to visit?<input type=\"date\" id =\"date\" size=\"30\" onchange ='setDate()'/>"+"<br/>"+"<c:if test="${cookie.username.value != null}">"+"<button onclick = 'PlacesSubForm(\""
+		+ "<c:if test="${cookie.username.value != null}">"+"<br/>When will you want to visit?<input type=\"date\" id =\"date\" size=\"30\" onchange ='setDate()'/>"+"<br/>"+"<button onclick = 'PlacesSubForm(\""
 		+place.place_id + "\")' >Add to Trip</button>"+"</c:if>"+"</p4>" ;
         
         google.maps.event.addListener(marker, 'click', function() {
@@ -274,7 +279,7 @@ function PlacesSubForm(eventid) {
 <tr><td>Search</td><td align = "center">Start</td><td align = "center">End</td></tr>
 <tr>
 <form action = "<c:url value="search" />">
-<td><input type="text" path="search" name = "search" size="30" placeholder="Search by City"/></td>
+<td><input type="text" path="search" name = "city" size="30" placeholder="Search by City"/></td>
 <td><input path="dateFrom" type="date" name = "dateFrom" size="30"/></td>
 <td><input path="dateTo" type="date" name ="dateTo" size="30"/></td>
 <td><input type = "submit" value = "Search"></td>
@@ -304,7 +309,11 @@ function PlacesSubForm(eventid) {
 		</c:if>
 
 <br/>
-
+	<c:if test="${empty eventList}">
+	<h3>No Events located in "<c:out value ="${param.city}" />" from <c:out value ="${param.dateFrom}" /> to <c:out value ="${param.dateTo}" /></h3>
+	</c:if>
+	<c:if test="${not empty eventList}">
+		<h3>Events located in <c:out value ="${param.city}" /> from <c:out value ="${param.dateFrom}" /> to <c:out value ="${param.dateTo}" /></h3>
 		<c:forEach var="event" items="${eventList}">
 
 	<div class="col-sm-3 ${event.genre} " style="min-width: 275px">
@@ -321,6 +330,7 @@ function PlacesSubForm(eventid) {
 		</div>
 
 		</c:forEach>
+	</c:if>
 	
 	</div>
 

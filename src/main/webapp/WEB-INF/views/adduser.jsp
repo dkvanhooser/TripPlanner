@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add User</title>
+<style>
+.error{
+color:red;
+}
+</style>
 </head>
 <body background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -56,16 +61,19 @@
                 <tr>
                     <td><form:label path="username">Username</form:label></td>
                     <td><form:input path="username"/></td>
+                    <td><form:errors path="username" cssClass="error"/></td>
 
                 </tr>
                 <tr>
                     <td><form:label path="password">Password</form:label></td>
                     <td><form:input path="password"/></td>
+                    <td><form:errors path="password" cssClass="error"/></td>
 
                 </tr>
                  <tr>
                     <td><form:label path="email">E-mail</form:label></td>
                     <td><form:input path="email"/></td>
+                    <td><form:errors path="email" cssClass="error"/></td>
 
                 </tr>
                 <tr>

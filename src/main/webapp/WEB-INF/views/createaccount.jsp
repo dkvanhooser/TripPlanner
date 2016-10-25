@@ -11,6 +11,17 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create a new account</title>
+
+<style>
+.error{
+color:red;
+}
+td{
+padding:5px;
+}
+
+
+</style>
 </head>
 <body background="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg">
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -54,29 +65,35 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-<form:form action="adduser" commandName="addUser" method="POST">
-<label class="fieldLabel">Username:
+<table>
+<tr>
+<form:form action="createaccount" commandName="addUser" method="POST">
+	<td>Username:</td>
 	
-    <form:input type="text" path="username" name="username" size="40" maxlength="32" placeholder="username" />      
-<!-- error form -->
-	<form:errors path="username" cssClass="error"/>
+   <td> <form:input type="text" path="username" name="username" size="40" maxlength="32" placeholder="username" /></td>
+	<td><form:errors path="username" cssClass="error"/></td>
 
-  </label>
-  <br>
-  <label class="fieldLabel">Password:
-    <form:input type="password" path="password" name="password" size="40" maxlength="12"/>      
-  </label>
-  <br>
-   <label class="fieldLabel"> Email:
-    <form:input type="text" path="email" name="email" size="40" maxlength="32" placeholder="someone@somewhere.com" />      
-  </label>
-  <br>
-  <div class="buttons">
+  </tr>
+  <tr>
+  <td>Password:</td>
+    <td><form:input type="password" path="password" name="password" size="40" maxlength="30"/></td>
+   <td> <form:errors path="password" cssClass="error"/></td>
+  
+  <tr>
+  <td>Email:</td>
+  
+  <td>  <form:input type="text" path="email" name="email" size="40" maxlength="32" />   </td>
+   <td> <form:errors path="email" cssClass="error"/></td>
+</tr>
+  <tr>
+<div class="buttons">
+ <td> 
     <input type="submit" name="submit" value="Create Account" />
-    <input type="reset" name="reset" value="Clear Form" />
+    <input type="reset" name="reset" value="Clear Form" /></td>
   </div>
+  </tr>
   </form:form>
+  </table>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
 
 </body>

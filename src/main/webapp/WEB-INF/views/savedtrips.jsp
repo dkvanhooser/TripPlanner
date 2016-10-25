@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta property="og:title"              content="My Saved Trip!" />
+<meta property="og:title"              content="My Saved Trip: ${savedtrip.tripName}" />
 <meta property="og:description"        content="Check out my trip!" />
 <meta property="og:image"              content="http://hdwallpaperbackgrounds.net/wp-content/uploads/2015/08/amazing-planet-hd-wallpapers.jpg" />
 <meta property="og:url"                content="http://planit-env.us-west-2.elasticbeanstalk.com/savedtrips?tripID=${savedtrip.tripID}" />
@@ -15,7 +15,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Saved trips</title>
+<title>Saved trip: ${savedtrip.tripName} </title>
 
 <style>
        html, body {
@@ -151,7 +151,7 @@ function deleteEvent(eventid, tripid) {
 
 <div class="alert-box success">Event Deleted!</div>
 <div class="alert-box privacy">Privacy Updated!</div>
-<h1 align = "center">Saved Trip</h1>
+<h1 align = "center">${savedtrip.tripName}</h1>
 
 
 <nav class="navbar navbar-default navbar-fixed-top">

@@ -11,7 +11,7 @@ public class TicketmasterKey {
 		setCity(city);
 		setDateFrom(dateFrom);
 		setDateTo(dateTo);
-		this.api = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=9GWQl0TyQA2GKd6qcHEAMxL3VkwldGx3&radius=1&startDateTime="+dateFrom+"T00%3A00%3A00Z&endDateTime="+dateTo+"T23%3A59%3A59Z&city="+city;
+		this.api = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=9GWQl0TyQA2GKd6qcHEAMxL3VkwldGx3&radius=1&startDateTime="+dateFrom+"T00%3A00%3A00Z&endDateTime="+dateTo+"T23%3A59%3A59Z&city="+city.replace(" ", "%20");
 	}
 	public TicketmasterKey(){
 		this.api = "apikey=9GWQl0TyQA2GKd6qcHEAMxL3VkwldGx3";
